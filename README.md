@@ -8,7 +8,7 @@ https://www.figma.com/design/P2PMOooD5uKye8W8b8Zsgc/Event-Storming-(Community)
 
 ## Rozdělení práce
 
-Service System - X
-Billing system - X
-Access System - X
-Room management System - X
+ - Service System - X
+ - Billing system - X
+ - Access System - X
+ - Room management System - X
