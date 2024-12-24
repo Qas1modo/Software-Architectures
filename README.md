@@ -37,5 +37,7 @@ Systém spravující místnosti bude moci zadávat nové pokoje hotelu do systé
 
 Dále, zde bude možné si zažádat po Checkoutu ubytovaného o jeho uklizení a dokud tato služba nebude provedena, tak se pokoj nebude moci nabídnout žádnému jinému zákazníkovi.
 
+V neposlední řadě bude tato část systému spravovat jednotlivé rezervace nad pokoji.
+
 ## Architektura
 Systém bude postaven s myšlenkou Clean architecture, kdy celý systém bude běžet nad modular monolith, kdy bude zajištěný jednoduchý přechod na micro service architekturu, v případě potřeby o nějaké rozšíření a škálování.
