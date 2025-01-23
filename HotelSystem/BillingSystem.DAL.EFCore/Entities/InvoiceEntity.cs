@@ -4,4 +4,5 @@ namespace BillingSystem.DAL.EFCore.Entities;
 
 public class InvoiceEntity : BaseEntity
 {
+    // TODO Fill properties
 }

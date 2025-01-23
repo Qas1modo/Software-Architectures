@@ -4,4 +4,6 @@ namespace BillingSystem.DAL.EFCore.Entities;
 
 public class BillingItemEntity : BaseEntity
 {
+    public int CustomerId { get; set; }
+    // TODO Fill properties
 }
