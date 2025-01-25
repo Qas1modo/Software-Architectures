@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace HotelServiceSystem.Infrastructure.Configurations
 {
     /// <summary>
-    /// Represents the configuration for the <see cref="Guest"/> entity.
+    /// Represents the configuration for the <see cref="GuestEntity"/> entity.
     /// </summary>
-    internal sealed class GuestConfiguration : IEntityTypeConfiguration<Guest>
+    internal sealed class GuestConfiguration : IEntityTypeConfiguration<GuestEntity>
     {
         /// <inheritdoc />
-        public void Configure(EntityTypeBuilder<Guest> builder)
+        public void Configure(EntityTypeBuilder<GuestEntity> builder)
         {
             builder.HasKey(guest => guest.Id);
 
@@ -22,7 +22,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 firstNameBuilder.WithOwner();
                 firstNameBuilder.Property(firstName => firstName.Value)
-                    .HasColumnName(nameof(Guest.GuestFirstName))
+                    .HasColumnName(nameof(GuestEntity.GuestFirstName))
                     .HasMaxLength(FirstName.MaxLength)
                     .IsRequired();
             });
@@ -31,7 +31,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 lastNameBuilder.WithOwner();
                 lastNameBuilder.Property(lastName => lastName.Value)
-                    .HasColumnName(nameof(Guest.GuestLastName))
+                    .HasColumnName(nameof(GuestEntity.GuestLastName))
                     .HasMaxLength(LastName.MaxLength)
                     .IsRequired();
             });
@@ -40,7 +40,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 roomNumberBuilder.WithOwner();
                 roomNumberBuilder.Property(roomNumber => roomNumber.Value)
-                    .HasColumnName(nameof(Guest.GuestRoomNumber))
+                    .HasColumnName(nameof(GuestEntity.GuestRoomNumber))
                     .HasMaxLength(RoomNumber.MaxRoom)
                     .IsRequired();
             });

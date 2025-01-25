@@ -36,7 +36,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
                 .HasForeignKey(orderItem => orderItem.RoomServiceOrderId)
                 .IsRequired();
 
-            builder.HasOne<RoomService>(orderItem => orderItem.RoomService)
+            builder.HasOne<RoomServiceEntity>(orderItem => orderItem.RoomService)
                 .WithMany()
                 .HasForeignKey(orderItem => orderItem.RoomServiceId)
                 .IsRequired();

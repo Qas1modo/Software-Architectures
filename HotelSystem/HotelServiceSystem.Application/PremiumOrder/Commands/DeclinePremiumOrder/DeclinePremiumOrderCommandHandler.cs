@@ -1,18 +1,17 @@
-using HotelServiceSystem.Domain.Enums;
-using HotelServiceSystem.Contracts.Models;
 using HotelServiceSystem.Application.Core.Abstractions.Messaging;
+using HotelServiceSystem.Domain.Core.Primitives.Result;
 
 namespace HotelServiceSystem.Application.PremiumOrder.Commands.DeclinePremiumOrder;
 
-public class DeclinePremiumOrderCommandHandler : ICommandHandler<DeclinePremiumOrderCommand, GenericResponseModel>
+public class DeclinePremiumOrderCommandHandler : ICommandHandler<DeclinePremiumOrderCommand, Result>
 {
 
     public DeclinePremiumOrderCommandHandler()
     {
     }
 
-    public async Task<GenericResponseModel> Handle(DeclinePremiumOrderCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeclinePremiumOrderCommand request, CancellationToken cancellationToken)
     {
-        return new GenericResponseModel { Success = true, Message = "Order status updated to Declined" };
+        return Result.Success();
     }
 }

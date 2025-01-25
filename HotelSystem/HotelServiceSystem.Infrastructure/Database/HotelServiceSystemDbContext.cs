@@ -11,14 +11,10 @@ using System.Reflection;
 
 namespace HotelServiceSystem.Infrastructure.Database;
 
-public class HotelServiceSystemDbContext : DbContext, IDbContext, IUnitOfWork
+public class HotelServiceSystemDbContext(DbContextOptions<HotelServiceSystemDbContext> options, IMediator mediator)
+    : DbContext(options), IDbContext, IUnitOfWork
 {
-    private readonly IMediator _mediator;
-
-    public HotelServiceSystemDbContext(DbContextOptions<HotelServiceSystemDbContext> options, IMediator mediator) : base(options)
-    {
-        _mediator = mediator;
-    }
+    private readonly IMediator _mediator = mediator;
 
     // //only for migrations
     // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

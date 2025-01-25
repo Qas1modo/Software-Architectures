@@ -11,21 +11,19 @@ namespace HotelServiceSystem.Api.Middleware
     /// <summary>
     /// Represents the exception handler middleware.
     /// </summary>
-    internal class ExceptionHandlerMiddleware
+    /// <remarks>
+    /// Initializes a new instance of the <see cref="ExceptionHandlerMiddleware"/> class.
+    /// </remarks>
+    /// <param name="next">The delegate pointing to the next middleware in the chain.</param>
+    /// <param name="logger">The logger.</param>
+    internal class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
     {
-        private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionHandlerMiddleware> _logger;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExceptionHandlerMiddleware"/> class.
-        /// </summary>
-        /// <param name="next">The delegate pointing to the next middleware in the chain.</param>
-        /// <param name="logger">The logger.</param>
-        public ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
+        private readonly RequestDelegate _next = next;
+        private readonly ILogger<ExceptionHandlerMiddleware> _logger = logger;
+        private readonly static JsonSerializerOptions _options = new()
         {
-            _next = next;
-            _logger = logger;
-        }
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
 
         /// <summary>
         /// Invokes the exception handler middleware with the specified <see cref="HttpContext"/>.
@@ -60,12 +58,7 @@ namespace HotelServiceSystem.Api.Middleware
 
             httpContext.Response.StatusCode = (int)httpStatusCode;
 
-            var serializerOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
-
-            string response = JsonSerializer.Serialize(new ApiErrorResponse(errors), serializerOptions);
+            string response = JsonSerializer.Serialize(new ApiErrorResponse(errors), _options);
 
             await httpContext.Response.WriteAsync(response);
         }

@@ -44,7 +44,7 @@ public sealed class CleanRoomRequest : AggregateRoot, IAuditableEntity, ISoftDel
         }
 
         Processed = true;
-
+        // TODO Raise Domain Event
         return Result.Success();
     }
 }

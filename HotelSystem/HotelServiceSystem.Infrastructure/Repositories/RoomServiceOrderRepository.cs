@@ -4,9 +4,7 @@ using HotelServiceSystem.Domain.Repositories;
 
 namespace HotelServiceSystem.Infrastructure.Repositories;
 
-internal class RoomServiceOrderRepository : GenericRepository<RoomServiceOrder>, IRoomServiceOrderRepository
+internal class RoomServiceOrderRepository(IDbContext dbContext) 
+    : GenericRepository<RoomServiceOrder>(dbContext), IRoomServiceOrderRepository
 {
-    public RoomServiceOrderRepository(IDbContext dbContext) : base(dbContext)
-    {
-    }
 }

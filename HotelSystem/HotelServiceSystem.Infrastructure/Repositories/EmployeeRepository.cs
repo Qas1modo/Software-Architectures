@@ -4,9 +4,7 @@ using HotelServiceSystem.Domain.Repositories;
 
 namespace HotelServiceSystem.Infrastructure.Repositories;
 
-internal class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
+internal class EmployeeRepository(IDbContext dbContext)
+    : GenericRepository<Employee>(dbContext), IEmployeeRepository
 {
-    public EmployeeRepository(IDbContext dbContext) : base(dbContext)
-    {
-    }
 }

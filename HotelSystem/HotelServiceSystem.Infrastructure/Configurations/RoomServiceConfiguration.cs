@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace HotelServiceSystem.Infrastructure.Configurations
 {
     /// <summary>
-    /// Represents the configuration for the <see cref="RoomService"/> entity.
+    /// Represents the configuration for the <see cref="RoomServiceEntity"/> entity.
     /// </summary>
-    internal sealed class RoomServiceConfiguration : IEntityTypeConfiguration<RoomService>
+    internal sealed class RoomServiceConfiguration : IEntityTypeConfiguration<RoomServiceEntity>
     {
         /// <inheritdoc />
-        public void Configure(EntityTypeBuilder<RoomService> builder)
+        public void Configure(EntityTypeBuilder<RoomServiceEntity> builder)
         {
             builder.HasKey(service => service.Id);
 
@@ -19,7 +19,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 nameBuilder.WithOwner();
                 nameBuilder.Property(name => name.Value)
-                    .HasColumnName(nameof(RoomService.Name))
+                    .HasColumnName(nameof(RoomServiceEntity.Name))
                     .HasMaxLength(ServiceName.MaxLength)
                     .IsRequired();
             });
@@ -28,7 +28,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 descriptionBuilder.WithOwner();
                 descriptionBuilder.Property(description => description.Value)
-                    .HasColumnName(nameof(RoomService.Description))
+                    .HasColumnName(nameof(RoomServiceEntity.Description))
                     .IsRequired();
             });
 
@@ -36,7 +36,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 imageBuilder.WithOwner();
                 imageBuilder.Property(image => image.Value)
-                    .HasColumnName(nameof(RoomService.Image))
+                    .HasColumnName(nameof(RoomServiceEntity.Image))
                     .HasMaxLength(ServiceImage.MaxLength)
                     .IsRequired();
             });
@@ -45,7 +45,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 priceBuilder.WithOwner();
                 priceBuilder.Property(price => price.Value)
-                    .HasColumnName(nameof(RoomService.Price))
+                    .HasColumnName(nameof(RoomServiceEntity.Price))
                     .HasColumnType("decimal(6,4)") // Example: Use appropriate decimal type
                     .IsRequired();
             });

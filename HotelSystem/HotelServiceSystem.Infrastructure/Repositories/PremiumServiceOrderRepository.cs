@@ -4,9 +4,12 @@ using HotelServiceSystem.Domain.Repositories;
 
 namespace HotelServiceSystem.Infrastructure.Repositories;
 
-internal class PremiumServiceOrderRepository : GenericRepository<PremiumServiceOrder>, IPremiumServiceOrderRepository
+internal class PremiumServiceOrderRepository(IDbContext dbContext)
+    : GenericRepository<PremiumServiceOrderEntity>(dbContext), IPremiumServiceOrderRepository
 {
-    public PremiumServiceOrderRepository(IDbContext dbContext) : base(dbContext)
+    public void CreatePremiumOrder(GuestEntity guest, PremiumServiceEntity premiumServiceEntity)
     {
+        var premiumServiceOrder = PremiumServiceOrderEntity.Create(guest, premiumServiceEntity);
+        Insert(premiumServiceOrder);
     }
 }

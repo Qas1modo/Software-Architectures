@@ -1,17 +1,18 @@
-﻿using HotelServiceSystem.Contracts.Models;
-using HotelServiceSystem.Application.Core.Abstractions.Messaging;
+﻿using HotelServiceSystem.Application.Core.Abstractions.Messaging;
+using HotelServiceSystem.Contracts.Models.Core;
+using HotelServiceSystem.Domain.Core.Primitives.Result;
 
 namespace HotelServiceSystem.Application.PremiumOrder.Commands.FulfillPremiumOrder;
 
-public class FulfillPremiumOrderCommandHandler : ICommandHandler<FulfillPremiumOrderCommand, GenericResponseModel>
+public class FulfillPremiumOrderCommandHandler : ICommandHandler<FulfillPremiumOrderCommand, Result>
 {
 
     public FulfillPremiumOrderCommandHandler()
     {
     }
 
-    public async Task<GenericResponseModel> Handle(FulfillPremiumOrderCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(FulfillPremiumOrderCommand request, CancellationToken cancellationToken)
     {
-        return new GenericResponseModel { Success = true, Message = "Order status updated to Declined" };
+        return Result.Success();
     }
 }

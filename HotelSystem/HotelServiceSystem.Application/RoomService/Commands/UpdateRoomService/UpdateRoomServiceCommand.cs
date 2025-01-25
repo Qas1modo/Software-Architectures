@@ -1,8 +1,8 @@
-﻿using HotelServiceSystem.Contracts.Models.RoomService;
-using HotelServiceSystem.Contracts.Models;
-using HotelServiceSystem.Application.Core.Abstractions.Messaging;
+﻿using HotelServiceSystem.Application.Core.Abstractions.Messaging;
+using HotelServiceSystem.Domain.Core.Primitives.Result;
+using HotelServiceSystem.Contracts.Models.RoomServiceModels;
 
 namespace HotelServiceSystem.Application.RoomService.Commands.UpdateRoomService
 {
-    public record UpdateRoomServiceCommand(UpdateRoomServiceModel UpdateRoomServiceModel) : ICommand<GenericResponseModel>;
+    public record UpdateRoomServiceCommand(UpdateRoomServiceModel UpdateRoomServiceModel) : ICommand<Result>;
 }

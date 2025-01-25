@@ -10,19 +10,18 @@ namespace HotelServiceSystem.Infrastructure.Repositories
     /// Represents the generic repository with the most common repository methods.
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    internal abstract class GenericRepository<TEntity>
+    /// <remarks>
+    /// Initializes a new instance of the <see cref="GenericRepository{TEntity}"/> class.
+    /// </remarks>
+    /// <param name="dbContext">The database context.</param>
+    internal abstract class GenericRepository<TEntity>(IDbContext dbContext)
         where TEntity : Entity
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericRepository{TEntity}"/> class.
-        /// </summary>
-        /// <param name="dbContext">The database context.</param>
-        protected GenericRepository(IDbContext dbContext) => DbContext = dbContext;
 
         /// <summary>
         /// Gets the database context.
         /// </summary>
-        protected IDbContext DbContext { get; }
+        protected IDbContext DbContext { get; } = dbContext;
 
         /// <summary>
         /// Gets the entity with the specified identifier.

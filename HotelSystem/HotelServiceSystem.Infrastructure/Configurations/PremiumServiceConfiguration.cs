@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace HotelServiceSystem.Infrastructure.Configurations
 {
     /// <summary>
-    /// Represents the configuration for the <see cref="PremiumService"/> entity.
+    /// Represents the configuration for the <see cref="PremiumServiceEntity"/> entity.
     /// </summary>
-    internal sealed class PremiumServiceConfiguration : IEntityTypeConfiguration<PremiumService>
+    internal sealed class PremiumServiceConfiguration : IEntityTypeConfiguration<PremiumServiceEntity>
     {
         /// <inheritdoc />
-        public void Configure(EntityTypeBuilder<PremiumService> builder)
+        public void Configure(EntityTypeBuilder<PremiumServiceEntity> builder)
         {
             builder.HasKey(service => service.Id);
 
@@ -19,7 +19,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 nameBuilder.WithOwner();
                 nameBuilder.Property(name => name.Value)
-                    .HasColumnName(nameof(PremiumService.Name))
+                    .HasColumnName(nameof(PremiumServiceEntity.Name))
                     .HasMaxLength(ServiceName.MaxLength)
                     .IsRequired();
             });
@@ -28,7 +28,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 descriptionBuilder.WithOwner();
                 descriptionBuilder.Property(description => description.Value)
-                    .HasColumnName(nameof(PremiumService.Description))
+                    .HasColumnName(nameof(PremiumServiceEntity.Description))
                     .HasMaxLength(ServiceImage.MaxLength)
                     .IsRequired();
             });
@@ -37,7 +37,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 imageBuilder.WithOwner();
                 imageBuilder.Property(image => image.Value)
-                    .HasColumnName(nameof(PremiumService.Image))
+                    .HasColumnName(nameof(PremiumServiceEntity.Image))
                     .HasMaxLength(ServiceImage.MaxLength)
                     .IsRequired();
             });
@@ -46,7 +46,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 priceBuilder.WithOwner();
                 priceBuilder.Property(price => price.Value)
-                    .HasColumnName(nameof(PremiumService.Price))
+                    .HasColumnName(nameof(PremiumServiceEntity.Price))
                     .HasColumnType("decimal(6,4)")
                     .IsRequired();
             });

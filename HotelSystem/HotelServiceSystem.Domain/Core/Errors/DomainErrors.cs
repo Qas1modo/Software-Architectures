@@ -1,5 +1,5 @@
-﻿using HotelServiceSystem.Domain.Core.Primitives;
-using HotelServiceSystem.Domain.Enums;
+﻿using HotelServiceSystem.Contracts.Enumerations;
+using HotelServiceSystem.Domain.Core.Primitives;
 using HotelServiceSystem.Domain.ValueObjects;
 
 namespace HotelServiceSystem.Domain.Core.Errors
@@ -26,6 +26,7 @@ namespace HotelServiceSystem.Domain.Core.Errors
 
         public static class GuestErrors
         {
+            public static Error NotFound => new("GuestErrors.Guest", "Guest not found !");
             public static Error InvalidGlobalGuestId => new("GuestErrors.InvalidGlobalGuestId", "Global Guest ID cannot be empty.");
             public static Error FirstNameRequired => new("GuestErrors.FirstNameRequired", "First name is required for a guest.");
             public static Error LastNameRequired => new("GuestErrors.LastNameRequired", "Last name is required for a guest.");
@@ -36,6 +37,7 @@ namespace HotelServiceSystem.Domain.Core.Errors
 
         public static class PremiumServiceErrors
         {
+            public static Error NotFound => new("PremiumServiceErrors.PremiumService", "Premium service not found !");
             public static Error NameRequired => new("PremiumServiceErrors.Name", "Name is required for a Premium Service.");
             public static Error DescriptionRequired => new("PremiumServiceErrors.Description", "Description is required for a Premium Service.");
             public static Error ImageRequired => new("PremiumServiceErrors.Image", "Image is required for a Premium Service.");
@@ -55,6 +57,7 @@ namespace HotelServiceSystem.Domain.Core.Errors
 
         public static class RoomServiceErrors
         {
+            public static Error NotFound => new("RoomServiceErrors.RoomService", "Room service not found !");
             public static Error NameRequired => new("RoomServiceErrors.Name", "Name is required for a Room Service.");
             public static Error DescriptionRequired => new("RoomServiceErrors.Description", "Description is required for a Room Service.");
             public static Error ImageRequired => new("RoomServiceErrors.Image", "Image is required for a Room Service.");
@@ -132,7 +135,8 @@ namespace HotelServiceSystem.Domain.Core.Errors
 
         public static class General
         {
-            public static Error ServerError => new Error("General.ServerError", "An unexpected server error occurred.");
+            public static Error ServerError => new("General.ServerError", "An unexpected server error occurred.");
+            public static Error UnProcessableRequest => new("General.UnProcessableRequest", "The server could not process the request.");
         }
     }
 }

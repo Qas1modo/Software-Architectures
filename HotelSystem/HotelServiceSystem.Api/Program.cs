@@ -1,5 +1,7 @@
 using HotelServiceSystem.Api;
 using HotelServiceSystem.Api.Middleware;
+using HotelSystem.ServiceDefaults;
+using Wolverine;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,13 @@ builder.AddServiceDefaults();
 // Add services to the container.
 
 builder.Services.ConfigureServices(builder.Configuration);
+
+builder.Host.UseWolverine(opts =>
+{
+    opts.MultipleHandlerBehavior = MultipleHandlerBehavior.Separated;
+    opts.Durability.MessageIdentity = MessageIdentity.IdAndDestination;
+    opts.Policies.AutoApplyTransactions();
+});
 
 var app = builder.Build();
 

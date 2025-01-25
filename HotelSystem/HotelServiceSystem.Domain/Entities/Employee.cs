@@ -1,8 +1,8 @@
-﻿using HotelServiceSystem.Domain.Core.Abstractions;
+﻿using HotelServiceSystem.Contracts.Enumerations;
+using HotelServiceSystem.Domain.Core.Abstractions;
 using HotelServiceSystem.Domain.Core.Errors;
 using HotelServiceSystem.Domain.Core.Primitives;
 using HotelServiceSystem.Domain.Core.Utility;
-using HotelServiceSystem.Domain.Enums;
 using HotelServiceSystem.Domain.ValueObjects;
 
 namespace HotelServiceSystem.Domain.Entities

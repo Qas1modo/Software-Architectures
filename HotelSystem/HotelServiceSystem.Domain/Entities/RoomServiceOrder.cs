@@ -1,15 +1,15 @@
-﻿using HotelServiceSystem.Domain.Core.Abstractions;
+﻿using HotelServiceSystem.Contracts.Enumerations;
+using HotelServiceSystem.Domain.Core.Abstractions;
 using HotelServiceSystem.Domain.Core.Errors;
 using HotelServiceSystem.Domain.Core.Primitives;
 using HotelServiceSystem.Domain.Core.Primitives.Result;
 using HotelServiceSystem.Domain.Core.Utility;
-using HotelServiceSystem.Domain.Enums;
 
 namespace HotelServiceSystem.Domain.Entities;
 
 public sealed class RoomServiceOrder : AggregateRoot, IAuditableEntity, ISoftDeletableEntity
 {
-    public RoomServiceOrder(Guest guest) : base(Guid.NewGuid())
+    public RoomServiceOrder(GuestEntity guest) : base(Guid.NewGuid())
     {
         Ensure.NotNull(guest, DomainErrors.RoomServiceOrderErrors.GuestRequired, nameof(guest));
         Ensure.NotEmpty(guest.Id, DomainErrors.RoomServiceOrderErrors.InvalidGuestId, $"{nameof(guest)}{nameof(guest.Id)}");
@@ -21,7 +21,7 @@ public sealed class RoomServiceOrder : AggregateRoot, IAuditableEntity, ISoftDel
     private RoomServiceOrder() { } // Required by EF Core
 
     public Guid GuestId { get; private set; }
-    public Guest Guest { get; private set; } = null!;
+    public GuestEntity Guest { get; private set; } = null!;
 
     public OrderStatusEnum OrderStatus { get; private set; }
 

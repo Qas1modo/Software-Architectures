@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
+using HotelServiceSystem.Contracts.Enumerations;
 using HotelServiceSystem.Domain.Entities;
-using HotelServiceSystem.Domain.Enums;
 
 namespace HotelServiceSystem.Infrastructure.Specifications
 {

@@ -11,12 +11,14 @@
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="WolverineFx" Version="3.8.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HotelServiceSystem.Application\HotelServiceSystem.Application.csproj" />
     <ProjectReference Include="..\HotelServiceSystem.Infrastructure\HotelServiceSystem.Infrastructure.csproj" />
     <ProjectReference Include="..\HotelSystem.ServiceDefaults\HotelSystem.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

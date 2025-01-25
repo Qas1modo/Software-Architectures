@@ -8,7 +8,7 @@ namespace HotelServiceSystem.Domain.Entities;
 
 public sealed class RoomServiceOrderItem : Entity, IAuditableEntity, ISoftDeletableEntity
 {
-    public RoomServiceOrderItem(Price unitPrice, OrderItemAmount amount, RoomService roomService, RoomServiceOrder order) : base(Guid.NewGuid())
+    public RoomServiceOrderItem(Price unitPrice, OrderItemAmount amount, RoomServiceEntity roomService, RoomServiceOrder order) : base(Guid.NewGuid())
     {
         Ensure.NotNull(unitPrice, DomainErrors.RoomServiceOrderItemErrors.InvalidUnitPrice, nameof(unitPrice));
         Ensure.NotNull(amount, DomainErrors.RoomServiceOrderItemErrors.InvalidAmount, nameof(amount));
@@ -31,7 +31,7 @@ public sealed class RoomServiceOrderItem : Entity, IAuditableEntity, ISoftDeleta
     public RoomServiceOrder RoomServiceOrder { get; private set; } = null!;
 
     public Guid RoomServiceId { get; private set; }
-    public RoomService RoomService { get; private set; } = null!;
+    public RoomServiceEntity RoomService { get; private set; } = null!;
 
 
     // Mandatory Fields

@@ -4,9 +4,7 @@ using HotelServiceSystem.Domain.Repositories;
 
 namespace HotelServiceSystem.Infrastructure.Repositories;
 
-internal class CleanRoomRequestRepository : GenericRepository<CleanRoomRequest>, ICleanRoomRequestRepository
+internal class CleanRoomRequestRepository(IDbContext dbContext) 
+    : GenericRepository<CleanRoomRequest>(dbContext), ICleanRoomRequestRepository
 {
-    public CleanRoomRequestRepository(IDbContext dbContext) : base(dbContext)
-    {
-    }
 }
