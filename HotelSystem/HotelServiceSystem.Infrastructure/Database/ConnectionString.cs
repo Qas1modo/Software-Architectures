@@ -1,26 +1,25 @@
-﻿namespace HotelServiceSystem.Infrastructure.Database
+﻿namespace HotelServiceSystem.Infrastructure.Database;
+
+/// <summary>
+/// Represents a connection string.
+/// </summary>
+public sealed class ConnectionString
 {
     /// <summary>
-    /// Represents a connection string.
+    /// The connection strings key.
     /// </summary>
-    public sealed class ConnectionString
-    {
-        /// <summary>
-        /// The connection strings key.
-        /// </summary>
-        public const string SettingsKey = "HotelSystemConnectionString";
+    public const string SettingsKey = "HotelSystemConnectionString";
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConnectionString"/> class.
-        /// </summary>
-        /// <param name="value">The connection string value.</param>
-        public ConnectionString(string value) => Value = value;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConnectionString"/> class.
+    /// </summary>
+    /// <param name="value">The connection string value.</param>
+    public ConnectionString(string value) => Value = value;
 
-        /// <summary>
-        /// Gets the connection string value.
-        /// </summary>
-        public string Value { get; }
+    /// <summary>
+    /// Gets the connection string value.
+    /// </summary>
+    public string Value { get; }
 
-        public static implicit operator string(ConnectionString connectionString) => connectionString.Value;
-    }
+    public static implicit operator string(ConnectionString connectionString) => connectionString.Value;
 }

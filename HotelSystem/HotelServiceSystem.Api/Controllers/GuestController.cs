@@ -4,6 +4,7 @@ using HotelServiceSystem.Application.Guest.Commands.CreateGuest;
 using HotelServiceSystem.Application.Guest.Commands.DeactivateGuest;
 using HotelServiceSystem.Application.Guest.Commands.DeleteGuest;
 using HotelServiceSystem.Application.Guest.Commands.UpdateGuest;
+using HotelServiceSystem.Application.Guest.Queries;
 using HotelServiceSystem.Contracts.Models.Guest;
 using HotelServiceSystem.Domain.Core.Errors;
 using HotelServiceSystem.Domain.Core.Primitives.Maybe;
@@ -15,6 +16,17 @@ namespace HotelServiceSystem.Api.Controllers;
 
 public sealed class GuestController(IMediator mediator) : ApiController(mediator)
 {
+
+    [HttpGet(ApiRoutes.Guest.Get)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
+    //[Authorize(Role = Admin)]
+    public async Task<IActionResult> Get(GetAllGuestsPaged getAllGuestsPaged) =>
+    await Maybe<GetAllGuestsQuery>
+        .From(new GetAllGuestsQuery(getAllGuestsPaged))
+        .Bind(query => Mediator.Send(query))
+        .Match(Ok, NotFound);
+
     [HttpPost(ApiRoutes.Guest.Post)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]

@@ -82,7 +82,7 @@ public class RoomServiceOrderController(IMediator mediator) : ApiController(medi
 
     [HttpGet(ApiRoutes.RoomServiceOrder.GetNew)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     //[Authorize]
     public async Task<IActionResult> GetNew(Guid guestId) =>
         await Maybe<GetAllNewRoomOrdersQuery>
@@ -92,7 +92,7 @@ public class RoomServiceOrderController(IMediator mediator) : ApiController(medi
 
     [HttpGet(ApiRoutes.RoomServiceOrder.GetCanceled)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     //[Authorize]
     public async Task<IActionResult> GetCanceled(Guid guestId) =>
         await Maybe<GetAllCanceledRoomOrdersQuery>
@@ -103,7 +103,7 @@ public class RoomServiceOrderController(IMediator mediator) : ApiController(medi
 
     [HttpGet(ApiRoutes.RoomServiceOrder.GetAccepted)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     //[Authorize]
     public async Task<IActionResult> GetAccepted(Guid guestId) =>
         await Maybe<GetAllAcceptedRoomOrdersQuery>
@@ -113,7 +113,7 @@ public class RoomServiceOrderController(IMediator mediator) : ApiController(medi
 
     [HttpGet(ApiRoutes.RoomServiceOrder.GetDeclined)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     //[Authorize]
     public async Task<IActionResult> GetDeclined(Guid guestId) =>
         await Maybe<GetAllDeclinedRoomOrdersQuery>
@@ -123,7 +123,7 @@ public class RoomServiceOrderController(IMediator mediator) : ApiController(medi
 
     [HttpGet(ApiRoutes.RoomServiceOrder.GetFulfilled)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     //[Authorize]
     public async Task<IActionResult> GetFulfilled(Guid guestId) =>
         await Maybe<GetAllFulfilledRoomOrdersQuery>

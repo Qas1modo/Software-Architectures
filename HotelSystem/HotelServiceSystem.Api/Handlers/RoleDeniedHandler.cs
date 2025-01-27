@@ -5,20 +5,19 @@ using HotelServiceSystem.Domain.Core.Primitives.Result;
 using MediatR;
 using SharedKernel.Messages;
 
-namespace HotelServiceSystem.Api.Handlers
+namespace HotelServiceSystem.Api.Handlers;
+
+public class RoleDeniedHandler(IMediator mediator) 
 {
-    public class RoleDeniedHandler(IMediator mediator) 
+    public async Task Handle(RoleDeniedOnOrderMessage roleDeniedNotification)
     {
-        public async Task Handle(RoleDeniedOnOrderMessage roleDeniedNotification)
+        var result = await Result.Create(roleDeniedNotification, DomainErrors.General.UnProcessableRequest)
+            .Map(request => new DeclinePremiumOrderCommand(roleDeniedNotification.GlobalGuestId,
+                    roleDeniedNotification.PremiumOrderId, roleDeniedNotification.Reason))
+            .Bind(command => mediator.Send(command));
+        if (result.IsFailure)
         {
-            var result = await Result.Create(roleDeniedNotification, DomainErrors.General.UnProcessableRequest)
-                .Map(request => new DeclinePremiumOrderCommand(roleDeniedNotification.GlobalGuestId,
-                        roleDeniedNotification.PremiumOrderId, roleDeniedNotification.Reason))
-                .Bind(command => mediator.Send(command));
-            if (result.IsFailure)
-            {
-                throw new RoleDeniedFailedException(result.Error);
-            }
+            throw new RoleDeniedFailedException(result.Error);
         }
     }
 }

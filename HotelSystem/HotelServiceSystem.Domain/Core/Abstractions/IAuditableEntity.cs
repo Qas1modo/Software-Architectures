@@ -1,20 +1,17 @@
-﻿using System;
+﻿namespace HotelServiceSystem.Domain.Core.Abstractions;
 
-namespace HotelServiceSystem.Domain.Core.Abstractions
+/// <summary>
+/// Represents the marker interface for auditable entities.
+/// </summary>
+public interface IAuditableEntity
 {
     /// <summary>
-    /// Represents the marker interface for auditable entities.
+    /// Gets the created on date and time in UTC format.
     /// </summary>
-    public interface IAuditableEntity
-    {
-        /// <summary>
-        /// Gets the created on date and time in UTC format.
-        /// </summary>
-        DateTime CreatedOnUtc { get; }
+    DateTime CreatedOnUtc { get; }
 
-        /// <summary>
-        /// Gets the modified on date and time in UTC format.
-        /// </summary>
-        DateTime? ModifiedOnUtc { get; }
-    }
+    /// <summary>
+    /// Gets the modified on date and time in UTC format.
+    /// </summary>
+    DateTime? ModifiedOnUtc { get; }
 }

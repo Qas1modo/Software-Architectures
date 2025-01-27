@@ -1,11 +1,10 @@
-﻿namespace HotelServiceSystem.Contracts.Enumerations
+﻿namespace HotelServiceSystem.Contracts.Enumerations;
+
+public enum OrderStatusEnum
 {
-    public enum OrderStatusEnum
-    {
-        New,
-        Canceled,
-        Accepted,
-        Declined,
-        Fulfilled,
-    }
+    New,
+    Canceled,
+    Accepted,
+    Declined,
+    Fulfilled,
 }

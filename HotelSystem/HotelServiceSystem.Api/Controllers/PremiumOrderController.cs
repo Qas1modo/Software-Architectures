@@ -16,7 +16,7 @@ public class PremiumOrderController(IMediator mediator) : ApiController(mediator
 {
     [HttpGet(ApiRoutes.PremiumServiceOrder.GetOrders)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     //[Authorize]
     public async Task<IActionResult> Get(GetPremiumOrdersModel getPremiumOrdersModel) =>
         await Maybe<GetOrdersForUserPagedQuery>

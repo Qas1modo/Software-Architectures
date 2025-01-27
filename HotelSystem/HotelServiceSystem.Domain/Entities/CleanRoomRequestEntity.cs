@@ -10,41 +10,45 @@ namespace HotelServiceSystem.Domain.Entities;
 
 public sealed class CleanRoomRequestEntity : AggregateRoot, IAuditableEntity, ISoftDeletableEntity
 {
-    public CleanRoomRequestEntity(DateTime deadline, RoomNumber roomNumber, EmployeeEntity employee) : base(Guid.NewGuid())
+    private CleanRoomRequestEntity(CleanRoomDeadline deadline, RoomNumber roomNumber) : base(Guid.NewGuid())
     {
         Ensure.NotEmpty(deadline, DomainErrors.CleanRoomRequestErrors.DeadlineRequired, nameof(deadline));
         Ensure.NotEmpty(roomNumber.ToString(), DomainErrors.CleanRoomRequestErrors.RoomNumberRequired, nameof(roomNumber));
-        Ensure.NotNull(employee, DomainErrors.CleanRoomRequestErrors.EmployeeRequired, nameof(employee));
-        Ensure.NotEmpty(employee.Id, DomainErrors.CleanRoomRequestErrors.InvalidEmployeeId, $"{nameof(employee)}{nameof(employee.Id)}");
 
         Deadline = deadline;
         RoomNumber = roomNumber;
-        EmployeeId = employee.Id;
-        Processed = false;
+        Completed = false;
     }
 
     private CleanRoomRequestEntity() { } // Required by EF Core
 
     public DateTime Deadline { get; private set; }
     public RoomNumber RoomNumber { get; private set; } = null!;
-    public Guid EmployeeId { get; private set; }
-    public bool Processed { get; private set; }
-
-
+    public bool Completed { get; private set; }
     public DateTime? CompletedAt { get; set; }
+
+
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; }
     public DateTime? DeletedOnUtc { get; }
     public bool Deleted { get; }
 
-    public Result MarkAsProcessed()
+    public static CleanRoomRequestEntity Create(RoomNumber roomNumber)
     {
-        if (Processed)
+        var cleanRoomRequestEntity = new CleanRoomRequestEntity(CleanRoomDeadline.Create(), roomNumber);
+        cleanRoomRequestEntity.AddDomainEvent(new RoomCleanedDomainEvent(cleanRoomRequestEntity));
+        return cleanRoomRequestEntity;
+    }
+
+    public Result MarkAsCompleted()
+    {
+        if (Completed)
         {
             return Result.Failure(DomainErrors.CleanRoomRequestErrors.AlreadyProcessed);
         }
 
-        Processed = true;
+        Completed = true;
+        CompletedAt = DateTime.Now;
         AddDomainEvent(new RoomCleanedDomainEvent(this));
         return Result.Success();
     }

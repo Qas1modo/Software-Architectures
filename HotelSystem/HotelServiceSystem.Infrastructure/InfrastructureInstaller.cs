@@ -24,8 +24,6 @@ namespace HotelServiceSystem.Infrastructure
 
             services.AddScoped<ICleanRoomRequestRepository, CleanRoomRequestRepository>();
 
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-
             services.AddScoped<IGuestRepository, GuestRepository>();
 
             services.AddScoped<IPremiumServiceOrderRepository, PremiumServiceOrderRepository>();

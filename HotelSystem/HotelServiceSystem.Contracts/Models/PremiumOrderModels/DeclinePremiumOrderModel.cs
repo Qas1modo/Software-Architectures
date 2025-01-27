@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace HotelServiceSystem.Contracts.Models.PremiumOrderModels;
+﻿namespace HotelServiceSystem.Contracts.Models.PremiumOrderModels;
 
 public class DeclinePremiumOrderModel
 {

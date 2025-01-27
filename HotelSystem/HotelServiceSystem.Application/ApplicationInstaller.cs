@@ -2,16 +2,15 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HotelServiceSystem.Application
+namespace HotelServiceSystem.Application;
+
+public static class ApplicationInstaller
 {
-    public static class ApplicationInstaller
+    public static IServiceCollection ApplicationInstall(this IServiceCollection services)
     {
-        public static IServiceCollection ApplicationInstall(this IServiceCollection services)
-        {
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddMediatR(new MediatRServiceConfiguration()
-                .RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-            return services;
-        }
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddMediatR(new MediatRServiceConfiguration()
+            .RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        return services;
     }
 }
