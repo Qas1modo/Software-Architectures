@@ -6,4 +6,19 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\ReservationCommands\" />
+    <Folder Include="Queries\ReservationQueries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RoomManagementSystem.Contracts\RoomManagementSystem.Contracts.csproj" />
+    <ProjectReference Include="..\RoomManagementSystem.DAL.EFCore\RoomManagementSystem.DAL.EFCore.csproj" />
+  </ItemGroup>
+
 </Project>
