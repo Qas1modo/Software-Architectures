@@ -16,10 +16,7 @@
   <ItemGroup>
     <Folder Include="Guest\Events\" />
     <Folder Include="Guest\Queries\" />
-    <Folder Include="PremiumOrder\Queries\" />
     <Folder Include="PremiumService\Events\" />
-    <Folder Include="RoomOrder\Events\" />
-    <Folder Include="RoomOrder\Queries\" />
     <Folder Include="RoomService\Events\" />
   </ItemGroup>
   <ItemGroup>

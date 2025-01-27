@@ -52,10 +52,10 @@ public sealed class RoomServiceOrderEntity : AggregateRoot, IAuditableEntity, IS
     {
         if (OrderStatus != OrderStatusEnum.New)
         {
-            return Result.Failure(DomainErrors.RoomServiceOrderErrors.InvalidStatusChange(OrderStatus, OrderStatusEnum.Cancelled));
+            return Result.Failure(DomainErrors.RoomServiceOrderErrors.InvalidStatusChange(OrderStatus, OrderStatusEnum.Canceled));
         }
         AddDomainEvent(new RoomServiceOrderCancelledDomainEvent(this));
-        OrderStatus = OrderStatusEnum.Cancelled;
+        OrderStatus = OrderStatusEnum.Canceled;
         return Result.Success();
     }
 
@@ -81,20 +81,9 @@ public sealed class RoomServiceOrderEntity : AggregateRoot, IAuditableEntity, IS
         return Result.Success();
     }
 
-    public Result ChangeStatusToProcessing()
-    {
-        if (OrderStatus != OrderStatusEnum.Accepted)
-        {
-            return Result.Failure(DomainErrors.RoomServiceOrderErrors.InvalidStatusChange(OrderStatus, OrderStatusEnum.Processing));
-        }
-        AddDomainEvent(new RoomServiceOrderProcessingDomainEvent(this));
-        OrderStatus = OrderStatusEnum.Processing;
-        return Result.Success();
-    }
-
     public Result ChangeStatusToFulfilled()
     {
-        if (OrderStatus != OrderStatusEnum.Processing)
+        if (OrderStatus != OrderStatusEnum.Accepted)
         {
             return Result.Failure(DomainErrors.RoomServiceOrderErrors.InvalidStatusChange(OrderStatus, OrderStatusEnum.Fulfilled));
         }

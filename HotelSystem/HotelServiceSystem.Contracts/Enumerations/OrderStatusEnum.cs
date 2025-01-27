@@ -3,10 +3,9 @@
     public enum OrderStatusEnum
     {
         New,
-        Cancelled,
+        Canceled,
         Accepted,
         Declined,
-        Processing,
         Fulfilled,
     }
 }

@@ -34,9 +34,25 @@
         {
             public const string Post = "roomservice/order";
 
-            public const string Delete = "roomservice/order";
-
             public const string Update = "roomservice/order";
+
+            public const string Cancel = "roomservice/order/cancel";
+
+            public const string Accept = "roomservice/order/accept";
+
+            public const string Decline = "roomservice/order/decline";
+
+            public const string Fulfill = "roomservice/order/fulfill";
+
+            public const string GetNew = "roomservice/order/new";
+
+            public const string GetCanceled = "roomservice/order/cancel";
+
+            public const string GetAccepted = "roomservice/order/accept";
+
+            public const string GetDeclined = "roomservice/order/decline";
+
+            public const string GetFulfilled = "roomservice/order/fulfill";
         }
 
 
@@ -55,8 +71,9 @@
         {
             public const string CreateOrder = "premiumservice/order";
 
-            public const string CancelOrder = "premiumservice/order/cancel";
+            public const string GetOrders = "premiumservice/order";
 
+            public const string CancelOrder = "premiumservice/order/cancel";
         }
 
     }

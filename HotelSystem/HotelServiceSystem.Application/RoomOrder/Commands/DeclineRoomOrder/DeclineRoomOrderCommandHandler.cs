@@ -3,17 +3,17 @@ using HotelServiceSystem.Application.Core.Abstractions.Messaging;
 using HotelServiceSystem.Domain.Core.Primitives.Result;
 using HotelServiceSystem.Domain.Repositories;
 
-namespace HotelServiceSystem.Application.RoomOrder.Commands.ProcessingRoomOrder;
+namespace HotelServiceSystem.Application.RoomOrder.Commands.DeclineRoomOrder;
 
-public class ProcessingRoomOrderCommandHandler(IUnitOfWork unitOfWork, IRoomServiceOrderRepository roomServiceOrderRepository)
-    : ICommandHandler<ProcessingRoomOrderCommand, Result>
+public class DeclineRoomOrderCommandHandler(IUnitOfWork unitOfWork, IRoomServiceOrderRepository roomServiceOrderRepository)
+    : ICommandHandler<DeclineRoomOrderCommand, Result>
 {
     private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IRoomServiceOrderRepository roomServiceOrderRepository = roomServiceOrderRepository;
 
-    public async Task<Result> Handle(ProcessingRoomOrderCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeclineRoomOrderCommand request, CancellationToken cancellationToken)
     {
-        var result = await roomServiceOrderRepository.ProcessingRoomOrder(request.RoomOrderId);
+        var result = await roomServiceOrderRepository.DeclineRoomOrder(request.RoomOrderId);
         if (result.IsSuccess) await unitOfWork.SaveChangesAsync(cancellationToken);
         return result;
     }

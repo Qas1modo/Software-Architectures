@@ -7,9 +7,9 @@ namespace HotelServiceSystem.Infrastructure.Specifications
     /// <summary>
     /// Represents the specification for determining the accepted room service.
     /// </summary>
-    internal sealed class OnlyAccpetedRoomServiceOrdersSpecification : Specification<RoomServiceOrderEntity>
+    internal sealed class OnlyNewRoomServiceOrdersSpecification : Specification<RoomServiceOrderEntity>
     {
         /// <inheritdoc />
-        internal override Expression<Func<RoomServiceOrderEntity, bool>> ToExpression() => RoomServiceOrder => RoomServiceOrder.OrderStatus == OrderStatusEnum.Accepted;
+        internal override Expression<Func<RoomServiceOrderEntity, bool>> ToExpression() => RoomServiceOrder => RoomServiceOrder.OrderStatus == OrderStatusEnum.New;
     }
 }

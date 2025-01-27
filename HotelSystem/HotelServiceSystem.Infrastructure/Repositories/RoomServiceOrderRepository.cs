@@ -1,11 +1,13 @@
 ﻿using HotelServiceSystem.Application.Core.Abstractions.Data;
 using HotelServiceSystem.Contracts.Models.RoomOrder;
 using HotelServiceSystem.Domain.Core.Errors;
+using HotelServiceSystem.Domain.Core.Primitives.Maybe;
 using HotelServiceSystem.Domain.Core.Primitives.Result;
 using HotelServiceSystem.Domain.Entities;
 using HotelServiceSystem.Domain.Repositories;
 using HotelServiceSystem.Domain.ValueObjects;
 using HotelServiceSystem.Domain.Wrappers;
+using HotelServiceSystem.Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelServiceSystem.Infrastructure.Repositories;
@@ -76,14 +78,14 @@ internal class RoomServiceOrderRepository(IDbContext dbContext, IRoomServiceRepo
         return roomOrder.Value.ChangeStatusToFulfilled();
     }
 
-    public async Task<Result> ProcessingRoomOrder(Guid RoomOrderId)
+    public async Task<Result> DeclineRoomOrder(Guid RoomOrderId)
     {
         var roomOrder = await GetByIdAsync(RoomOrderId);
         if (roomOrder.HasNoValue)
         {
             return Result.Failure(DomainErrors.RoomServiceOrderErrors.OrderNotFound);
         }
-        return roomOrder.Value.ChangeStatusToProcessing();
+        return roomOrder.Value.ChangeStatusToDeclined();
     }
 
     public async Task<Result> UpdateRoomOrder(Guid OrderId, Guid GuestId, IEnumerable<RoomOrderItemModel> ItemsToAdd,
@@ -134,5 +136,54 @@ internal class RoomServiceOrderRepository(IDbContext dbContext, IRoomServiceRepo
         };
         order.Value.AddUpdatedDomainEvent();
         return Result.Success();
+    }
+
+    public async Task<Maybe<List<RoomOrderResponseModel>>> GetNewOrdersForGuestAsync(Guid guestId, CancellationToken cancellationToken)
+    {
+        return await GetOrdersForGuestAsync(guestId, new OnlyNewRoomServiceOrdersSpecification(), cancellationToken);
+    }
+
+    public async Task<Maybe<List<RoomOrderResponseModel>>> GetCanceledOrdersForGuestAsync(Guid guestId, CancellationToken cancellationToken)
+    {
+        return await GetOrdersForGuestAsync(guestId, new OnlyCanceledRoomServiceOrdersSpecification(), cancellationToken);
+    }
+
+    public async Task<Maybe<List<RoomOrderResponseModel>>> GetAcceptedOrdersForGuestAsync(Guid guestId, CancellationToken cancellationToken)
+    {
+        return await GetOrdersForGuestAsync(guestId, new OnlyAcceptedRoomServiceOrdersSpecification(), cancellationToken);
+    }
+
+    public async Task<Maybe<List<RoomOrderResponseModel>>> GetDeclinedOrdersForGuestAsync(Guid guestId, CancellationToken cancellationToken)
+    {
+        return await GetOrdersForGuestAsync(guestId, new OnlyDeclinedRoomServiceOrdersSpecification(), cancellationToken);
+    }
+
+    public async Task<Maybe<List<RoomOrderResponseModel>>> GetFulfilledOrdersForGuestAsync(Guid guestId, CancellationToken cancellationToken)
+    {
+        return await GetOrdersForGuestAsync(guestId, new OnlyFulfilledRoomServiceOrdersSpecification(), cancellationToken);
+    }
+
+    private async Task<Maybe<List<RoomOrderResponseModel>>> GetOrdersForGuestAsync(Guid guestId,
+         Specification<RoomServiceOrderEntity> specification, CancellationToken cancellationToken)
+    {
+        var query = await DbContext.Set<RoomServiceOrderEntity>().AsQueryable()
+        .Where(specification)
+        .Where(ro => ro.GuestId == guestId).ToListAsync(cancellationToken);
+            return query.Select(ro => new RoomOrderResponseModel
+            {
+                CreatedOnUtc = ro.CreatedOnUtc,
+                RoomOrderId = ro.Id,
+                OrderItems = ro.OrderItems.Select(oi =>
+                {
+                    return new RoomOrderItemResponseModel
+                    {
+                        Amount = oi.Amount,
+                        Description = oi.RoomService.Description,
+                        Name = oi.RoomService.Name,
+                        Image = oi.RoomService.Image,
+                        UnitPrice = oi.UnitPrice
+                    };
+            }).ToList()
+        }).ToList();
     }
 }
