@@ -2,11 +2,12 @@
 using HotelServiceSystem.Application.Core.Abstractions.Messaging;
 using HotelServiceSystem.Domain.Core.Errors;
 using HotelServiceSystem.Domain.Core.Primitives.Result;
+using HotelServiceSystem.Domain.Entities;
 using HotelServiceSystem.Domain.Repositories;
 
 namespace HotelServiceSystem.Application.PremiumOrder.Commands.CreatePremiumOrder;
 
-public class CreatePremiumOrderCommandHandler(IPremiumServiceOrderRepository premiumServiceOrderRepository,
+public class CreateRoomOrderCommandHandler(IPremiumServiceOrderRepository premiumServiceOrderRepository,
     IPremiumServiceRepository premiumServiceRepository,
     IGuestRepository guestRepository,
     IUnitOfWork unitOfWork) : ICommandHandler<CreatePremiumOrderCommand, Result>
@@ -21,13 +22,13 @@ public class CreatePremiumOrderCommandHandler(IPremiumServiceOrderRepository pre
         var premiumService = await premiumServiceRepository.GetByIdAsync(request.CreatePremiumOrderModel.PremiumServiceId);
         var guest = await guestRepository.GetByIdAsync(request.CreatePremiumOrderModel.GuestId);
         if (guest.HasNoValue) {
-            return Result.Failure(DomainErrors.RoomServiceOrderErrors.InvalidGuestId);
+            return Result.Failure(DomainErrors.PremiumServiceOrderErrors.InvalidGuestId);
         }
         if (premiumService.HasNoValue)
         {
-            return Result.Failure(DomainErrors.PremiumServiceOrderErrors.InvalidGuestId);
+            return Result.Failure(DomainErrors.PremiumServiceOrderErrors.InvalidOrderedPremiumServiceId);
         }
-        premiumServiceOrderRepository.CreatePremiumOrder(guest, premiumService);
+        premiumServiceOrderRepository.Insert(PremiumServiceOrderEntity.Create(guest, premiumService.Value));
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Success();
     }

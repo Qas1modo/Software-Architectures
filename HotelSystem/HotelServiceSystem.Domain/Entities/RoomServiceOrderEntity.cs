@@ -4,28 +4,29 @@ using HotelServiceSystem.Domain.Core.Errors;
 using HotelServiceSystem.Domain.Core.Primitives;
 using HotelServiceSystem.Domain.Core.Primitives.Result;
 using HotelServiceSystem.Domain.Core.Utility;
+using HotelServiceSystem.Domain.Events.RoomOrder;
 
 namespace HotelServiceSystem.Domain.Entities;
 
-public sealed class RoomServiceOrder : AggregateRoot, IAuditableEntity, ISoftDeletableEntity
+public sealed class RoomServiceOrderEntity : AggregateRoot, IAuditableEntity, ISoftDeletableEntity
 {
-    public RoomServiceOrder(GuestEntity guest) : base(Guid.NewGuid())
+    private RoomServiceOrderEntity(GuestEntity guest) : base(Guid.NewGuid())
     {
         Ensure.NotNull(guest, DomainErrors.RoomServiceOrderErrors.GuestRequired, nameof(guest));
         Ensure.NotEmpty(guest.Id, DomainErrors.RoomServiceOrderErrors.InvalidGuestId, $"{nameof(guest)}{nameof(guest.Id)}");
-
         GuestId = guest.Id;
         OrderStatus = OrderStatusEnum.New;
+
     }
 
-    private RoomServiceOrder() { } // Required by EF Core
+    private RoomServiceOrderEntity() { } // Required by EF Core
 
     public Guid GuestId { get; private set; }
     public GuestEntity Guest { get; private set; } = null!;
 
     public OrderStatusEnum OrderStatus { get; private set; }
 
-    public List<RoomServiceOrderItem> OrderItems { get; private set; } = null!;
+    public List<RoomServiceOrderItemEntity> OrderItems { get; private set; } = null!;
 
 
     // Mandatory Fields
@@ -35,13 +36,25 @@ public sealed class RoomServiceOrder : AggregateRoot, IAuditableEntity, ISoftDel
     public DateTime? ModifiedOnUtc { get; }
     public DateTime? DeletedOnUtc { get; }
 
+    public static RoomServiceOrderEntity Create(GuestEntity guest)
+    {
+        var roomOrder = new RoomServiceOrderEntity(guest);
+        roomOrder.AddDomainEvent(new RoomServiceOrderCreatedDomainEvent(roomOrder));
+        return roomOrder;
+    }
+
+    public void AddUpdatedDomainEvent()
+    {
+        AddDomainEvent(new RoomServiceOrderUpdatedDomainEvent(this));
+    }
+
     public Result ChangeStatusToCancelled()
     {
         if (OrderStatus != OrderStatusEnum.New)
         {
             return Result.Failure(DomainErrors.RoomServiceOrderErrors.InvalidStatusChange(OrderStatus, OrderStatusEnum.Cancelled));
         }
-
+        AddDomainEvent(new RoomServiceOrderCancelledDomainEvent(this));
         OrderStatus = OrderStatusEnum.Cancelled;
         return Result.Success();
     }
@@ -52,7 +65,7 @@ public sealed class RoomServiceOrder : AggregateRoot, IAuditableEntity, ISoftDel
         {
             return Result.Failure(DomainErrors.RoomServiceOrderErrors.InvalidStatusChange(OrderStatus, OrderStatusEnum.Accepted));
         }
-
+        AddDomainEvent(new RoomServiceOrderAcceptedDomainEvent(this));
         OrderStatus = OrderStatusEnum.Accepted;
         return Result.Success();
     }
@@ -63,7 +76,7 @@ public sealed class RoomServiceOrder : AggregateRoot, IAuditableEntity, ISoftDel
         {
             return Result.Failure(DomainErrors.RoomServiceOrderErrors.InvalidStatusChange(OrderStatus, OrderStatusEnum.Declined));
         }
-
+        AddDomainEvent(new RoomServiceOrderDeclinedDomainEvent(this));
         OrderStatus = OrderStatusEnum.Declined;
         return Result.Success();
     }
@@ -74,7 +87,7 @@ public sealed class RoomServiceOrder : AggregateRoot, IAuditableEntity, ISoftDel
         {
             return Result.Failure(DomainErrors.RoomServiceOrderErrors.InvalidStatusChange(OrderStatus, OrderStatusEnum.Processing));
         }
-
+        AddDomainEvent(new RoomServiceOrderProcessingDomainEvent(this));
         OrderStatus = OrderStatusEnum.Processing;
         return Result.Success();
     }
@@ -85,7 +98,7 @@ public sealed class RoomServiceOrder : AggregateRoot, IAuditableEntity, ISoftDel
         {
             return Result.Failure(DomainErrors.RoomServiceOrderErrors.InvalidStatusChange(OrderStatus, OrderStatusEnum.Fulfilled));
         }
-
+        AddDomainEvent(new RoomServiceOrderFulfilledDomainEvent(this));
         OrderStatus = OrderStatusEnum.Fulfilled;
         return Result.Success();
     }

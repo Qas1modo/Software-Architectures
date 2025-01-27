@@ -14,7 +14,7 @@ public class DeactivateGuestCommandHandler(IGuestRepository guestRepository,
     public async Task<Result> Handle(DeactivateGuestCommand request, CancellationToken cancellationToken)
     {
         var result = await guestRepository.DeactivateGuest(request.GlobalGuestId);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        if (result.IsSuccess) await unitOfWork.SaveChangesAsync(cancellationToken);
         return result;
     }
 }

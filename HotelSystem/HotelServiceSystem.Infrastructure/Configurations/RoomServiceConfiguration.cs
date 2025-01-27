@@ -46,7 +46,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
                 priceBuilder.WithOwner();
                 priceBuilder.Property(price => price.Value)
                     .HasColumnName(nameof(RoomServiceEntity.Price))
-                    .HasColumnType("decimal(6,4)") // Example: Use appropriate decimal type
+                    .HasColumnType("decimal(6,4)")
                     .IsRequired();
             });
 

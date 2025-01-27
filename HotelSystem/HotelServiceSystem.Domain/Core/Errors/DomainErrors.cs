@@ -49,6 +49,7 @@ namespace HotelServiceSystem.Domain.Core.Errors
         {
             public static Error PremiumServiceRequired => new("PremiumServiceOrderErrors.PremiumServiceRequired", "Premium service is required for an order.");
             public static Error InvalidOrderedPremiumServiceId => new("PremiumServiceOrderErrors.InvalidOrderedPremiumServiceId", "Premium service ID cannot be empty.");
+            public static Error InvalidPremiumServiceId => new("PremiumServiceOrderErrors.InvalidPremiumServiceId", "Premium order with this ID cannot be found.");
             public static Error GuestRequired => new("PremiumServiceOrderErrors.GuestRequired", "Guest is required for an order.");
             public static Error InvalidGuestId => new("PremiumServiceOrderErrors.InvalidGuestId", "Guest ID cannot be empty.");
             public static Error InvalidStatusChange(OrderStatusEnum currentStatus, OrderStatusEnum targetStatus) =>
@@ -66,18 +67,25 @@ namespace HotelServiceSystem.Domain.Core.Errors
 
         public static class RoomServiceOrderErrors
         {
+            public static Error OrderNotFound => new("RoomServiceOrderErrors.OrderId", "Order not found!");
             public static Error GuestRequired => new("RoomServiceOrderErrors.GuestRequired", "Guest is required for a Room Service Order.");
             public static Error InvalidGuestId => new("RoomServiceOrderErrors.InvalidGuestId", "Guest ID cannot be empty.");
+            public static Error InvalidId => new("RoomServiceOrderErrors.InvalidGuestId", "Guest ID cannot be empty.");
+            public static Error OrderStatusInvalid => new("RoomServiceOrderErrors.OrderStatus", "Operation cannot be performed in this state!");
+            public static Error GuestDoesNotOwnThisOrder => new("RoomServiceOrderErrors.GuestID", "Guest ID is not of the order owner.");
             public static Error InvalidStatusChange(OrderStatusEnum currentStatus, OrderStatusEnum targetStatus) =>
                 new($"RoomServiceOrderErrors.InvalidStatusChange({currentStatus})", $"Cannot change order status from {currentStatus} to {targetStatus}.");
         }
 
         public static class RoomServiceOrderItemErrors
         {
+            public static Error NotFound => new("RoomServiceOrderItemErrors.OrderItemId", "Order Item not found!");
+            public static Error AmountTooLarge => new("RoomServiceOrderItemErrors.Amount", "Invalid amount for order item!");
             public static Error InvalidUnitPrice => new("RoomServiceOrderItemErrors.InvalidUnitPrice", "Unit price cannot be empty for a Room Service Order Item.");
             public static Error InvalidAmount => new("RoomServiceOrderItemErrors.InvalidAmount", "Amount cannot be empty for a Room Service Order Item.");
             public static Error RoomServiceRequired => new("RoomServiceOrderItemErrors.RoomServiceRequired", "Room Service is required for a Room Service Order Item.");
             public static Error InvalidRoomServiceId => new("RoomServiceOrderItemErrors.InvalidRoomServiceId", "Room Service ID cannot be empty.");
+            public static Error AllRoomServiceNotFound => new("RoomServiceOrderItemErrors.InvalidRoomServiceId", "Some room services could not be found or have duplicates!");
             public static Error RoomServiceOrderRequired => new("RoomServiceOrderItemErrors.RoomServiceOrderRequired", "Room Service Order is required for a Room Service Order Item.");
             public static Error InvalidRoomServiceOrderId => new("RoomServiceOrderItemErrors.InvalidRoomServiceOrderId", "Room Service Order ID cannot be empty.");
         }

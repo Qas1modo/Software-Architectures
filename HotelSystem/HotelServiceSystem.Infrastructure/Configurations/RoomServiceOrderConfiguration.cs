@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace HotelServiceSystem.Infrastructure.Configurations
 {
     /// <summary>
-    /// Represents the configuration for the <see cref="RoomServiceOrder"/> entity.
+    /// Represents the configuration for the <see cref="RoomServiceOrderEntity"/> entity.
     /// </summary>
-    internal sealed class RoomServiceOrderConfiguration : IEntityTypeConfiguration<RoomServiceOrder>
+    internal sealed class RoomServiceOrderConfiguration : IEntityTypeConfiguration<RoomServiceOrderEntity>
     {
-        public void Configure(EntityTypeBuilder<RoomServiceOrder> builder)
+        public void Configure(EntityTypeBuilder<RoomServiceOrderEntity> builder)
         {
             builder.HasKey(order => order.Id);
 

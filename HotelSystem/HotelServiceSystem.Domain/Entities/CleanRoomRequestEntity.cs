@@ -3,13 +3,14 @@ using HotelServiceSystem.Domain.Core.Errors;
 using HotelServiceSystem.Domain.Core.Primitives;
 using HotelServiceSystem.Domain.Core.Primitives.Result;
 using HotelServiceSystem.Domain.Core.Utility;
+using HotelServiceSystem.Domain.Events.CleanRoom;
 using HotelServiceSystem.Domain.ValueObjects;
 
 namespace HotelServiceSystem.Domain.Entities;
 
-public sealed class CleanRoomRequest : AggregateRoot, IAuditableEntity, ISoftDeletableEntity
+public sealed class CleanRoomRequestEntity : AggregateRoot, IAuditableEntity, ISoftDeletableEntity
 {
-    public CleanRoomRequest(DateTime deadline, RoomNumber roomNumber, Employee employee) : base(Guid.NewGuid())
+    public CleanRoomRequestEntity(DateTime deadline, RoomNumber roomNumber, EmployeeEntity employee) : base(Guid.NewGuid())
     {
         Ensure.NotEmpty(deadline, DomainErrors.CleanRoomRequestErrors.DeadlineRequired, nameof(deadline));
         Ensure.NotEmpty(roomNumber.ToString(), DomainErrors.CleanRoomRequestErrors.RoomNumberRequired, nameof(roomNumber));
@@ -22,7 +23,7 @@ public sealed class CleanRoomRequest : AggregateRoot, IAuditableEntity, ISoftDel
         Processed = false;
     }
 
-    private CleanRoomRequest() { } // Required by EF Core
+    private CleanRoomRequestEntity() { } // Required by EF Core
 
     public DateTime Deadline { get; private set; }
     public RoomNumber RoomNumber { get; private set; } = null!;
@@ -44,7 +45,7 @@ public sealed class CleanRoomRequest : AggregateRoot, IAuditableEntity, ISoftDel
         }
 
         Processed = true;
-        // TODO Raise Domain Event
+        AddDomainEvent(new RoomCleanedDomainEvent(this));
         return Result.Success();
     }
 }

@@ -2,6 +2,7 @@
 using HotelServiceSystem.Domain.Core.Errors;
 using HotelServiceSystem.Domain.Core.Primitives;
 using HotelServiceSystem.Domain.Core.Utility;
+using HotelServiceSystem.Domain.Events.RoomService;
 using HotelServiceSystem.Domain.ValueObjects;
 
 namespace HotelServiceSystem.Domain.Entities;
@@ -28,7 +29,7 @@ public sealed class RoomServiceEntity : AggregateRoot, IAuditableEntity, ISoftDe
     public ServiceImage Image { get; private set; } = null!;
     public Price Price { get; private set; } = null!;
 
-    public List<RoomServiceOrderItem> OrderItems { get; set; } = null!;
+    public List<RoomServiceOrderItemEntity> OrderItems { get; set; } = null!;
 
     //Mandatory Fields
 

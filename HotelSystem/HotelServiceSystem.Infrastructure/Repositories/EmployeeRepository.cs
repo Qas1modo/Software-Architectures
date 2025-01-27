@@ -5,6 +5,6 @@ using HotelServiceSystem.Domain.Repositories;
 namespace HotelServiceSystem.Infrastructure.Repositories;
 
 internal class EmployeeRepository(IDbContext dbContext)
-    : GenericRepository<Employee>(dbContext), IEmployeeRepository
+    : GenericRepository<EmployeeEntity>(dbContext), IEmployeeRepository
 {
 }

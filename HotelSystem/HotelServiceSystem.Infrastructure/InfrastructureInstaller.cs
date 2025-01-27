@@ -10,7 +10,7 @@ namespace HotelServiceSystem.Infrastructure
 {
     public static class InfrastructureInstaller
     {
-        public static IServiceCollection InstallInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection InfrastructureInstall(this IServiceCollection services, IConfiguration configuration)
         {
             string connectionString = configuration.GetConnectionString(ConnectionString.SettingsKey) ?? throw new Exception("Connection string not defined!");
 

@@ -1,18 +1,23 @@
-﻿using HotelServiceSystem.Application.Core.Abstractions.Messaging;
-using HotelServiceSystem.Contracts.Models.Core;
+﻿using HotelServiceSystem.Application.Core.Abstractions.Data;
+using HotelServiceSystem.Application.Core.Abstractions.Messaging;
 using HotelServiceSystem.Domain.Core.Primitives.Result;
+using HotelServiceSystem.Domain.Repositories;
 
 namespace HotelServiceSystem.Application.PremiumOrder.Commands.FulfillPremiumOrder;
 
-public class FulfillPremiumOrderCommandHandler : ICommandHandler<FulfillPremiumOrderCommand, Result>
+public class FulfillPremiumOrderCommandHandler(IUnitOfWork unitOfWork, IPremiumServiceOrderRepository premiumServiceOrderRepository)
+    : ICommandHandler<FulfillPremiumOrderCommand, Result>
 {
-
-    public FulfillPremiumOrderCommandHandler()
-    {
-    }
+    private readonly IUnitOfWork unitOfWork = unitOfWork;
+    private readonly IPremiumServiceOrderRepository premiumServiceOrderRepository = premiumServiceOrderRepository;
 
     public async Task<Result> Handle(FulfillPremiumOrderCommand request, CancellationToken cancellationToken)
     {
-        return Result.Success();
+        var result = await premiumServiceOrderRepository.FulfillPremiumOrder(request.PremiumOrderId);
+        if (result.IsSuccess)
+        {
+            if (result.IsSuccess) await unitOfWork.SaveChangesAsync(cancellationToken);
+        }
+        return result;
     }
 }

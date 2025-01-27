@@ -6,9 +6,9 @@ using HotelServiceSystem.Domain.ValueObjects;
 
 namespace HotelServiceSystem.Domain.Entities;
 
-public sealed class RoomServiceOrderItem : Entity, IAuditableEntity, ISoftDeletableEntity
+public sealed class RoomServiceOrderItemEntity : Entity, IAuditableEntity, ISoftDeletableEntity
 {
-    public RoomServiceOrderItem(Price unitPrice, OrderItemAmount amount, RoomServiceEntity roomService, RoomServiceOrder order) : base(Guid.NewGuid())
+    public RoomServiceOrderItemEntity(Price unitPrice, OrderItemAmount amount, RoomServiceEntity roomService, RoomServiceOrderEntity order) : base(Guid.NewGuid())
     {
         Ensure.NotNull(unitPrice, DomainErrors.RoomServiceOrderItemErrors.InvalidUnitPrice, nameof(unitPrice));
         Ensure.NotNull(amount, DomainErrors.RoomServiceOrderItemErrors.InvalidAmount, nameof(amount));
@@ -23,12 +23,12 @@ public sealed class RoomServiceOrderItem : Entity, IAuditableEntity, ISoftDeleta
         CreatedOnUtc = DateTime.UtcNow;
     }
 
-    private RoomServiceOrderItem() { } // Required by EF Core
+    private RoomServiceOrderItemEntity() { } // Required by EF Core
 
     public Price UnitPrice { get; private set; } = null!;
     public OrderItemAmount Amount { get; private set; } = null!;
     public Guid RoomServiceOrderId { get; private set; }
-    public RoomServiceOrder RoomServiceOrder { get; private set; } = null!;
+    public RoomServiceOrderEntity RoomServiceOrder { get; private set; } = null!;
 
     public Guid RoomServiceId { get; private set; }
     public RoomServiceEntity RoomService { get; private set; } = null!;
@@ -40,4 +40,16 @@ public sealed class RoomServiceOrderItem : Entity, IAuditableEntity, ISoftDeleta
     public DateTime? ModifiedOnUtc { get; }
     public DateTime? DeletedOnUtc { get; }
     public bool Deleted { get; }
+
+    public static RoomServiceOrderItemEntity Create(Price unitPrice, OrderItemAmount amount, 
+        RoomServiceEntity roomService, RoomServiceOrderEntity order)
+    {
+        return new RoomServiceOrderItemEntity(unitPrice, amount, roomService, order);
+    }
+
+    public RoomServiceOrderItemEntity ChangeAmount(OrderItemAmount newAmount)
+    {
+        Amount = newAmount;
+        return this;
+    }
 }

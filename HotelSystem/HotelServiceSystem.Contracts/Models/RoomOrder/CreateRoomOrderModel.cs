@@ -4,6 +4,6 @@ public class CreateRoomOrderModel
 {
     public Guid GuestId { get; set; }
 
-    public IEnumerable<Guid> RoomOrderItems { get; set; } = null!;
+    public IEnumerable<RoomOrderItemModel> RoomOrderItems { get; set; } = null!;
 
 }

@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace HotelServiceSystem.Infrastructure.Configurations
 {
     /// <summary>
-    /// Represents the configuration for the <see cref="Employee"/> entity.
+    /// Represents the configuration for the <see cref="EmployeeEntity"/> entity.
     /// </summary>
-    internal sealed class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
+    internal sealed class EmployeeConfiguration : IEntityTypeConfiguration<EmployeeEntity>
     {
         /// <inheritdoc />
-        public void Configure(EntityTypeBuilder<Employee> builder)
+        public void Configure(EntityTypeBuilder<EmployeeEntity> builder)
         {
             builder.HasKey(employee => employee.Id);
 
@@ -19,7 +19,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 firstNameBuilder.WithOwner();
                 firstNameBuilder.Property(firstName => firstName.Value)
-                    .HasColumnName(nameof(Employee.EmployeeFirstName))
+                    .HasColumnName(nameof(EmployeeEntity.EmployeeFirstName))
                     .HasMaxLength(FirstName.MaxLength)
                     .IsRequired();
             });
@@ -28,7 +28,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 lastNameBuilder.WithOwner();
                 lastNameBuilder.Property(lastName => lastName.Value)
-                    .HasColumnName(nameof(Employee.EmployeeLastName))
+                    .HasColumnName(nameof(EmployeeEntity.EmployeeLastName))
                     .HasMaxLength(LastName.MaxLength)
                     .IsRequired();
             });

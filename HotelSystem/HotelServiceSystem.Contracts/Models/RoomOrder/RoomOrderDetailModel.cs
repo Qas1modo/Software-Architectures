@@ -3,5 +3,5 @@
 public class RoomOrderDetailModel
 {
     public Guid GuestId { get; set; }
-    public IEnumerable<Guid> RoomOrderItems { get; set; } = null!;
+    public List<RoomOrderItemModel> RoomOrderItems { get; set; } = null!;
 }

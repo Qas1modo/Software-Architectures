@@ -13,7 +13,7 @@ public static class ServiceConfiguration
         services.AddOpenApi();
         services
             .ApplicationInstall()
-            .InstallInfrastructure(configuration);
+            .InfrastructureInstall(configuration);
 
         services.AddFluentValidationAutoValidation();
         services.AddFluentValidationClientsideAdapters();

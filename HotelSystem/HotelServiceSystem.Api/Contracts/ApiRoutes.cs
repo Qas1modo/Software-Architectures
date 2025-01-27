@@ -30,6 +30,16 @@
             public const string Update = "roomservice";
         }
 
+        public static class RoomServiceOrder
+        {
+            public const string Post = "roomservice/order";
+
+            public const string Delete = "roomservice/order";
+
+            public const string Update = "roomservice/order";
+        }
+
+
         public static class PremiumService
         {
             public const string Get = "premiumservice";

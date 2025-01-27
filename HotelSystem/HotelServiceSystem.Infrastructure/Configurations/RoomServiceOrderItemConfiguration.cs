@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace HotelServiceSystem.Infrastructure.Configurations
 {
     /// <summary>
-    /// Represents the configuration for the <see cref="RoomServiceOrderItem"/> entity.
+    /// Represents the configuration for the <see cref="RoomServiceOrderItemEntity"/> entity.
     /// </summary>
-    internal sealed class RoomServiceOrderItemConfiguration : IEntityTypeConfiguration<RoomServiceOrderItem>
+    internal sealed class RoomServiceOrderItemConfiguration : IEntityTypeConfiguration<RoomServiceOrderItemEntity>
     {
         /// <inheritdoc />
-        public void Configure(EntityTypeBuilder<RoomServiceOrderItem> builder)
+        public void Configure(EntityTypeBuilder<RoomServiceOrderItemEntity> builder)
         {
             builder.HasKey(orderItem => orderItem.Id);
 
@@ -18,7 +18,7 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 priceBuilder.WithOwner();
                 priceBuilder.Property(price => price.Value)
-                    .HasColumnName(nameof(RoomServiceOrderItem.UnitPrice))
+                    .HasColumnName(nameof(RoomServiceOrderItemEntity.UnitPrice))
                     .HasColumnType("decimal(6,4)")
                     .IsRequired();
             });
@@ -27,11 +27,11 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 amountBuilder.WithOwner();
                 amountBuilder.Property(amount => amount.Value)
-                    .HasColumnName(nameof(RoomServiceOrderItem.Amount))
+                    .HasColumnName(nameof(RoomServiceOrderItemEntity.Amount))
                     .IsRequired();
             });
 
-            builder.HasOne<RoomServiceOrder>(orderItem => orderItem.RoomServiceOrder)
+            builder.HasOne<RoomServiceOrderEntity>(orderItem => orderItem.RoomServiceOrder)
                 .WithMany(order => order.OrderItems)
                 .HasForeignKey(orderItem => orderItem.RoomServiceOrderId)
                 .IsRequired();

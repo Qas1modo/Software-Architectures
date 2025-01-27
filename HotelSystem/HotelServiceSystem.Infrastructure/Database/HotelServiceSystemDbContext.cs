@@ -31,7 +31,7 @@ public class HotelServiceSystemDbContext(DbContextOptions<HotelServiceSystemDbCo
            => base.Set<TEntity>();
 
     /// <inheritdoc />
-    public async Task<Maybe<TEntity>> GetBydIdAsync<TEntity>(Guid id)
+    public async Task<Maybe<TEntity>> GetByIdAsync<TEntity>(Guid id)
         where TEntity : Entity
         => id == Guid.Empty ?
             Maybe<TEntity>.None :

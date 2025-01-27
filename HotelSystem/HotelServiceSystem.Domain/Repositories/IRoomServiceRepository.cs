@@ -1,6 +1,5 @@
 ﻿using HotelServiceSystem.Contracts.Models.Core;
 using HotelServiceSystem.Contracts.Models.RoomServiceModels;
-using HotelServiceSystem.Domain.Core.Primitives;
 using HotelServiceSystem.Domain.Core.Primitives.Maybe;
 using HotelServiceSystem.Domain.Entities;
 

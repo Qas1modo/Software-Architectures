@@ -3,5 +3,5 @@ using HotelServiceSystem.Domain.Core.Primitives.Result;
 
 namespace HotelServiceSystem.Application.RoomOrder.Commands.AcceptRoomOrder;
 
-public sealed record AcceptRoomOrderCommand(Guid UserId, Guid RoomOrderId) : ICommand<Result>;
+public sealed record AcceptRoomOrderCommand(Guid RoomOrderId) : ICommand<Result>;
 

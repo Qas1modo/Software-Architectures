@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace HotelServiceSystem.Infrastructure.Configurations
 {
     /// <summary>
-    /// Represents the configuration for the <see cref="CleanRoomRequest"/> entity.
+    /// Represents the configuration for the <see cref="CleanRoomRequestEntity"/> entity.
     /// </summary>
-    internal sealed class CleanRoomRequestConfiguration : IEntityTypeConfiguration<CleanRoomRequest>
+    internal sealed class CleanRoomRequestConfiguration : IEntityTypeConfiguration<CleanRoomRequestEntity>
     {
         /// <inheritdoc />
-        public void Configure(EntityTypeBuilder<CleanRoomRequest> builder)
+        public void Configure(EntityTypeBuilder<CleanRoomRequestEntity> builder)
         {
             builder.HasKey(request => request.Id);
 
@@ -22,13 +22,13 @@ namespace HotelServiceSystem.Infrastructure.Configurations
             {
                 roomNumberBuilder.WithOwner();
                 roomNumberBuilder.Property(roomNumber => roomNumber.Value)
-                    .HasColumnName(nameof(CleanRoomRequest.RoomNumber))
+                    .HasColumnName(nameof(CleanRoomRequestEntity.RoomNumber))
                     .HasMaxLength(RoomNumber.MaxRoom)
                     .IsRequired();
             });
 
             builder.Property(request => request.EmployeeId);
-            builder.HasOne<Employee>()
+            builder.HasOne<EmployeeEntity>()
                 .WithMany()
                 .HasForeignKey(request => request.EmployeeId)
                 .IsRequired()
