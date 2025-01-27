@@ -3,28 +3,23 @@
 /// <summary>
 /// Represents a concrete domain error.
 /// </summary>
-public sealed class Error : ValueObject
+/// <remarks>
+/// Initializes a new instance of the <see cref="Error"/> class.
+/// </remarks>
+/// <param name="code">The error code.</param>
+/// <param name="message">The error message.</param>
+public sealed class Error(string code, string message) : ValueObject
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Error"/> class.
-    /// </summary>
-    /// <param name="code">The error code.</param>
-    /// <param name="message">The error message.</param>
-    public Error(string code, string message)
-    {
-        Code = code;
-        Message = message;
-    }
 
     /// <summary>
     /// Gets the error code.
     /// </summary>
-    public string Code { get; }
+    public string Code { get; } = code;
 
     /// <summary>
     /// Gets the error message.
     /// </summary>
-    public string Message { get; }
+    public string Message { get; } = message;
 
     public static implicit operator string(Error error) => error?.Code ?? string.Empty;
 

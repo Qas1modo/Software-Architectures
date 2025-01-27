@@ -7,7 +7,6 @@ using HotelServiceSystem.Domain.Core.Errors;
 using HotelServiceSystem.Domain.Core.Primitives.Maybe;
 using HotelServiceSystem.Domain.Core.Primitives.Result;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelServiceSystem.Api.Controllers;

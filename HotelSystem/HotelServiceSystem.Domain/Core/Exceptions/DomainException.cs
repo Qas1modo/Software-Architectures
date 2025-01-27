@@ -5,18 +5,15 @@ namespace HotelServiceSystem.Domain.Core.Exceptions;
 /// <summary>
 /// Represents an exception that occurred in the domain.
 /// </summary>
-public class DomainException : Exception
+/// <remarks>
+/// Initializes a new instance of the <see cref="DomainException"/> class.
+/// </remarks>
+/// <param name="error">The error containing the information about what happened.</param>
+public class DomainException(Error error) : Exception(error.Message)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="DomainException"/> class.
-    /// </summary>
-    /// <param name="error">The error containing the information about what happened.</param>
-    public DomainException(Error error)
-        : base(error.Message)
-        => Error = error;
 
     /// <summary>
     /// Gets the error.
     /// </summary>
-    public Error Error { get; }
+    public Error Error { get; } = error;
 }
