@@ -4,7 +4,6 @@ using HotelServiceSystem.Contracts.Models.RoomServiceModels;
 using HotelServiceSystem.Domain.Core.Primitives.Maybe;
 using HotelServiceSystem.Domain.Entities;
 using HotelServiceSystem.Domain.Repositories;
-using HotelServiceSystem.Infrastructure.Converters;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelServiceSystem.Infrastructure.Repositories;
@@ -18,17 +17,9 @@ internal class RoomServiceRepository(IDbContext dbContext) : GenericRepository<R
         {
             return Maybe<PagedList<RoomServiceResponseModel>>.None;
         }
-        var query = DbContext.Set<RoomServiceEntity>().AsQueryable();
+        var query = DbContext.Set<RoomServiceEntity>().AsQueryable().AsNoTracking();
         int totalCount = await query.CountAsync(cancellationToken);
-        if (getRoomServicesModel.OrderByDescending)
-        {
-            query = query.OrderByDescending(EnumerationConverter<RoomServiceEntity>.OrderByConverterToExpression(getRoomServicesModel.OrderBy));
-        }
-        else
-        {
-            query = query.OrderBy(EnumerationConverter<RoomServiceEntity>.OrderByConverterToExpression(getRoomServicesModel.OrderBy));
-        }
-        var result = await query.Skip(getRoomServicesModel.Page * getRoomServicesModel.PageSize)
+        var result = await query.Skip((getRoomServicesModel.Page - 1) * getRoomServicesModel.PageSize)
             .Take(getRoomServicesModel.PageSize)
             .Select(roomServices =>
                 new RoomServiceResponseModel

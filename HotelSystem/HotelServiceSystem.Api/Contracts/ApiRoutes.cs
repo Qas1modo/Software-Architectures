@@ -73,9 +73,9 @@ public static class ApiRoutes
 
         public const string Post = "premiumservice";
 
-        public const string Delete = "roomservice";
+        public const string Delete = "premiumservice";
 
-        public const string Update = "roomservice";
+        public const string Update = "premiumservice";
     }
 
     public static class PremiumServiceOrder

@@ -9,7 +9,7 @@ public class SendPremiumOrderFulfilledPivotalEventHandler(IMessageBus bus) : IDo
 {
     public async Task Handle(PremiumOrderCreatedDomainEvent notification, CancellationToken cancellationToken)
     {
-        await bus.InvokeAsync(new PremiumOrderFulfilledMessage(notification.PremiumServiceOrder.Guest.GlobalGuestId,
-            notification.PremiumServiceOrder.Id, notification.PremiumServiceOrder.PremiumService.Price));
+        //await bus.InvokeAsync(new PremiumOrderFulfilledMessage(notification.PremiumServiceOrder.Guest.GlobalGuestId,
+        //    notification.PremiumServiceOrder.Id, notification.PremiumServiceOrder.PremiumService.Price));
     }
 }

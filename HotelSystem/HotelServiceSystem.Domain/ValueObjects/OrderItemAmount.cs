@@ -16,7 +16,7 @@ public sealed class OrderItemAmount : ValueObject
 
     public static Result<OrderItemAmount> Create(int orderItemAmount) =>
         Result.Create(orderItemAmount, DomainErrors.OrderItemAmountErrors.NullOrEmpty)
-            .Ensure(oia => orderItemAmount >= 0, DomainErrors.OrderItemAmountErrors.CannotBeNegative)
+            .Ensure(oia => orderItemAmount > 0, DomainErrors.OrderItemAmountErrors.CannotBeNegative)
             .Ensure(oia => oia <= MaxOrderItemCount, DomainErrors.OrderItemAmountErrors.LargerThanAllowed)
             .Map(oia => new OrderItemAmount(oia));
 

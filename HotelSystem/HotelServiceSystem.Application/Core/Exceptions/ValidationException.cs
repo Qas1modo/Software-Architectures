@@ -1,5 +1,4 @@
-﻿using FluentValidation.Results;
-using HotelServiceSystem.Domain.Core.Primitives;
+﻿using HotelServiceSystem.Domain.Core.Primitives;
 
 namespace HotelServiceSystem.Application.Core.Exceptions;
 
@@ -12,12 +11,11 @@ public sealed class ValidationException : Exception
     /// Initializes a new instance of the <see cref="ValidationException"/> class.
     /// </summary>
     /// <param name="failures">The collection of validation failures.</param>
-    public ValidationException(IEnumerable<ValidationFailure> failures)
-        : base("One or more validation failures has occurred.") =>
-        Errors = failures
-            .Distinct()
-            .Select(failure => new Error(failure.ErrorCode, failure.ErrorMessage))
-            .ToList();
+    public ValidationException(IEnumerable<Error> errors)
+        : base("One or more validation failures has occurred.")
+    {
+        Errors = (IReadOnlyCollection<Error>)errors;
+    }
 
     /// <summary>
     /// Gets the validation errors.

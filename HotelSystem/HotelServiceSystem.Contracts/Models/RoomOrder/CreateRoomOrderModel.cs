@@ -1,9 +1,12 @@
-﻿namespace HotelServiceSystem.Contracts.Models.RoomOrder;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HotelServiceSystem.Contracts.Models.RoomOrder;
 
 public class CreateRoomOrderModel
 {
+    [Required]
     public Guid GuestId { get; set; }
 
-    public IEnumerable<RoomOrderItemModel> RoomOrderItems { get; set; } = null!;
+    public List<RoomOrderItemModel> RoomOrderItems { get; set; } = null!;
 
 }

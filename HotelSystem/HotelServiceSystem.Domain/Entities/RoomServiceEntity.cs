@@ -29,7 +29,7 @@ public sealed class RoomServiceEntity : AggregateRoot, IAuditableEntity, ISoftDe
     public ServiceImage Image { get; private set; } = null!;
     public Price Price { get; private set; } = null!;
 
-    public List<RoomServiceOrderItemEntity> OrderItems { get; set; } = null!;
+    public List<RoomServiceOrderItemEntity> OrderItems { get; private set; } = null!;
 
     //Mandatory Fields
 

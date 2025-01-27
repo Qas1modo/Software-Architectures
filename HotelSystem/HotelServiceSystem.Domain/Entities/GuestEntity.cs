@@ -56,13 +56,14 @@ public sealed class GuestEntity : AggregateRoot, IAuditableEntity, ISoftDeletabl
     }
 
     public GuestEntity Update(Guid globalGuestId, FirstName guestFirstName, LastName guestLastName,
-        RoomNumber guestRoomNumber, Email email)
+        RoomNumber guestRoomNumber, Email email, bool active)
     {
         GlobalGuestId = globalGuestId;
         GuestFirstName = guestFirstName;
         GuestLastName = guestLastName;
         GuestRoomNumber = guestRoomNumber;
         Email = email;
+        Active = active;
         AddDomainEvent(new GuestUpdatedDomainEvent(this));
         return this;
     }

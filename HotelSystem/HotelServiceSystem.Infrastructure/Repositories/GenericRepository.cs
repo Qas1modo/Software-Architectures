@@ -28,7 +28,7 @@ namespace HotelServiceSystem.Infrastructure.Repositories
         /// </summary>
         /// <param name="id">The entity identifier.</param>
         /// <returns>The maybe instance that may contain the entity with the specified identifier.</returns>
-        public async Task<Maybe<TEntity>> GetByIdAsync(Guid id) => await DbContext.GetByIdAsync<TEntity>(id);
+        public async virtual Task<Maybe<TEntity>> GetByIdAsync(Guid id) => await DbContext.GetByIdAsync<TEntity>(id);
 
         /// <summary>
         /// Inserts the specified entity into the database.

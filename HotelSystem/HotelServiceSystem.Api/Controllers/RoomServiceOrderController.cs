@@ -22,7 +22,7 @@ public class RoomServiceOrderController(IMediator mediator) : ApiController(medi
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     //[Authorize]
-    public async Task<IActionResult> Post(CreateRoomOrderModel roomOrderModel) =>
+    public async Task<IActionResult> Post([FromBody] CreateRoomOrderModel roomOrderModel) =>
         await Result.Create(roomOrderModel, DomainErrors.General.UnProcessableRequest)
                 .Map(request => new CreateRoomOrderCommand(roomOrderModel))
                 .Bind(command => Mediator.Send(command))
@@ -33,7 +33,7 @@ public class RoomServiceOrderController(IMediator mediator) : ApiController(medi
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     //[Authorize]
-    public async Task<IActionResult> Update(UpdateRoomOrderModel roomOrderUpdateModel) =>
+    public async Task<IActionResult> Update([FromBody] UpdateRoomOrderModel roomOrderUpdateModel) =>
     await Result.Create(roomOrderUpdateModel, DomainErrors.General.UnProcessableRequest)
             .Map(request => new UpdateRoomOrderCommand(roomOrderUpdateModel))
             .Bind(command => Mediator.Send(command))

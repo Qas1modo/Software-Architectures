@@ -2,6 +2,8 @@
 
 public class GuestResponseModel
 {
+    public GuestResponseModel() { }
+
     public Guid GuestId { get; set; }
     public string GuestFirstName { get; set; } = null!;
     public string GuestLastName { get; set; } = null!;

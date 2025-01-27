@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HotelServiceSystem.Api.Infrastructure;
 
-[Authorize]
 [Route("api")]
 public class ApiController : ControllerBase
 {

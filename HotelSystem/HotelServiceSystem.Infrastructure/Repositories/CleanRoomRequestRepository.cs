@@ -19,16 +19,17 @@ internal class CleanRoomRequestRepository(IDbContext dbContext)
         CancellationToken cancellationToken)
     {
         var query = DbContext.Set<CleanRoomRequestEntity>().AsQueryable()
-        .Where(new NotCompletedCleanRequestsSpecification());
+            .AsNoTracking()
+            .Where(new NotCompletedCleanRequestsSpecification());
         var totalCount = await query.CountAsync(cancellationToken);
         var result = await query
-        .Skip(pagination.Page * pagination.PageSize)
+        .Skip((pagination.Page - 1) * pagination.PageSize)
         .Take(pagination.PageSize)
         .Select(crr => new CleanRoomRequestResponseModel
         {
             CleanRoomRequestGuid = crr.Id,
             Deadline = crr.Deadline,
-            RoomNumber = crr.RoomNumber,
+            RoomNumber = crr.RoomNumber.Value,
         })
         .ToListAsync(cancellationToken);
         return new PagedList<CleanRoomRequestResponseModel>(result, pagination.Page, pagination.PageSize, totalCount);

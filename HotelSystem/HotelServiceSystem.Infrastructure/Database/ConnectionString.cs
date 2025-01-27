@@ -8,5 +8,7 @@ public sealed class ConnectionString
     /// <summary>
     /// The connection strings key.
     /// </summary>
+    public const string SettingsMigrationKey = "HotelSystemConnectionStringMigration";
+
     public const string SettingsKey = "HotelSystemConnectionString";
 }

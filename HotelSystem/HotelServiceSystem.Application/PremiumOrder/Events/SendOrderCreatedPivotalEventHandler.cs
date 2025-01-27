@@ -9,7 +9,7 @@ public class SendOrderCreatedPivotalEventHandler(IMessageBus bus) : IDomainEvent
 {
     public async Task Handle(PremiumOrderCreatedDomainEvent notification, CancellationToken cancellationToken)
     {
-        await bus.InvokeAsync(new PremiumOrderCreatedMessage(notification.PremiumServiceOrder.Guest.GlobalGuestId,
-            notification.PremiumServiceOrder.Id, notification.PremiumServiceOrder.PremiumService.RelevantRoleCodeName));
+        //await bus.InvokeAsync(new PremiumOrderCreatedMessage(notification.PremiumServiceOrder.Guest.GlobalGuestId,
+        //    notification.PremiumServiceOrder.Id, notification.PremiumServiceOrder.PremiumService.RelevantRoleCodeName));
     }
 }

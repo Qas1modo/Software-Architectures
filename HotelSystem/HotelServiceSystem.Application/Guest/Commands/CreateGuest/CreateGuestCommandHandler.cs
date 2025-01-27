@@ -19,7 +19,7 @@ public class CreateGuestCommandHandler(IGuestRepository guestRepository, IUnitOf
         Result<LastName> guestLastName = LastName.Create(request.CreateGuestModel.GuestLastName);
         Result<RoomNumber> guestRoomNumber = RoomNumber.Create(request.CreateGuestModel.GuestRoom);
         Result<Email> email = Email.Create(request.CreateGuestModel.Email);
-        Result firstFailureOrSuccess = Result.FirstFailureOrSuccess(guestFirstName, guestLastName, guestRoomNumber, guestRoomNumber);
+        Result firstFailureOrSuccess = Result.FirstFailureOrSuccess(guestFirstName, guestLastName, guestRoomNumber, email);
         if (firstFailureOrSuccess.IsFailure)
         {
             return Result.Failure(firstFailureOrSuccess.Error);

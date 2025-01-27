@@ -19,7 +19,7 @@ public class HotelServiceSystemDbContextFactory : IDesignTimeDbContextFactory<Ho
             .Build();
 
 
-        string connectionString = configuration.GetConnectionString(ConnectionString.SettingsKey)
+        string connectionString = configuration.GetConnectionString(ConnectionString.SettingsMigrationKey)
             ?? throw new Exception("Connection string not defined!");
 
         var optionsBuilder = new DbContextOptionsBuilder<HotelServiceSystemDbContext>();

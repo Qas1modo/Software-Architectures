@@ -8,7 +8,7 @@ public class SendRoomServiceFulfilledDomainEventHandler(IMessageBus bus) : IDoma
 {
     public async Task Handle(RoomServiceOrderFulfilledDomainEvent notification, CancellationToken cancellationToken)
     {
-        await bus.InvokeAsync(new RoomOrderFulfilledMessage(notification.RoomServiceOrder.Guest.GlobalGuestId,
-            notification.RoomServiceOrder.Id, notification.RoomServiceOrder.OrderItems.Sum(ro => ro.UnitPrice * ro.Amount)));
+        //await bus.InvokeAsync(new RoomOrderFulfilledMessage(notification.RoomServiceOrder.Guest.GlobalGuestId,
+        //    notification.RoomServiceOrder.Id, notification.RoomServiceOrder.OrderItems.Sum(ro => ro.UnitPrice * ro.Amount)));
     }
 }

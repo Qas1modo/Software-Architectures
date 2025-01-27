@@ -9,12 +9,25 @@ using HotelServiceSystem.Domain.ValueObjects;
 using HotelServiceSystem.Domain.Wrappers;
 using HotelServiceSystem.Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace HotelServiceSystem.Infrastructure.Repositories;
 
 internal class RoomServiceOrderRepository(IDbContext dbContext, IRoomServiceRepository RoomServiceRepository)
     : GenericRepository<RoomServiceOrderEntity>(dbContext), IRoomServiceOrderRepository
 {
+
+    public override async Task<Maybe<RoomServiceOrderEntity>> GetByIdAsync(Guid orderId)
+    {
+        var order = await DbContext.Set<RoomServiceOrderEntity>()
+            .AsQueryable()
+            .Include(o => o.OrderItems)
+            .ThenInclude(oi => oi.RoomService)
+            .FirstOrDefaultAsync(o => o.Id == orderId);
+
+        return order is not null ? Maybe<RoomServiceOrderEntity>.From(order) : Maybe<RoomServiceOrderEntity>.None;
+    }
+
     public async Task<Result> AcceptRoomOrder(Guid RoomOrderId)
     {
         var roomOrder = await GetByIdAsync(RoomOrderId);
@@ -166,9 +179,12 @@ internal class RoomServiceOrderRepository(IDbContext dbContext, IRoomServiceRepo
     private async Task<Maybe<List<RoomOrderResponseModel>>> GetOrdersForGuestAsync(Guid guestId,
          Specification<RoomServiceOrderEntity> specification, CancellationToken cancellationToken)
     {
-        var query = await DbContext.Set<RoomServiceOrderEntity>().AsQueryable()
+        var query = await DbContext.Set<RoomServiceOrderEntity>().AsQueryable().AsNoTracking()
         .Where(specification)
-        .Where(ro => ro.GuestId == guestId).ToListAsync(cancellationToken);
+        .Where(ro => ro.GuestId == guestId)
+        .Include(ro => ro.OrderItems)
+        .ThenInclude(oi => oi.RoomService)
+        .ToListAsync(cancellationToken);
             return query.Select(ro => new RoomOrderResponseModel
             {
                 CreatedOnUtc = ro.CreatedOnUtc,
@@ -177,6 +193,7 @@ internal class RoomServiceOrderRepository(IDbContext dbContext, IRoomServiceRepo
                 {
                     return new RoomOrderItemResponseModel
                     {
+                        RoomServiceId = oi.RoomServiceId,
                         Amount = oi.Amount,
                         Description = oi.RoomService.Description,
                         Name = oi.RoomService.Name,

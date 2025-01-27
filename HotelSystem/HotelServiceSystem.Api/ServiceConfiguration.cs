@@ -1,5 +1,4 @@
-﻿using FluentValidation.AspNetCore;
-using HotelServiceSystem.Application;
+﻿using HotelServiceSystem.Application;
 using HotelServiceSystem.Infrastructure;
 using Microsoft.OpenApi.Models;
 
@@ -14,9 +13,6 @@ public static class ServiceConfiguration
         services
             .ApplicationInstall()
             .InfrastructureInstall(configuration);
-
-        services.AddFluentValidationAutoValidation();
-        services.AddFluentValidationClientsideAdapters();
 
         services.AddSwaggerGen(swaggerGenOptions =>
         {
