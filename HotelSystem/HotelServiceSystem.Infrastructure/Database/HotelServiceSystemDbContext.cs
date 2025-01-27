@@ -16,16 +16,6 @@ public class HotelServiceSystemDbContext(DbContextOptions<HotelServiceSystemDbCo
 {
     private readonly IMediator _mediator = mediator;
 
-    // //only for migrations
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // {
-    //     if (!optionsBuilder.IsConfigured)
-    //     {
-    //         
-    //         optionsBuilder.LogTo(Console.WriteLine);
-    //     }
-    // }
-
     public new DbSet<TEntity> Set<TEntity>()
            where TEntity : Entity
            => base.Set<TEntity>();

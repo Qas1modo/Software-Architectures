@@ -14,8 +14,6 @@ namespace HotelServiceSystem.Infrastructure
         {
             string connectionString = configuration.GetConnectionString(ConnectionString.SettingsKey) ?? throw new Exception("Connection string not defined!");
 
-            services.AddSingleton(new ConnectionString(connectionString));
-
             services.AddDbContext<HotelServiceSystemDbContext>(options => options.UseSqlite(connectionString));
 
             services.AddScoped<IDbContext>(serviceProvider => serviceProvider.GetRequiredService<HotelServiceSystemDbContext>());

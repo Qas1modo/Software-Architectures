@@ -45,7 +45,14 @@ internal sealed class GuestConfiguration : IEntityTypeConfiguration<GuestEntity>
                 .IsRequired();
         });
 
-        builder.OwnsOne(guest => guest.Email); // Configure Email as a Value Object
+        builder.OwnsOne(guest => guest.Email, emailBuilder =>
+        {
+            emailBuilder.WithOwner();
+            emailBuilder.Property(roomNumber => roomNumber.Value)
+                .HasColumnName(nameof(GuestEntity.Email))
+                .HasMaxLength(Email.MaxLength)
+                .IsRequired();
+        });
 
         builder.Property(guest => guest.Active)
             .HasDefaultValue(true);
