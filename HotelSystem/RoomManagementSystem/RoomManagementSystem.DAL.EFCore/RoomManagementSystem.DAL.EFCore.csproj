@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RoomManagementSystem.Contracts\RoomManagementSystem.Contracts.csproj" />
+    <ProjectReference Include="..\RoomManagementSystem.DAL.InfraStructure\RoomManagementSystem.DAL.InfraStructure.csproj" />
   </ItemGroup>
 
 </Project>

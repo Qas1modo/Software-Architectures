@@ -16,5 +16,6 @@ namespace RoomManagementSystem.DAL.EFCore.Entities
         public decimal Price { get; set; }
         public int BedCount { get; set; }
         public RoomState RoomState { get; set; }
+        public IEnumerable<ReservationEntity> Reservations { get; set; } = [];
     }
 }
