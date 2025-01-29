@@ -2,7 +2,7 @@
 using RoomManagementSystem.Contracts;
 using RoomManagementSystem.Contracts.Models.RoomModels;
 
-namespace RoomManagementSystem.BL;
+namespace RoomManagementSystem.BL.Queries.RoomQueries;
 
-public record class SearchAvailableRoomsQuery(RoomFilterModel RoomFilterModel) : IRequest<IEnumerable<RoomListModel>>;
+public record class SearchAvailableRoomsQuery(RoomFilterModel RoomFilterModel, int Page = -1, int PageSize = -1) : IRequest<IList<RoomListModel>>;
 

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using RoomManagementSystem.Contracts;
 
-namespace RoomManagementSystem.BL;
+namespace RoomManagementSystem.BL.Commands.ReservationCommands;
 
-public record class CancelReservationCommand(int Id) : IRequest<bool>;
+public record CancelReservationCommand(int Id) : IRequest<bool>;
 

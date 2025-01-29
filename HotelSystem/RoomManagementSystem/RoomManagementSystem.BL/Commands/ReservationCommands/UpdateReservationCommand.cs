@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using RoomManagementSystem.Contracts;
 
-namespace RoomManagementSystem.BL;
+namespace RoomManagementSystem.BL.Commands.ReservationCommands
+{
+    public record UpdateReservationCommand(ReservationUpdateModel ReservationUpdateModel) : IRequest<ReservationDetailModel>;
 
-public record class UpdateReservationCommand(ReservationUpdateModel ReservationUpdateModel) : IRequest<ReservationDetailModel>;
+}

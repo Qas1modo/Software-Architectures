@@ -1,6 +1,6 @@
 ﻿using RoomManagementSystem.Contracts;
 using MediatR;
 
-namespace RoomManagementSystem.BL;
+namespace RoomManagementSystem.BL.Commands.ReservationCommands;
 
-public record class CreateReservationCommand(ReservationCreateModel ReservationCreateModel) : IRequest<ReservationDetailModel>;
+public record CreateReservationCommand(ReservationCreateModel ReservationCreateModel) : IRequest<ReservationDetailModel>;

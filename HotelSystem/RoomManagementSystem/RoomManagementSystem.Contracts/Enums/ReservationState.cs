@@ -11,6 +11,6 @@ namespace RoomManagementSystem.Contracts.Enums
         Created,
         CheckedIn,
         CheckedOut,
-        Canceled
+        Cancelled
     }
 }

@@ -1,6 +1,6 @@
 ﻿using RoomManagementSystem.Contracts;
 using MediatR;
 
-namespace RoomManagementSystem.BL;
+namespace RoomManagementSystem.BL.Queries.RoomQueries;
 
-public record class GetRoomQuery(int Id) : IRequest<RoomDetailModel>;
+public record GetRoomQuery(int Id) : IRequest<RoomDetailModel>;

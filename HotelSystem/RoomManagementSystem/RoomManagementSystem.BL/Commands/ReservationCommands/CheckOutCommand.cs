@@ -1,5 +1,5 @@
 ﻿using MediatR;
 
-namespace RoomManagementSystem.BL;
+namespace RoomManagementSystem.BL.Commands.ReservationCommands;
 
-public record class CheckOutCommand(int ReservationId) : IRequest<bool>;
+public record CheckOutCommand(int ReservationId) : IRequest<bool>;

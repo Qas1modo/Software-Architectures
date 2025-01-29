@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BillingSystem.DAL.EFCore.UnitOfWork;
-using BillingSystem.DAL.Infrastructure.UnitOfWork.Interfaces;
+using RoomManagementSystem.DAL.EFCore.UnitOfWork;
+using RoomManagementSystem.DAL.InfraStructure.UnitOfWork.Interfaces;
 
-namespace BillingSystem.BL.Handlers.CommandHandlers.Base;
+namespace RoomManagementSystem.BL.Handlers.CommandHandlers.Base;
 
 public abstract class CommandHandler<TInputCommand, TReturnModel>
 {

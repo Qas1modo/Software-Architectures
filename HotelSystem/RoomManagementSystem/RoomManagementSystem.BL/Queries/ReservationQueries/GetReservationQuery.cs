@@ -1,6 +1,6 @@
-﻿namespace RoomManagementSystem.BL;
+﻿using MediatR;
+using RoomManagementSystem.Contracts;
 
-public record class GetReservationQuery
-{
+namespace RoomManagementSystem.BL.Queries.ReservationQueries;
 
-}
+public record GetReservationQuery(int Id) : IRequest<ReservationDetailModel>;
