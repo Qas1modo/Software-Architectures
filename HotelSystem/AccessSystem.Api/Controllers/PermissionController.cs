@@ -1,7 +1,11 @@
 using AccessSystem.Api.Contracts;
 using AccessSystem.Api.Infrastructure;
 using AccessSystem.Application.Permissions.Commands;
+using AccessSystem.Application.Permissions.Commands.CreatePermission;
+using AccessSystem.Application.Permissions.Commands.DeletePermission;
+using AccessSystem.Application.Permissions.Commands.UpdatePermission;
 using AccessSystem.Application.Permissions.Queries;
+using AccessSystem.Application.Permissions.Queries.GetPermission;
 using AccessSystem.Contracts.Models.Permission;
 using AccessSystem.Domain.Core.Errors;
 using MediatR;
@@ -17,8 +21,8 @@ public class PermissionController(IMediator mediator) : ApiController(mediator)
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Get(GetPermissionModel getPermissionModel) =>
-        await Maybe<PermissionGetPermissionQuery>
-            .From(new PermissionGetPermissionQuery(getPermissionModel))
+        await Maybe<GetPermissionQuery>
+            .From(new GetPermissionQuery(getPermissionModel))
             .Bind(query => Mediator.Send(query))
             .Match(Ok, NotFound);
     

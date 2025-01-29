@@ -8,7 +8,6 @@ namespace AccessSystem.Application
     {
         public static IServiceCollection ApplicationInstall(this IServiceCollection services)
         {
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(new MediatRServiceConfiguration()
                 .RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             return services;

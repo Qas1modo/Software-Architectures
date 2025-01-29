@@ -16,20 +16,20 @@ public class AccessCardPermission : AggregateRoot, IAuditableEntity, ISoftDeleta
     {
     }
 
-    public Guid? AccessCardId { get; set; }
-    public Guid? PermissionId { get; set; }
-    
+    public Guid AccessCardId { get; set; }
+    public Guid PermissionId { get; set; }
+
     [ForeignKey(nameof(AccessCardId))]
-    public virtual AccessCard? AccessCard { get; set; }
-    
+    public virtual AccessCardEntity? AccessCard { get; set; }
+
     [ForeignKey(nameof(PermissionId))]
-    public virtual Permission? Permission { get; set; }
-    
+    public virtual PermissionEntity? Permission { get; set; }
+
     public DateTime CreatedOnUtc { get; }
-    
+
     public DateTime? ModifiedOnUtc { get; }
-    
+
     public DateTime? DeletedOnUtc { get; }
-    
+
     public bool Deleted { get; }
 }

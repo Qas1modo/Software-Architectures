@@ -1,5 +1,4 @@
 using AccessSystem.Domain.Entities;
-using AccessSystem.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,23 +13,11 @@ public class RoleConfiguration : IEntityTypeConfiguration<RoleEntity>
         builder.Property(request => request.RoleCodeName)
             .IsRequired();
 
-        builder.OwnsOne(role => role.RoleName, roleNameBuilder =>
-        {
-            roleNameBuilder.WithOwner();
-            roleNameBuilder.Property(roleName => roleName.Value)
-                .HasColumnName(nameof(RoleEntity.RoleName))
-                .HasMaxLength(RoleName.MaxLength)
-                .IsRequired();
-        });
-
-        builder.OwnsOne(role => role.RoleDescription, roleDescriptionBuilder =>
-        {
-            roleDescriptionBuilder.WithOwner();
-            roleDescriptionBuilder.Property(roleDescription => roleDescription.Value)
-                .HasColumnName(nameof(RoleEntity.RoleDescription))
-                .HasMaxLength(RoleDescription.MaxLength)
-                .IsRequired();
-        });
+        builder.Property(request => request.RoleName)
+            .IsRequired();
+        
+        builder.Property(request => request.RoleDescription)
+            .IsRequired();
 
         builder.HasMany(role => role.Permissions)
             .WithMany(permission => permission.Roles)

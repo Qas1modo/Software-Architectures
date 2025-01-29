@@ -1,12 +1,18 @@
+using System.Collections;
+
 namespace AccessSystem.Contracts.Models.AccessCard;
 
 public class UpdateAccessCardModel
 {
-    public Guid Id { get; set; }
-
-    public ICollection<string> AddRoleNames { get; set; } = [];
-    public ICollection<string> RemoveRoleNames { get; set; } = [];
+    public Guid? CardId { get; set; }
     
-    public ICollection<string> AddPermissionNames { get; set; } = [];
-    public ICollection<string> RemovePermissionNames { get; set; } = [];
+    public Guid? HolderId { get; set; }
+
+    public bool ResetHolder = false;
+    
+    public ICollection<string> RoleNamesToAdd { get; set; } = [];
+    public ICollection<string> RoleNamesToRemove { get; set; } = [];
+    
+    public ICollection<string> PermissionNamesToAdd { get; set; } = [];
+    public ICollection<string> PermissionNamesToRemove { get; set; } = [];
 }

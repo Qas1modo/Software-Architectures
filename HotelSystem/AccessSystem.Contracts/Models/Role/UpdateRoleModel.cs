@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace AccessSystem.Contracts.Models.Role;
 
 public class UpdateRoleModel
@@ -8,5 +10,7 @@ public class UpdateRoleModel
     public string? RoleName { get; set; }
     public string? RoleDescription { get; set; }
     
-    public IEnumerable<string> PermissionCodeNames { get; set; } = [];
+    public ICollection<string> PermissionCodeNamesToAdd { get; set; } = [];
+    
+    public ICollection<string> PermissionCodeNamesToRemove{ get; set; } = [];
 }

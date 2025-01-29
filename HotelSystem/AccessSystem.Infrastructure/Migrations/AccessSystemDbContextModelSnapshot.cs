@@ -17,7 +17,7 @@ namespace AccessSystem.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
 
-            modelBuilder.Entity("AccessSystem.Domain.Entities.AccessCard", b =>
+            modelBuilder.Entity("AccessSystem.Domain.Entities.AccessCardEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,6 +36,9 @@ namespace AccessSystem.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedOnUtc")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("HolderId")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("ModifiedOnUtc")
                         .HasColumnType("TEXT");
 
@@ -48,19 +51,22 @@ namespace AccessSystem.Infrastructure.Migrations
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
                             CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false
+                            Deleted = false,
+                            HolderId = new Guid("00000000-0000-0000-0000-000000000001")
                         },
                         new
                         {
                             Id = new Guid("22222222-2222-2222-2222-222222222222"),
                             CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false
+                            Deleted = false,
+                            HolderId = new Guid("00000000-0000-0000-0000-000000000002")
                         },
                         new
                         {
                             Id = new Guid("33333333-3333-3333-3333-333333333333"),
                             CreatedOnUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false
+                            Deleted = false,
+                            HolderId = new Guid("00000000-0000-0000-0000-000000000003")
                         });
                 });
 
@@ -70,10 +76,26 @@ namespace AccessSystem.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("AccessCardId")
+                    b.Property<Guid>("AccessCardId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("PermissionId")
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("PermissionId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -105,10 +127,26 @@ namespace AccessSystem.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("AccessCardId")
+                    b.Property<Guid>("AccessCardId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("RoleId")
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -134,13 +172,14 @@ namespace AccessSystem.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AccessSystem.Domain.Entities.AccessLogEntry", b =>
+            modelBuilder.Entity("AccessSystem.Domain.Entities.AccessClaimEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("AccessCardId")
+                    b.Property<string>("CodeName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedOnUtc")
@@ -161,12 +200,77 @@ namespace AccessSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.ToTable("AccessClaims");
+                });
+
+            modelBuilder.Entity("AccessSystem.Domain.Entities.AccessClaimPermission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AccessClaimId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("PermissionId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccessClaimId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.ToTable("AccessClaimPermissions");
+                });
+
+            modelBuilder.Entity("AccessSystem.Domain.Entities.AccessLogEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AccessCardId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AccessClaimId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<bool>("IsEntryAllowed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
                     b.HasIndex("AccessCardId");
 
                     b.ToTable("AccessLogEntries");
                 });
 
-            modelBuilder.Entity("AccessSystem.Domain.Entities.Permission", b =>
+            modelBuilder.Entity("AccessSystem.Domain.Entities.PermissionEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -192,6 +296,14 @@ namespace AccessSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("PermissionDescription")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PermissionName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Permissions");
@@ -200,21 +312,27 @@ namespace AccessSystem.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("44444444-4444-4444-4444-444444444444"),
-                            PermissionCodeName = "Gym"
+                            PermissionCodeName = "Gym",
+                            PermissionDescription = "Gym permission",
+                            PermissionName = "Gym"
                         },
                         new
                         {
                             Id = new Guid("55555555-5555-5555-5555-555555555555"),
-                            PermissionCodeName = "Pool"
+                            PermissionCodeName = "Pool",
+                            PermissionDescription = "Pool permission",
+                            PermissionName = "Pool"
                         },
                         new
                         {
                             Id = new Guid("66666666-6666-6666-6666-666666666666"),
-                            PermissionCodeName = "Maintenance"
+                            PermissionCodeName = "Maintenance",
+                            PermissionDescription = "Maintenance permission",
+                            PermissionName = "Maintenance"
                         });
                 });
 
-            modelBuilder.Entity("AccessSystem.Domain.Entities.Role", b =>
+            modelBuilder.Entity("AccessSystem.Domain.Entities.RoleEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -240,6 +358,14 @@ namespace AccessSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("RoleDescription")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
@@ -248,12 +374,16 @@ namespace AccessSystem.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("77777777-7777-7777-7777-777777777777"),
-                            RoleCodeName = "Receptionist"
+                            RoleCodeName = "Receptionist",
+                            RoleDescription = "Receptionist role",
+                            RoleName = "Receptionist"
                         },
                         new
                         {
                             Id = new Guid("88888888-8888-8888-8888-888888888888"),
-                            RoleCodeName = "Guest"
+                            RoleCodeName = "Guest",
+                            RoleDescription = "Guest role",
+                            RoleName = "Guest"
                         });
                 });
 
@@ -261,6 +391,22 @@ namespace AccessSystem.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("PermissionId")
@@ -300,13 +446,17 @@ namespace AccessSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("AccessSystem.Domain.Entities.AccessCardPermission", b =>
                 {
-                    b.HasOne("AccessSystem.Domain.Entities.AccessCard", "AccessCard")
+                    b.HasOne("AccessSystem.Domain.Entities.AccessCardEntity", "AccessCard")
                         .WithMany()
-                        .HasForeignKey("AccessCardId");
+                        .HasForeignKey("AccessCardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("AccessSystem.Domain.Entities.Permission", "Permission")
+                    b.HasOne("AccessSystem.Domain.Entities.PermissionEntity", "Permission")
                         .WithMany()
-                        .HasForeignKey("PermissionId");
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AccessCard");
 
@@ -315,22 +465,45 @@ namespace AccessSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("AccessSystem.Domain.Entities.AccessCardRole", b =>
                 {
-                    b.HasOne("AccessSystem.Domain.Entities.AccessCard", "AccessCard")
+                    b.HasOne("AccessSystem.Domain.Entities.AccessCardEntity", "AccessCard")
                         .WithMany()
-                        .HasForeignKey("AccessCardId");
+                        .HasForeignKey("AccessCardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("AccessSystem.Domain.Entities.Role", "Role")
+                    b.HasOne("AccessSystem.Domain.Entities.RoleEntity", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AccessCard");
 
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("AccessSystem.Domain.Entities.AccessClaimPermission", b =>
+                {
+                    b.HasOne("AccessSystem.Domain.Entities.AccessClaimEntity", "AccessClaim")
+                        .WithMany()
+                        .HasForeignKey("AccessClaimId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AccessSystem.Domain.Entities.PermissionEntity", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AccessClaim");
+
+                    b.Navigation("Permission");
+                });
+
             modelBuilder.Entity("AccessSystem.Domain.Entities.AccessLogEntry", b =>
                 {
-                    b.HasOne("AccessSystem.Domain.Entities.AccessCard", "AccessCard")
+                    b.HasOne("AccessSystem.Domain.Entities.AccessCardEntity", "AccessCard")
                         .WithMany("AccessLogEntries")
                         .HasForeignKey("AccessCardId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -339,165 +512,13 @@ namespace AccessSystem.Infrastructure.Migrations
                     b.Navigation("AccessCard");
                 });
 
-            modelBuilder.Entity("AccessSystem.Domain.Entities.Permission", b =>
-                {
-                    b.OwnsOne("AccessSystem.Domain.ValueObjects.PermissionDescription", "PermissionDescription", b1 =>
-                        {
-                            b1.Property<Guid>("PermissionId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasMaxLength(5000)
-                                .HasColumnType("TEXT")
-                                .HasColumnName("PermissionDescription");
-
-                            b1.HasKey("PermissionId");
-
-                            b1.ToTable("Permissions");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PermissionId");
-
-                            b1.HasData(
-                                new
-                                {
-                                    PermissionId = new Guid("44444444-4444-4444-4444-444444444444"),
-                                    Value = "Gym permission"
-                                },
-                                new
-                                {
-                                    PermissionId = new Guid("55555555-5555-5555-5555-555555555555"),
-                                    Value = "Pool permission"
-                                },
-                                new
-                                {
-                                    PermissionId = new Guid("66666666-6666-6666-6666-666666666666"),
-                                    Value = "Maintenance permission"
-                                });
-                        });
-
-                    b.OwnsOne("AccessSystem.Domain.ValueObjects.PermissionName", "PermissionName", b1 =>
-                        {
-                            b1.Property<Guid>("PermissionId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("TEXT")
-                                .HasColumnName("PermissionName");
-
-                            b1.HasKey("PermissionId");
-
-                            b1.ToTable("Permissions");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PermissionId");
-
-                            b1.HasData(
-                                new
-                                {
-                                    PermissionId = new Guid("44444444-4444-4444-4444-444444444444"),
-                                    Value = "Gym"
-                                },
-                                new
-                                {
-                                    PermissionId = new Guid("55555555-5555-5555-5555-555555555555"),
-                                    Value = "Pool"
-                                },
-                                new
-                                {
-                                    PermissionId = new Guid("66666666-6666-6666-6666-666666666666"),
-                                    Value = "Maintenance"
-                                });
-                        });
-
-                    b.Navigation("PermissionDescription")
-                        .IsRequired();
-
-                    b.Navigation("PermissionName")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AccessSystem.Domain.Entities.Role", b =>
-                {
-                    b.OwnsOne("AccessSystem.Domain.ValueObjects.RoleDescription", "RoleDescription", b1 =>
-                        {
-                            b1.Property<Guid>("RoleId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasMaxLength(5000)
-                                .HasColumnType("TEXT")
-                                .HasColumnName("RoleDescription");
-
-                            b1.HasKey("RoleId");
-
-                            b1.ToTable("Roles");
-
-                            b1.WithOwner()
-                                .HasForeignKey("RoleId");
-
-                            b1.HasData(
-                                new
-                                {
-                                    RoleId = new Guid("77777777-7777-7777-7777-777777777777"),
-                                    Value = "Receptionist role"
-                                },
-                                new
-                                {
-                                    RoleId = new Guid("88888888-8888-8888-8888-888888888888"),
-                                    Value = "Guest role"
-                                });
-                        });
-
-                    b.OwnsOne("AccessSystem.Domain.ValueObjects.RoleName", "RoleName", b1 =>
-                        {
-                            b1.Property<Guid>("RoleId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("TEXT")
-                                .HasColumnName("RoleName");
-
-                            b1.HasKey("RoleId");
-
-                            b1.ToTable("Roles");
-
-                            b1.WithOwner()
-                                .HasForeignKey("RoleId");
-
-                            b1.HasData(
-                                new
-                                {
-                                    RoleId = new Guid("77777777-7777-7777-7777-777777777777"),
-                                    Value = "Receptionist"
-                                },
-                                new
-                                {
-                                    RoleId = new Guid("88888888-8888-8888-8888-888888888888"),
-                                    Value = "Guest role"
-                                });
-                        });
-
-                    b.Navigation("RoleDescription")
-                        .IsRequired();
-
-                    b.Navigation("RoleName")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("AccessSystem.Domain.Entities.RolePermission", b =>
                 {
-                    b.HasOne("AccessSystem.Domain.Entities.Permission", "Permission")
+                    b.HasOne("AccessSystem.Domain.Entities.PermissionEntity", "Permission")
                         .WithMany()
                         .HasForeignKey("PermissionId");
 
-                    b.HasOne("AccessSystem.Domain.Entities.Role", "Role")
+                    b.HasOne("AccessSystem.Domain.Entities.RoleEntity", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId");
 
@@ -506,7 +527,7 @@ namespace AccessSystem.Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("AccessSystem.Domain.Entities.AccessCard", b =>
+            modelBuilder.Entity("AccessSystem.Domain.Entities.AccessCardEntity", b =>
                 {
                     b.Navigation("AccessLogEntries");
                 });

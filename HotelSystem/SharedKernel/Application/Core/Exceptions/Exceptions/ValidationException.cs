@@ -1,7 +1,6 @@
-﻿using FluentValidation.Results;
-using SharedKernel.Domain.Core.Primitives;
+﻿using SharedKernel.Domain.Core.Primitives;
 
-namespace SharedKernel.Application.Core.Exceptions;
+namespace SharedKernel.Application.Core.Exceptions.Exceptions;
 
 /// <summary>
 /// Represents an exception that occurs when a validation fails.
@@ -12,12 +11,12 @@ public sealed class ValidationException : Exception
     /// Initializes a new instance of the <see cref="ValidationException"/> class.
     /// </summary>
     /// <param name="failures">The collection of validation failures.</param>
-    public ValidationException(IEnumerable<ValidationFailure> failures)
-        : base("One or more validation failures has occurred.") =>
-        Errors = failures
-            .Distinct()
-            .Select(failure => new Error(failure.ErrorCode, failure.ErrorMessage))
-            .ToList();
+    public ValidationException(IEnumerable<Error> errors)
+        : base("One or more validation failures has occurred.")
+    {
+        Errors = (IReadOnlyCollection<Error>)errors;
+    }
+
 
     /// <summary>
     /// Gets the validation errors.

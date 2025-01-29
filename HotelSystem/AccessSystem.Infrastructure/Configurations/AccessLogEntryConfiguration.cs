@@ -13,6 +13,9 @@ public class AccessLogEntryConfiguration : IEntityTypeConfiguration<AccessLogEnt
         builder.Property(entry => entry.AccessCardId)
             .IsRequired();
 
+        builder.Property(entry => entry.IsEntryAllowed)
+            .IsRequired();
+
         builder.HasOne(entry => entry.AccessCard)
             .WithMany(card => card.AccessLogEntries)
             .HasForeignKey(entry => entry.AccessCardId)
@@ -22,12 +25,5 @@ public class AccessLogEntryConfiguration : IEntityTypeConfiguration<AccessLogEnt
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         builder.Property(request => request.ModifiedOnUtc);
-
-        builder.Property(request => request.DeletedOnUtc);
-
-        builder.Property(request => request.Deleted)
-            .HasDefaultValue(false);
-
-        builder.HasQueryFilter(request => !request.Deleted);
     }
 }

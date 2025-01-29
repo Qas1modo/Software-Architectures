@@ -3,6 +3,7 @@ using System.Text.Json;
 using AccessSystem.Api.Contracts;
 using SharedKernel.Application.Core.Exceptions;
 using AccessSystem.Domain.Core.Errors;
+using SharedKernel.Application.Core.Exceptions.Exceptions;
 using SharedKernel.Domain.Core.Exceptions;
 using SharedKernel.Domain.Core.Primitives;
 

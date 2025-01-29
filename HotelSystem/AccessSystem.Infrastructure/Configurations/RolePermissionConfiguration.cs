@@ -17,5 +17,17 @@ public class RolePermissionConfiguration : IEntityTypeConfiguration<RolePermissi
         builder.HasOne(rp => rp.Role)
             .WithMany()
             .HasForeignKey(rp => rp.RoleId);
+        
+        builder.Property(request => request.CreatedOnUtc)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+        builder.Property(request => request.ModifiedOnUtc);
+
+        builder.Property(request => request.DeletedOnUtc);
+
+        builder.Property(request => request.Deleted)
+            .HasDefaultValue(false);
+
+        builder.HasQueryFilter(request => !request.Deleted);
     }
 }

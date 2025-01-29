@@ -41,7 +41,7 @@ public sealed class RoomServiceEntity : AggregateRoot, IAuditableEntity, ISoftDe
     public static RoomServiceEntity Create(ServiceName name, ServiceDescription description, ServiceImage image, Price price)
     {
         var roomService = new RoomServiceEntity(name, description, image, price);
-        roomService.AddDomainEvent(new RoomServiceCreatedDomainEvent(roomService));
+        //roomService.AddDomainEvent(new RoomServiceCreatedDomainEvent(roomService));
         return roomService;
     }
 
@@ -52,7 +52,7 @@ public sealed class RoomServiceEntity : AggregateRoot, IAuditableEntity, ISoftDe
         Description = description;
         Image = image;
         Name = name;
-        AddDomainEvent(new RoomServiceUpdatedDomainEvent(this));
+        //AddDomainEvent(new RoomServiceUpdatedDomainEvent(this));
         return this;
     }
 }

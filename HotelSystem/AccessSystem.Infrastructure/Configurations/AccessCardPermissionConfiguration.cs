@@ -17,5 +17,17 @@ public class AccessCardPermissionConfiguration : IEntityTypeConfiguration<Access
         builder.HasOne(acp => acp.Permission)
             .WithMany()
             .HasForeignKey(acp => acp.PermissionId);
+        
+        builder.Property(request => request.CreatedOnUtc)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+        builder.Property(request => request.ModifiedOnUtc);
+
+        builder.Property(request => request.DeletedOnUtc);
+
+        builder.Property(request => request.Deleted)
+            .HasDefaultValue(false);
+
+        builder.HasQueryFilter(request => !request.Deleted);
     }
 }

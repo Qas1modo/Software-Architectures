@@ -16,27 +16,29 @@ namespace AccessSystem.Infrastructure.Databaase;
 public class AccessSystemDbContext : DbContext, IDbContext, IUnitOfWork
 {
     private readonly IMediator _mediator;
-    
-    public DbSet<AccessCard> AccessCards { get; set; }
-    public DbSet<AccessLogEntry> AccessLogEntries { get; set; }
-    public DbSet<Permission> Permissions { get; set; }
-    public DbSet<RoleEntity> Roles { get; set; }
+
+    public DbSet<AccessCardEntity> AccessCards { get; set; }
     public DbSet<AccessCardPermission> AccessCardPermissions { get; set; }
-    public DbSet<RolePermission> RolePermissions { get; set; }
     public DbSet<AccessCardRole> AccessCardRoles { get; set; }
+    public DbSet<AccessClaimEntity> AccessClaims { get; set; }
+    public DbSet<AccessClaimPermission> AccessClaimPermissions { get; set; }
+    public DbSet<AccessLogEntry> AccessLogEntries { get; set; }
+    public DbSet<PermissionEntity> Permissions { get; set; }
+    public DbSet<RoleEntity> Roles { get; set; }
+    public DbSet<RolePermission> RolePermissions { get; set; }
 
     public AccessSystemDbContext(DbContextOptions<AccessSystemDbContext> options, IMediator mediator) : base(options)
     {
         _mediator = mediator;
     }
-    
+
     //only for migrations
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();
         if (!optionsBuilder.IsConfigured)
         {
-            
+
             optionsBuilder.LogTo(Console.WriteLine);
         }
     }
@@ -128,7 +130,7 @@ public class AccessSystemDbContext : DbContext, IDbContext, IUnitOfWork
             return;
         }
 
-        foreach (ReferenceEntry referenceEntry in entityEntry.References.Where(r => r.TargetEntry.State == EntityState.Deleted))
+        foreach (ReferenceEntry referenceEntry in entityEntry.References.Where(r => r.TargetEntry?.State == EntityState.Deleted))
         {
             referenceEntry.TargetEntry.State = EntityState.Unchanged;
 

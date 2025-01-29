@@ -8,7 +8,13 @@ namespace AccessSystem.Domain.Repositories;
 public interface IRoleRepository
 {
     Task<Maybe<PagedList<RoleResponseModel>>> GetRolesByFilter(GetRoleModel getRoleModel, CancellationToken cancellationToken);
-    void Remove(RoleEntity role);
+    
+    Task<Maybe<RoleEntity>> GetByIdAsync(Guid id);
+    
+    Task<Maybe<ICollection<RoleResponseModel>>> GetRolesByNames(ICollection<string> names,
+        CancellationToken cancellationToken);
+
+    Task Remove(RoleEntity role);
 
     void Insert(RoleEntity role);
 

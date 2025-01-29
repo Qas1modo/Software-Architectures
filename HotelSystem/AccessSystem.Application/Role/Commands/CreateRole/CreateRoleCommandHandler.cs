@@ -1,30 +1,22 @@
 using AccessSystem.Domain.Entities;
 using AccessSystem.Domain.Repositories;
-using AccessSystem.Domain.ValueObjects;
 using SharedKernel.Application.Core.Abstractions.Data;
 using SharedKernel.Application.Core.Abstractions.Messaging;
 using SharedKernel.Domain.Core.Primitives.Result;
 
 namespace AccessSystem.Application.Role.Commands.CreateRole;
 
-public class CreateRoleCommandHandler(IRoleRepository roleRepository, IUnitOfWork unitOfWork) 
+public class CreateRoleCommandHandler(IRoleRepository roleRepository, IRolePermissionRepository rolePermissionRepository, IUnitOfWork unitOfWork) 
     : ICommandHandler<CreateRoleCommand, Result>
 {
     public async Task<Result> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
     {
-        Result<RoleName> roleName = RoleName.Create(request.CreateRoleModel.RoleName);
-        Result<RoleDescription> roleDescription = RoleDescription.Create(request.CreateRoleModel.RoleDescription);
-        
-        Result firstFailureOrSuccess = Result.FirstFailureOrSuccess(roleName, roleDescription);
-        if (firstFailureOrSuccess.IsFailure)
-        {
-            return Result.Failure(firstFailureOrSuccess.Error);
-        }
-        
-        var role = RoleEntity.Create(request.CreateRoleModel.RoleCodeName, roleName.Value, roleDescription.Value);
+        var role = RoleEntity.Create(request.CreateRoleModel.RoleCodeName, request.CreateRoleModel.RoleName, request.CreateRoleModel.RoleDescription);
         roleRepository.Insert(role);
+
+        await rolePermissionRepository.AddPermissionsToRoleByName(role.Id, request.CreateRoleModel.permissionNames,
+            cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
-            
         return Result.Success();
     }
 }

@@ -1,3 +1,5 @@
+using AccessSystem.Contracts.Enumerations;
+
 namespace AccessSystem.Contracts.Models.Permission;
 
 public class GetPermissionModel

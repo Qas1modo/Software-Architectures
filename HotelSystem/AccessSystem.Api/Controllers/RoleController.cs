@@ -1,7 +1,11 @@
 using AccessSystem.Api.Contracts;
 using AccessSystem.Api.Infrastructure;
 using AccessSystem.Application.Role.Commands;
+using AccessSystem.Application.Role.Commands.CreateRole;
+using AccessSystem.Application.Role.Commands.DeleteRole;
+using AccessSystem.Application.Role.Commands.UpdateRole;
 using AccessSystem.Application.Role.Queries;
+using AccessSystem.Application.Role.Queries.GetRole;
 using AccessSystem.Contracts.Models.Role;
 using AccessSystem.Domain.Core.Errors;
 using MediatR;
@@ -17,8 +21,8 @@ public sealed class RoleController(IMediator mediator) : ApiController(mediator)
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Get(GetRoleModel getRoleModel) =>
-        await Maybe<RoleGetRoleQuery>
-            .From(new RoleGetRoleQuery(getRoleModel))
+        await Maybe<GetRoleQuery>
+            .From(new GetRoleQuery(getRoleModel))
             .Bind(query => Mediator.Send(query))
             .Match(Ok, NotFound);
     

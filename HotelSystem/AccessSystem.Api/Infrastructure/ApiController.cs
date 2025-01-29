@@ -2,12 +2,10 @@
 using SharedKernel.Domain.Core.Primitives;
 using SharedKernel.Domain.Core.Primitives.Result;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccessSystem.Api.Infrastructure
 {
-    [Authorize]
     [Route("api")]
     public class ApiController : ControllerBase
     {

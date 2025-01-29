@@ -1,36 +1,23 @@
 using AccessSystem.Domain.Entities;
-using AccessSystem.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AccessSystem.Infrastructure.Configurations;
 
-public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
+public class PermissionConfiguration : IEntityTypeConfiguration<PermissionEntity>
 {
-    public void Configure(EntityTypeBuilder<Permission> builder)
+    public void Configure(EntityTypeBuilder<PermissionEntity> builder)
     {
         builder.HasKey(permission => permission.Id);
 
         builder.Property(request => request.PermissionCodeName)
             .IsRequired();
 
-        builder.OwnsOne(permission => permission.PermissionName, permissionNameBuilder =>
-        {
-            permissionNameBuilder.WithOwner();
-            permissionNameBuilder.Property(permissionName => permissionName.Value)
-                .HasColumnName(nameof(Permission.PermissionName))
-                .HasMaxLength(PermissionName.MaxLength)
-                .IsRequired();
-        });
-
-        builder.OwnsOne(permission => permission.PermissionDescription, permissionDescriptionBuilder =>
-        {
-            permissionDescriptionBuilder.WithOwner();
-            permissionDescriptionBuilder.Property(permissionDescription => permissionDescription.Value)
-                .HasColumnName(nameof(Permission.PermissionDescription))
-                .HasMaxLength(PermissionDescription.MaxLength)
-                .IsRequired();
-        });
+        builder.Property(request => request.PermissionName)
+            .IsRequired();
+        
+        builder.Property(request => request.PermissionDescription)
+            .IsRequired();
 
         builder.HasMany(permission => permission.Roles)
             .WithMany(role => role.Permissions)
@@ -39,6 +26,10 @@ public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
         builder.HasMany(permission => permission.AccessCards)
             .WithMany(card => card.Permissions)
             .UsingEntity<AccessCardPermission>();
+        
+        builder.HasMany(permission => permission.AccessClaims)
+            .WithMany(claim => claim.AllowedPermissions)
+            .UsingEntity<AccessClaimPermission>();
 
         builder.Property(request => request.CreatedOnUtc)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");

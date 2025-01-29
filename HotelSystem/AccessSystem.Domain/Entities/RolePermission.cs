@@ -24,7 +24,7 @@ public class RolePermission : AggregateRoot, IAuditableEntity, ISoftDeletableEnt
     public Guid? PermissionId { get; set; }
     
     [ForeignKey(nameof(PermissionId))]
-    public virtual Permission? Permission { get; set; }
+    public virtual PermissionEntity? Permission { get; set; }
     
     public DateTime CreatedOnUtc { get; }
     

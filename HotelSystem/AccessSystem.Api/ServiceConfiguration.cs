@@ -15,9 +15,6 @@ public static class ServiceConfiguration
             .ApplicationInstall()
             .InstallInfrastructure(configuration);
 
-        services.AddFluentValidationAutoValidation();
-        services.AddFluentValidationClientsideAdapters();
-
         services.AddSwaggerGen(swaggerGenOptions =>
         {
             swaggerGenOptions.SwaggerDoc("v1", new OpenApiInfo

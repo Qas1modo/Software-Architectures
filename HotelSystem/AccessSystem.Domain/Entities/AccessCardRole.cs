@@ -11,26 +11,26 @@ public class AccessCardRole : AggregateRoot, IAuditableEntity, ISoftDeletableEnt
         AccessCardId = accessCardId;
         RoleId = roleId;
     }
-    
+
     public AccessCardRole()
     {
     }
-    
-    public Guid? AccessCardId { get; set; }
-    
+
+    public Guid AccessCardId { get; set; }
+
     [ForeignKey(nameof(AccessCardId))]
-    public virtual AccessCard? AccessCard { get; set; }
-    
-    public Guid? RoleId { get; set; }
-    
+    public virtual AccessCardEntity? AccessCard { get; set; }
+
+    public Guid RoleId { get; set; }
+
     [ForeignKey(nameof(RoleId))]
     public virtual RoleEntity? Role { get; set; }
-    
+
     public DateTime CreatedOnUtc { get; }
-    
+
     public DateTime? ModifiedOnUtc { get; }
-    
+
     public DateTime? DeletedOnUtc { get; }
-    
+
     public bool Deleted { get; }
 }

@@ -1,5 +1,6 @@
 using AccessSystem.Api;
 using AccessSystem.Api.Middleware;
+using HotelSystem.ServiceDefaults;
 using Wolverine;
 
 
@@ -25,18 +26,20 @@ app.MapDefaultEndpoints();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI(swaggerUiOptions => swaggerUiOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "Hotel Service System API"));
+    app.UseSwaggerUI(swaggerUiOptions => {
+            swaggerUiOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "Access System API");
+            swaggerUiOptions.RoutePrefix = string.Empty;
+        }
+    );
+
 }
 app.UseCustomExceptionHandler();
 
 app.UseRouting();
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

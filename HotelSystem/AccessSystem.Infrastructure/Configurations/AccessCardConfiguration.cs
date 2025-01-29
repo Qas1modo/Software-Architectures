@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AccessSystem.Infrastructure.Configurations;
 
-public class AccessCardConfiguration : IEntityTypeConfiguration<AccessCard>
+public class AccessCardConfiguration : IEntityTypeConfiguration<AccessCardEntity>
 {
-    public void Configure(EntityTypeBuilder<AccessCard> builder)
+    public void Configure(EntityTypeBuilder<AccessCardEntity> builder)
     {
         builder.HasKey(card => card.Id);
 
@@ -17,6 +17,8 @@ public class AccessCardConfiguration : IEntityTypeConfiguration<AccessCard>
         builder.HasMany(card => card.Roles)
             .WithMany(role => role.AccessCards)
             .UsingEntity<AccessCardRole>();
+
+        builder.Property(request => request.HolderId);
 
         builder.Property(request => request.CreatedOnUtc)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
