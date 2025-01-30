@@ -1,0 +1,24 @@
+﻿using AutoMapper;
+using BillingSystem.Application.BillingItem.Queries;
+using BillingSystem.Application.Handlers.Base;
+using BillingSystem.DAL.Infrastructure.QueryObjects.Interfaces;
+using BillingSystem.Shared.Models.BillingItemModels;
+using MediatR;
+
+namespace BillingSystem.Application.BillingItem.Handlers.QueryHandlers;
+
+public class GetBillingItemByCustomerQueryHandler : QueryHandler<GetBillingItemsByCustomerQuery, List<BillingItemListModel>>, IRequestHandler<GetBillingItemsByCustomerQuery, List<BillingItemListModel>>
+{
+    private IGetBillingItemsByCustomerQueryObject<Domain.Entities.BillingItem.BillingItem> _getBillingItemByCustomerQueryObject;
+
+    public GetBillingItemByCustomerQueryHandler(IGetBillingItemsByCustomerQueryObject<Domain.Entities.BillingItem.BillingItem> getBillingItemByCustomerQueryObject, IMapper mapper) : base(mapper)
+    {
+        _getBillingItemByCustomerQueryObject = getBillingItemByCustomerQueryObject;
+    }
+
+    public override async Task<List<BillingItemListModel>> Handle(GetBillingItemsByCustomerQuery request, CancellationToken cancellationToken)
+    {
+        var billingItems = await _getBillingItemByCustomerQueryObject.UseFilter(request.CustomerId).ExecuteAsync();
+        return _mapper.Map<ICollection<BillingItemListModel>>(billingItems).ToList();
+    }
+}

@@ -16,7 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AccessSystem.Api\AccessSystem.Api.csproj" />
     <ProjectReference Include="..\HotelServiceSystem.Api\HotelServiceSystem.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BillingSystem\BillingSystem.csproj" />
   </ItemGroup>
 
 </Project>
