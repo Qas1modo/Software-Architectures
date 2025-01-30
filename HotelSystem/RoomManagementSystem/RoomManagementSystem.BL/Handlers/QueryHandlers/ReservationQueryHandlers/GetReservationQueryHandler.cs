@@ -6,7 +6,7 @@ using RoomManagementSystem.DAL.EFCore.UnitOfWork;
 using RoomManagementSystem.DAL.InfraStructure.UnitOfWork.Interfaces;
 
 
-namespace RoomManagementSystem.BL.Handlers.QueryHandlers.ReservationQueries
+namespace RoomManagementSystem.BL.Handlers.QueryHandlers.ReservationQueryHandlers
 {
     public class GetReservationQueryHandler : QueryHandler<GetReservationQuery, ReservationDetailModel>
     {

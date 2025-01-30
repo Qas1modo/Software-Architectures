@@ -8,7 +8,7 @@ using RoomManagementSystem.DAL.EFCore.UnitOfWork;
 using RoomManagementSystem.DAL.InfraStructure.UnitOfWork.Interfaces;
 using System.Linq.Expressions;
 
-namespace RoomManagementSystem.BL.Handlers.QueryHandlers.RoomQueries
+namespace RoomManagementSystem.BL.Handlers.QueryHandlers.RoomQueryHandlers
 {
     public class SearchAvailableRoomsQueryHandler : QueryHandler<SearchAvailableRoomsQuery, IEnumerable<RoomListModel>>
     {
