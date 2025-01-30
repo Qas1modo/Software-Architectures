@@ -9,7 +9,7 @@ namespace RoomManagementSystem.BL.Profiles.RoomProfiles
     {
         public RoomDetailProfile()
         {
-            CreateMap<RoomDetailModel, RoomEntity>();
+            CreateMap<RoomDetailModel, RoomEntity>().ReverseMap();
         }
     }
 }

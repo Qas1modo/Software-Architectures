@@ -14,7 +14,7 @@ namespace RoomManagementSystem.BL.Profiles.ReservationProfiles
         public ReservationCreateProfile()
         {
 
-            CreateMap<ReservationCreateModel, ReservationEntity>();
+            CreateMap<ReservationCreateModel, ReservationEntity>().ReverseMap();
         }
     }
 }

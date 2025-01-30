@@ -7,7 +7,7 @@ namespace RoomManagementSystem.BL.Profiles.ReservationProfiles
     internal class ReservationUpdateProfile : Profile
     {
         public ReservationUpdateProfile() { 
-            CreateMap<ReservationUpdateModel, ReservationEntity>();
+            CreateMap<ReservationUpdateModel, ReservationEntity>().ReverseMap();
         }
     }
 }
