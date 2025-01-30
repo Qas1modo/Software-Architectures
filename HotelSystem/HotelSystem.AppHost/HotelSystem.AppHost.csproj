@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AccessSystem.Api\AccessSystem.Api.csproj" />
     <ProjectReference Include="..\HotelServiceSystem.Api\HotelServiceSystem.Api.csproj" />
   </ItemGroup>
 
