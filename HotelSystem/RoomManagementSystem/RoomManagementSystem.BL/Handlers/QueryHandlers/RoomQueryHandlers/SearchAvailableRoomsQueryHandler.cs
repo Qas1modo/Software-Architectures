@@ -10,13 +10,13 @@ using System.Linq.Expressions;
 
 namespace RoomManagementSystem.BL.Handlers.QueryHandlers.RoomQueryHandlers
 {
-    public class SearchAvailableRoomsQueryHandler : QueryHandler<SearchAvailableRoomsQuery, IEnumerable<RoomListModel>>
+    public class SearchAvailableRoomsQueryHandler : QueryHandler<SearchAvailableRoomsQuery, IList<RoomListModel>>
     {
         public SearchAvailableRoomsQueryHandler(IUnitOfWorkProvider<IEFCoreUnitOfWork> unitOfWorkProvider, IMapper mapper) :
             base(unitOfWorkProvider, mapper)
         {
         }
-        public override async Task<IEnumerable<RoomListModel>> Handle(SearchAvailableRoomsQuery request, CancellationToken cancellationToken)
+        public override async Task<IList<RoomListModel>> Handle(SearchAvailableRoomsQuery request, CancellationToken cancellationToken)
         {
             var filterModel = request.RoomFilterModel;
             using var uow = _unitOfWorkProvider.Create() ;
@@ -36,7 +36,7 @@ namespace RoomManagementSystem.BL.Handlers.QueryHandlers.RoomQueryHandlers
                pageSize: request.PageSize
                 );
 
-            return _mapper.Map<IEnumerable<RoomListModel>>(rooms);
+            return _mapper.Map<IList<RoomListModel>>(rooms);
 
         }
     }

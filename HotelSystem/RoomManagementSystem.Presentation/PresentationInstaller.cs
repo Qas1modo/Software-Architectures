@@ -10,7 +10,7 @@ namespace RoomManagementSystem.Presentation
         {
             services.InstallDAL(connectionString);
             services.InstallBL();
-            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+            //services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
         }

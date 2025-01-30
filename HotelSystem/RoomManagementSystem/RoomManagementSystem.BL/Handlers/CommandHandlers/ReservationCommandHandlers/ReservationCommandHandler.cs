@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MediatR;
 using RoomManagementSystem.BL.Handlers.CommandHandlers.Base;
 using RoomManagementSystem.Contracts.Enums;
 using RoomManagementSystem.DAL.EFCore.UnitOfWork;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace RoomManagementSystem.BL.Handlers.CommandHandlers.ReservationCommandHandlers
 {
-    public abstract class ReservationCommandHandler<TCommand, TResult> : CommandHandler<TCommand, TResult>
+    public abstract class ReservationCommandHandler<TCommand, TResult> : CommandHandler<TCommand, TResult> where TCommand : IRequest<TResult>
     {
         protected ReservationCommandHandler(IUnitOfWorkProvider<IEFCoreUnitOfWork> unitOfWorkProvider, IMapper mapper) : base(unitOfWorkProvider, mapper)
         {

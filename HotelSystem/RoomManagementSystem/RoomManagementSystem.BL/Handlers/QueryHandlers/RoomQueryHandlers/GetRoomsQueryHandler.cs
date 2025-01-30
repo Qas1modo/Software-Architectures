@@ -9,17 +9,17 @@ using RoomManagementSystem.DAL.InfraStructure.UnitOfWork.Interfaces;
 namespace RoomManagementSystem.BL.Handlers.QueryHandlers.RoomQueryHandlers
 {
     public class GetRoomsQueryHandler
-        : QueryHandler<GetRoomsQuery, IEnumerable<RoomListModel>>
+        : QueryHandler<GetRoomsQuery, IList<RoomListModel>>
     {
         public GetRoomsQueryHandler(IUnitOfWorkProvider<IEFCoreUnitOfWork> unitOfWorkProvider, IMapper mapper) :
             base(unitOfWorkProvider, mapper)
         {
         }
-        public override async Task<IEnumerable<RoomListModel>> Handle(GetRoomsQuery request, CancellationToken cancellationToken)
+        public override async Task<IList<RoomListModel>> Handle(GetRoomsQuery request, CancellationToken cancellationToken)
         {
             using var uow = _unitOfWorkProvider.Create();
             var rooms = await uow.Rooms.GetAsync(request.Page,request.PageSize);
-            return _mapper.Map<IEnumerable<RoomListModel>>(rooms);
+            return _mapper.Map<IList<RoomListModel>>(rooms);
         }
     }
 }
