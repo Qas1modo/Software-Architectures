@@ -6,7 +6,7 @@ using SharedKernel.Domain.Core.Primitives.Result;
 
 namespace AccessSystem.Application.AccessClaim.Commands.UpdateAccessClaim;
 
-public class UpdateAccessClaimCommandHandler(IAccessClaimRepository accessClaimRepository, IAccessClaimPermissionRepository accessClaimPermissionRepository, IUnitOfWork unitOfWork)
+public class UpdateAccessClaimCommandHandler(IAccessClaimRepository accessClaimRepository, IAccessClaimRoleRepository accessClaimRoleRepository, IUnitOfWork unitOfWork)
     : ICommandHandler<UpdateAccessClaimCommand, Result>
 {
     public async Task<Result> Handle(UpdateAccessClaimCommand request, CancellationToken cancellationToken)
@@ -16,18 +16,18 @@ public class UpdateAccessClaimCommandHandler(IAccessClaimRepository accessClaimR
         {
             return Result.Failure(DomainErrors.AccessClaimErrors.NotFound);
         }
-        
-        var permissionsToAdd = request.UpdateAccessClaimModel.PermissionCodeNamesToAdd;
-        var permissionsToRemove = request.UpdateAccessClaimModel.PermissionCodeNamesToRemove;
-        
-        if (permissionsToAdd.Any())
+
+        var rolesToAdd = request.UpdateAccessClaimModel.RoleCodeNamesToAdd;
+        var RolesToRemove = request.UpdateAccessClaimModel.RoleCodeNamesToRemove;
+
+        if (rolesToAdd.Any())
         {
-            await accessClaimPermissionRepository.AddPermissionsToClaimByName(accessClaim.Value.Id, permissionsToAdd, cancellationToken);
+            await accessClaimRoleRepository.AddRolesToClaimByName(accessClaim.Value.Id, rolesToAdd, cancellationToken);
         }
-        
-        if (permissionsToRemove.Any())
+
+        if (RolesToRemove.Any())
         {
-            await accessClaimPermissionRepository.RemovePermissionsFromClaimByName(accessClaim.Value.Id, permissionsToRemove, cancellationToken);
+            await accessClaimRoleRepository.RemoveRolesFromClaimByName(accessClaim.Value.Id, RolesToRemove, cancellationToken);
         }
 
         if (request.UpdateAccessClaimModel.Name is not null && request.UpdateAccessClaimModel.Name != String.Empty)
@@ -35,7 +35,7 @@ public class UpdateAccessClaimCommandHandler(IAccessClaimRepository accessClaimR
             accessClaim.Value.CodeName = request.UpdateAccessClaimModel.Name;
             accessClaimRepository.Update(accessClaim.Value);
         }
-        
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Success();
     }

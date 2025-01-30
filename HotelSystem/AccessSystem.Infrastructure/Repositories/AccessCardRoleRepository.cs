@@ -14,10 +14,10 @@ internal class AccessCardRoleRepository : GenericRepository<AccessCardRole>, IAc
 
     public async Task ResetRoles(Guid cardId, CancellationToken cancellationToken)
     {
-        var roles = await DbContext.Set<AccessCardRole>().Where(accessCardPermission => accessCardPermission.AccessCardId == cardId).ToArrayAsync(cancellationToken);
+        var roles = await DbContext.Set<AccessCardRole>().Where(accessCardRole => accessCardRole.AccessCardId == cardId).ToArrayAsync(cancellationToken);
         DbContext.Set<AccessCardRole>().RemoveRange(roles);
     }
-    
+
     public async Task AddRolesToCardById(Guid cardId, IEnumerable<Guid> roleIds, CancellationToken cancellationToken)
     {
         var roles = roleIds.Select(roleId => new AccessCardRole
@@ -28,7 +28,7 @@ internal class AccessCardRoleRepository : GenericRepository<AccessCardRole>, IAc
 
         await DbContext.Set<AccessCardRole>().AddRangeAsync(roles, cancellationToken);
     }
-    
+
     public async Task AddRolesToCardByName(Guid cardId, IEnumerable<string> roleNames, CancellationToken cancellationToken)
     {
         var roles = await DbContext.Set<RoleEntity>().Where(role => roleNames.Contains(role.RoleCodeName)).Select(role => new AccessCardRole
@@ -46,7 +46,7 @@ internal class AccessCardRoleRepository : GenericRepository<AccessCardRole>, IAc
             .Where(accessCardRole => accessCardRole.AccessCardId == cardId)
             .Where(accessCardRole => roleIds.Contains(accessCardRole.RoleId.ToString()))
             .ToArrayAsync(cancellationToken);
-        
+
         DbContext.Set<AccessCardRole>().RemoveRange(roles);
     }
 
@@ -61,7 +61,7 @@ internal class AccessCardRoleRepository : GenericRepository<AccessCardRole>, IAc
             .Where(accessCardRole => accessCardRole.AccessCardId == cardId)
             .Where(accessCardRole => roles.Contains(accessCardRole.RoleId))
             .ToArrayAsync(cancellationToken);
-        
+
         DbContext.Set<AccessCardRole>().RemoveRange(rolesToRemove);
     }
 }

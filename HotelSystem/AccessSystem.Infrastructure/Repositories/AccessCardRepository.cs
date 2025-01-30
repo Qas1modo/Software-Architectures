@@ -21,9 +21,7 @@ public class AccessCardRepository : GenericRepository<AccessCardEntity>, IAccess
             return Maybe<AccessCardEntity>.None;
         }
         var query = DbContext.Set<AccessCardEntity>()
-            .Include(card => card.Permissions)
             .Include(card => card.Roles)
-            .ThenInclude(role => role.Permissions)
             .AsQueryable();
 
         var result = await query.FirstOrDefaultAsync(card => card.Id == id);
@@ -52,16 +50,11 @@ public class AccessCardRepository : GenericRepository<AccessCardEntity>, IAccess
             Id = result.Id,
             HolderId = result.HolderId,
             RoleNames = result.Roles.Select(role => role.RoleCodeName).ToList(),
-            PermissionNames = result.Permissions.Select(permission => permission.PermissionCodeName).ToList()
         };
     }
     
     public new async Task Remove(AccessCardEntity entity)
     {
-        var accessCardPermissions = DbContext.Set<AccessCardPermission>().AsQueryable();
-        var cardPermissions = await accessCardPermissions.Where(accessCardPermission => accessCardPermission.AccessCardId == entity.Id).ToListAsync();
-        DbContext.Set<AccessCardPermission>().RemoveRange(cardPermissions);
-        
         var accessCardRoles = DbContext.Set<AccessCardRole>().AsQueryable();
         var cardRoles = await accessCardRoles.Where(accessCardRole => accessCardRole.AccessCardId == entity.Id).ToListAsync();
         DbContext.Set<AccessCardRole>().RemoveRange(cardRoles);

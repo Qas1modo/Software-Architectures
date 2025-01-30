@@ -18,14 +18,11 @@ public class AccessSystemDbContext : DbContext, IDbContext, IUnitOfWork
     private readonly IMediator _mediator;
 
     public DbSet<AccessCardEntity> AccessCards { get; set; }
-    public DbSet<AccessCardPermission> AccessCardPermissions { get; set; }
     public DbSet<AccessCardRole> AccessCardRoles { get; set; }
     public DbSet<AccessClaimEntity> AccessClaims { get; set; }
-    public DbSet<AccessClaimPermission> AccessClaimPermissions { get; set; }
+    public DbSet<AccessClaimRole> AccessClaimRoles { get; set; }
     public DbSet<AccessLogEntry> AccessLogEntries { get; set; }
-    public DbSet<PermissionEntity> Permissions { get; set; }
     public DbSet<RoleEntity> Roles { get; set; }
-    public DbSet<RolePermission> RolePermissions { get; set; }
 
     public AccessSystemDbContext(DbContextOptions<AccessSystemDbContext> options, IMediator mediator) : base(options)
     {

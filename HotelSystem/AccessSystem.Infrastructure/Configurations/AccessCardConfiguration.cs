@@ -9,11 +9,7 @@ public class AccessCardConfiguration : IEntityTypeConfiguration<AccessCardEntity
     public void Configure(EntityTypeBuilder<AccessCardEntity> builder)
     {
         builder.HasKey(card => card.Id);
-
-        builder.HasMany(card => card.Permissions)
-            .WithMany(permission => permission.AccessCards)
-            .UsingEntity<AccessCardPermission>();
-
+        
         builder.HasMany(card => card.Roles)
             .WithMany(role => role.AccessCards)
             .UsingEntity<AccessCardRole>();

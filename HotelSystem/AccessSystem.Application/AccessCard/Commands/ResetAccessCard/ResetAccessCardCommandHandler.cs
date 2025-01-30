@@ -6,7 +6,7 @@ using SharedKernel.Domain.Core.Primitives.Result;
 
 namespace AccessSystem.Application.AccessCard.Commands.ResetAccessCard;
 
-public class ResetAccessCardCommandHandler(IAccessCardRepository accessCardRepository, IAccessCardRoleRepository accessCardRoleRepository, IAccessCardPermissionRepository accessCardPermissionRepository, IUnitOfWork unitOfWork)
+public class ResetAccessCardCommandHandler(IAccessCardRepository accessCardRepository, IAccessCardRoleRepository accessCardRoleRepository, IUnitOfWork unitOfWork)
     : ICommandHandler<ResetAccessCardCommand, Result>
 {
     public async Task<Result> Handle(ResetAccessCardCommand request, CancellationToken cancellationToken)
@@ -41,7 +41,6 @@ public class ResetAccessCardCommandHandler(IAccessCardRepository accessCardRepos
         
         
         await accessCardRoleRepository.ResetRoles(cardId, cancellationToken);
-        await accessCardPermissionRepository.ResetPermissions(cardId, cancellationToken);
 
         accessCard.Value.HolderId = null;
         accessCardRepository.Update(accessCard.Value);

@@ -6,7 +6,7 @@ using SharedKernel.Domain.Core.Primitives.Result;
 
 namespace AccessSystem.Application.AccessCard.Commands.CreateAccessCard;
 
-public class CreateAccessCardCommandHandler(IAccessCardRepository accessCardRepository, IAccessCardPermissionRepository accessCardPermissionRepository, IAccessCardRoleRepository accessCardRoleRepository, IUnitOfWork unitOfWork)
+public class CreateAccessCardCommandHandler(IAccessCardRepository accessCardRepository, IAccessCardRoleRepository accessCardRoleRepository, IUnitOfWork unitOfWork)
     : ICommandHandler<CreateAccessCardCommand, Result>
 {
     public async Task<Result> Handle(CreateAccessCardCommand request, CancellationToken cancellationToken)
@@ -19,7 +19,6 @@ public class CreateAccessCardCommandHandler(IAccessCardRepository accessCardRepo
 
         accessCardRepository.Insert(accessCard);
 
-        await accessCardPermissionRepository.AddPermissionsToCardByName(accessCard.Id, request.CreateAccessCardModel.PermissionNames, cancellationToken);
         await accessCardRoleRepository.AddRolesToCardByName(accessCard.Id, request.CreateAccessCardModel.RoleNames,
             cancellationToken);
 

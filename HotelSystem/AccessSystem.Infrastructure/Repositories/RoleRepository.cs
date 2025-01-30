@@ -24,7 +24,7 @@ public class RoleRepository : GenericRepository<RoleEntity>, IRoleRepository
         }
 
         var query = DbContext.Set<RoleEntity>().AsQueryable();
-        
+
         if (getRoleModel.RoleId.HasValue)
         {
             query = query.Where(role => role.Id == getRoleModel.RoleId);
@@ -34,9 +34,9 @@ public class RoleRepository : GenericRepository<RoleEntity>, IRoleRepository
         {
             query = query.Where(role => role.RoleCodeName == getRoleModel.RoleCodeName);
         }
-        
+
         int totalCount = await query.CountAsync(cancellationToken);
-        
+
         var result = await query.Skip(getRoleModel.Page * getRoleModel.PageSize)
             .Take(getRoleModel.PageSize)
             .Select(role =>
@@ -46,7 +46,6 @@ public class RoleRepository : GenericRepository<RoleEntity>, IRoleRepository
                     RoleCodeName = role.RoleCodeName,
                     RoleName = role.RoleName,
                     RoleDescription = role.RoleDescription,
-                    PermissionNames = role.Permissions.Select(permission => permission.PermissionName).ToList()
                 }
             )
             .ToArrayAsync(cancellationToken: cancellationToken);
@@ -59,7 +58,7 @@ public class RoleRepository : GenericRepository<RoleEntity>, IRoleRepository
         {
             return Maybe<ICollection<RoleResponseModel>>.None;
         }
-        
+
         var query = DbContext.Set<RoleEntity>().AsQueryable();
         var result = await query.Where(role => names.Contains(role.RoleCodeName)).Select(role =>
                 new RoleResponseModel
@@ -74,17 +73,17 @@ public class RoleRepository : GenericRepository<RoleEntity>, IRoleRepository
 
         return Maybe<ICollection<RoleResponseModel>>.From(result);
     }
-    
+
     public new async Task Remove(RoleEntity entity)
     {
         var accessCardRoles = DbContext.Set<AccessCardRole>().AsQueryable();
-        var cardPermissions = await accessCardRoles.Where(accessCardRole => accessCardRole.RoleId == entity.Id).ToListAsync();
-        DbContext.Set<AccessCardRole>().RemoveRange(cardPermissions);
+        var cardRoles = await accessCardRoles.Where(accessCardRole => accessCardRole.RoleId == entity.Id).ToListAsync();
+        DbContext.Set<AccessCardRole>().RemoveRange(cardRoles);
         
-        var rolePermissions = DbContext.Set<RolePermission>().AsQueryable();
-        var permissions = await rolePermissions.Where(rolePermission => rolePermission.RoleId == entity.Id).ToListAsync();
-        DbContext.Set<RolePermission>().RemoveRange(permissions);
-        
+        var accessClaimsRoles = DbContext.Set<AccessClaimRole>().AsQueryable();
+        var claims = await accessClaimsRoles.Where(accessClaim => accessClaim.RoleId == entity.Id).ToListAsync();
+        DbContext.Set<AccessClaimRole>().RemoveRange(claims);
+
         DbContext.Set<RoleEntity>().Remove(entity);
     }
 }

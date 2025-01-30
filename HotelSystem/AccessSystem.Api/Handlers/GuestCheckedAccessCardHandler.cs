@@ -17,9 +17,9 @@ public class GuestCheckedAccessCardHandler(IMediator mediator)
         var createAccessCardModel = new CreateAccessCardModel()
         {
             HolderId = guestCheckedOutMessage.GlobalGuestId,
-            PermissionNames = ["Room" + guestCheckedOutMessage.GuestRoomNumber]
+            RoleNames = ["Room" + guestCheckedOutMessage.GuestRoomNumber]
         };
-        
+
         var resetCardResult = await Result.Create(guestCheckedOutMessage.GlobalGuestId, DomainErrors.General.UnProcessableRequest)
             .Map(_ => new CreateAccessCardCommand(createAccessCardModel))
             .Bind(command => mediator.Send(command));

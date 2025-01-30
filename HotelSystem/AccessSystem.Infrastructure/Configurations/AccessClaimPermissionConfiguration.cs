@@ -4,20 +4,20 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AccessSystem.Infrastructure.Configurations;
 
-public class AccessClaimPermissionConfiguration : IEntityTypeConfiguration<AccessClaimPermission>
+public class AccessClaimRoleConfiguration : IEntityTypeConfiguration<AccessClaimRole>
 {
-    public void Configure(EntityTypeBuilder<AccessClaimPermission> builder)
+    public void Configure(EntityTypeBuilder<AccessClaimRole> builder)
     {
         builder.HasKey(claim => claim.Id);
-        
+
         builder.HasOne(acp => acp.AccessClaim)
             .WithMany()
             .HasForeignKey(acp => acp.AccessClaimId);
 
-        builder.HasOne(acp => acp.Permission)
+        builder.HasOne(acp => acp.Role)
             .WithMany()
-            .HasForeignKey(acp => acp.PermissionId);
-        
+            .HasForeignKey(acp => acp.RoleId);
+
         builder.Property(request => request.CreatedOnUtc)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
 

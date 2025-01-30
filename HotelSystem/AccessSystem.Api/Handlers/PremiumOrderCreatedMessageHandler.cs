@@ -17,7 +17,7 @@ public class PremiumOrderCreatedMessageHandler(IMediator mediator)
         var updateAccessCardModel = new UpdateAccessCardModel
         {
             HolderId = premiumOrderCreatedMessage.GlobalGuestId,
-            PermissionNamesToAdd = [premiumOrderCreatedMessage.RelevantRoleCodeName]
+            RoleNamesToAdd = [premiumOrderCreatedMessage.RelevantRoleCodeName]
         };
 
         var updateCardResult = await Result
@@ -25,7 +25,7 @@ public class PremiumOrderCreatedMessageHandler(IMediator mediator)
             .Map(_ => new UpdateAccessCardCommand(updateAccessCardModel))
             .Bind(command => mediator.Send(command));
 
-        
+
         // I didn't make the roles with capacity, so it should always pass unless error happens
         if (updateCardResult.IsFailure)
         {
@@ -37,7 +37,7 @@ public class PremiumOrderCreatedMessageHandler(IMediator mediator)
 
             return;
         }
-        
+
         await mediator.Publish(new RoleAcceptedOnOrderMessage(
             premiumOrderCreatedMessage.GlobalGuestId,
             premiumOrderCreatedMessage.PremiumOrderId

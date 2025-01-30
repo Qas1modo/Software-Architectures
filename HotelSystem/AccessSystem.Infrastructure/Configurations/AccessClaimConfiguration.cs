@@ -13,9 +13,9 @@ public class AccessClaimConfiguration : IEntityTypeConfiguration<AccessClaimEnti
         builder.Property(claim => claim.CodeName)
             .IsRequired();
         
-        builder.HasMany(claim => claim.AllowedPermissions)
-            .WithMany(permission => permission.AccessClaims)
-            .UsingEntity<AccessClaimPermission>();
+        builder.HasMany(claim => claim.AllowedRoles)
+            .WithMany(role => role.AccessClaims)
+            .UsingEntity<AccessClaimRole>();
         
         builder.Property(request => request.CreatedOnUtc)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");

@@ -19,10 +19,6 @@ public class RoleConfiguration : IEntityTypeConfiguration<RoleEntity>
         builder.Property(request => request.RoleDescription)
             .IsRequired();
 
-        builder.HasMany(role => role.Permissions)
-            .WithMany(permission => permission.Roles)
-            .UsingEntity<RolePermission>();
-
         builder.Property(request => request.CreatedOnUtc)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
 

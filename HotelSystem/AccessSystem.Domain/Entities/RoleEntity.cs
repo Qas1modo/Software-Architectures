@@ -22,10 +22,9 @@ public class RoleEntity : AggregateRoot, IAuditableEntity, ISoftDeletableEntity
     public string RoleName { get; set; } = null!;
     [Required]
     public string RoleDescription { get; set; } = null!;
-
-    public virtual List<PermissionEntity> Permissions { get; set; } = [];
     public virtual List<AccessCardEntity> AccessCards { get; set; } = [];
-
+    
+    public virtual List<AccessClaimEntity> AccessClaims { get; set; } = [];
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; }
     public DateTime? DeletedOnUtc { get; }

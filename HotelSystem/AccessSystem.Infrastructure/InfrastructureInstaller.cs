@@ -23,22 +23,16 @@ public static class InfrastructureInstaller
 
         services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<AccessSystemDbContext>());
         
-        services.AddScoped<IAccessCardPermissionRepository, AccessCardPermissionRepository>();
-        
         services.AddScoped<IAccessCardRepository, AccessCardRepository>();
         
         services.AddScoped<IAccessCardRoleRepository, AccessCardRoleRepository>();
         
-        services.AddScoped<IAccessClaimPermissionRepository, AccessClaimPermissionRepository>();
+        services.AddScoped<IAccessClaimRoleRepository, AccessClaimRoleRepository>();
         
         services.AddScoped<IAccessClaimRepository, AccessClaimRepository>();
         
         services.AddScoped<IAccessLogEntryRepository, AccessLogEntryRepository>();
         
-        services.AddScoped<IPermissionRepository, PermissionRepository>();
-
-        services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
-
         services.AddScoped<IRoleRepository, RoleRepository>();
         
 

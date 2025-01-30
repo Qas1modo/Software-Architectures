@@ -15,26 +15,26 @@ internal class AccessClaimRepository(IDbContext dbContext) : GenericRepository<A
         {
             return Maybe<AccessClaimEntity>.None;
         }
-        
-        var accessClaim = DbContext.Set<AccessClaimEntity>().Include(claim => claim.AllowedPermissions).AsQueryable();
-        
+
+        var accessClaim = DbContext.Set<AccessClaimEntity>().Include(claim => claim.AllowedRoles).AsQueryable();
+
         var result = await accessClaim.FirstOrDefaultAsync(claim => claim.Id == id);
-        
+
         if (result is null)
         {
             return Maybe<AccessClaimEntity>.None;
         }
 
-        return Maybe<AccessClaimEntity>.From(result);   
+        return Maybe<AccessClaimEntity>.From(result);
     }
-    
-    
+
+
     public new async Task Remove(AccessClaimEntity entity)
     {
-        var accessClaimPermissions = DbContext.Set<AccessClaimPermission>().AsQueryable();
-        var claimPermissions = await accessClaimPermissions.Where(accessClaimPermission => accessClaimPermission.AccessClaimId == entity.Id).ToListAsync();
-        DbContext.Set<AccessClaimPermission>().RemoveRange(claimPermissions);
-        
+        var accessClaimRoles = DbContext.Set<AccessClaimRole>().AsQueryable();
+        var claimRoles = await accessClaimRoles.Where(accessClaimRole => accessClaimRole.AccessClaimId == entity.Id).ToListAsync();
+        DbContext.Set<AccessClaimRole>().RemoveRange(claimRoles);
+
         DbContext.Set<AccessClaimEntity>().Remove(entity);
     }
 }

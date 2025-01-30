@@ -18,8 +18,6 @@ public class AccessCardEntity : AggregateRoot, IAuditableEntity, ISoftDeletableE
     }
     
     public Guid? HolderId { get; set; }
-
-    public virtual List<PermissionEntity> Permissions { get; set; } = [];
     
     public virtual List<RoleEntity> Roles { get; set; } = [];
     

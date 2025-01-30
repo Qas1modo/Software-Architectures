@@ -7,7 +7,7 @@ public class AccessClaimEntity(string codeName) : AggregateRoot(Guid.NewGuid()),
 {
     public string CodeName { get; set; } = codeName;
 
-    public virtual List<PermissionEntity> AllowedPermissions { get; set; } = [];
+    public virtual List<RoleEntity> AllowedRoles { get; set; } = [];
 
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; }

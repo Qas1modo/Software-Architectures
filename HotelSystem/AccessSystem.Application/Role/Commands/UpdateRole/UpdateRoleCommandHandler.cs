@@ -6,7 +6,7 @@ using SharedKernel.Domain.Core.Primitives.Result;
 
 namespace AccessSystem.Application.Role.Commands.UpdateRole;
 
-public class UpdateRoleCommandHandler(IRoleRepository roleRepository, IRolePermissionRepository rolePermissionRepository, IUnitOfWork unitOfWork) 
+public class UpdateRoleCommandHandler(IRoleRepository roleRepository, IUnitOfWork unitOfWork)
     : ICommandHandler<UpdateRoleCommand, Result>
 {
     public async Task<Result> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
@@ -21,19 +21,9 @@ public class UpdateRoleCommandHandler(IRoleRepository roleRepository, IRolePermi
         role.Value.RoleCodeName = request.UpdateRoleModel.RoleCodeName ?? role.Value.RoleCodeName;
         role.Value.RoleName = request.UpdateRoleModel.RoleName ?? role.Value.RoleName;
         role.Value.RoleDescription = request.UpdateRoleModel.RoleDescription ?? role.Value.RoleDescription;
-        
+
         roleRepository.Update(role);
-        
-        if (request.UpdateRoleModel.PermissionCodeNamesToAdd.Any())
-        {
-            await rolePermissionRepository.AddPermissionsToRoleByName(role.Value.Id, request.UpdateRoleModel.PermissionCodeNamesToAdd, cancellationToken);
-        }
-        
-        if (request.UpdateRoleModel.PermissionCodeNamesToRemove.Any())
-        {
-            await rolePermissionRepository.RemovePermissionsFromRoleByName(role.Value.Id, request.UpdateRoleModel.PermissionCodeNamesToRemove, cancellationToken);
-        }
-        
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Success();
     }

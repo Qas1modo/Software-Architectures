@@ -47,7 +47,7 @@ public sealed class GuestEntity : AggregateRoot, IAuditableEntity, ISoftDeletabl
     public bool Deleted { get; }
 
 
-    public static GuestEntity Create(Guid globalGuestId, FirstName guestFirstName,
+    public static GuestEntity Create(Guid globalGuestId, FirstName guestFirstName, 
         LastName guestLastName, RoomNumber guestRoomNumber, Email email)
     {
         var guestEntity = new GuestEntity(globalGuestId, guestFirstName, guestLastName, guestRoomNumber, email);

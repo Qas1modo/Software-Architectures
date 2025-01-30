@@ -23,7 +23,7 @@ public class AccessRequestCommandHandler(
     public async Task<Result> Handle(AccessRequestCommand request, CancellationToken cancellationToken)
     {
         var accessCard = await accessCardRepository.GetByIdAsync(request.RequestAccessModel.AccessCardId);
-        
+
         if (accessCard.HasNoValue)
         {
             return Result.Failure(DomainErrors.AccessCardErrors.NotFound);
@@ -34,34 +34,13 @@ public class AccessRequestCommandHandler(
         {
             return Result.Failure(DomainErrors.AccessCardErrors.NotFound);
         }
-        var accessCardPermissionsIdsFromRoles = accessCard.Value.Roles
-            .SelectMany(role => role.Permissions.Select(permission => permission.Id).ToHashSet())
-            .ToList();
 
         var accessClaimValue = accessClaim.Value;
-        var accessClaimPermissionsIds = accessClaimValue.AllowedPermissions.Select(permission => permission.Id).ToList();
-        
-        if (accessCardPermissionsIdsFromRoles.Intersect(accessClaimPermissionsIds).Any())
-        {
-            var accessLogEntry = AccessLogEntry.Create(accessCard.Value.Id, accessClaimValue.Id, DateTime.UtcNow, true);
-            accessLogEntryRepository.Insert(accessLogEntry);
-            await unitOfWork.SaveChangesAsync(cancellationToken);
-            
-            var responseModel = new RequestAccessResponseModel
-            {
-                AccessCardId = accessCard.Value.Id,
-                ClaimId = accessClaimValue.Id,
-                IsAccessAllowed = true
-            };
-            
-            await mediator.Publish(new AccessRequestApprovedDomainEvent(responseModel), cancellationToken);
-            
-            return Result.Success();
-        }
+        var accessClaimRolesIds = accessClaimValue.AllowedRoles.Select(role => role.Id).ToList();
 
-        var cardPermissionsIds = accessCard.Value.Permissions.Select(permission => permission.Id).ToList();
+        var cardRoleIds = accessCard.Value.Roles.Select(role => role.Id).ToList();
 
-        if (cardPermissionsIds.Intersect(accessClaimPermissionsIds).Any())
+        if (cardRoleIds.Intersect(accessClaimRolesIds).Any())
         {
             var accessLogEntry = AccessLogEntry.Create(accessCard.Value.Id, accessClaimValue.Id, DateTime.UtcNow, true);
             accessLogEntryRepository.Insert(accessLogEntry);
@@ -73,25 +52,25 @@ public class AccessRequestCommandHandler(
                 ClaimId = accessClaimValue.Id,
                 IsAccessAllowed = true
             };
-            
+
             await mediator.Publish(new AccessRequestApprovedDomainEvent(responseModel), cancellationToken);
-            
+
             return Result.Success();
         }
 
         var accessLogEntryDenied = AccessLogEntry.Create(accessCard.Value.Id, accessClaimValue.Id, DateTime.UtcNow, false);
         accessLogEntryRepository.Insert(accessLogEntryDenied);
         await unitOfWork.SaveChangesAsync(cancellationToken);
-        
+
         var responseModelFailure = new RequestAccessResponseModel
         {
             AccessCardId = accessCard.Value.Id,
             ClaimId = accessClaimValue.Id,
             IsAccessAllowed = false
         };
-            
+
         await mediator.Publish(new AccessRequestDeniedDomainEvent(responseModelFailure), cancellationToken);
-        
+
         return Result.Failure(DomainErrors.AccessClaimErrors.AccessForbidden);
 
     }

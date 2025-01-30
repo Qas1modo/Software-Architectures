@@ -20,7 +20,6 @@ public class GetCardQueryHandler(IAccessCardRepository accessCardRepository)
         {
             Id = accessCard.Value.Id,
             RoleNames = accessCard.Value.Roles.Select(r => r.RoleCodeName).ToList(),
-            PermissionNames = accessCard.Value.Permissions.Select(r => r.PermissionCodeName).ToList()
         };
     }
 }
