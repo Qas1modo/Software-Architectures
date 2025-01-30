@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BillingSystem.BL\BillingSystem.BL.csproj" />
-    <ProjectReference Include="..\BillingSystem.DAL.EFCore\BillingSystem.DAL.EFCore.csproj" />
+    <ProjectReference Include="..\BillingSystem.BL\BillingSystem.Application.csproj" />
+    <ProjectReference Include="..\BillingSystem.DAL.EFCore\BillingSystem.Domain.csproj" />
   </ItemGroup>
 
 </Project>

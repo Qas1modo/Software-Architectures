@@ -1,4 +1,4 @@
-﻿using BillingSystem.BL.Exceptions;
+﻿using BillingSystem.Application.Exceptions;
 using BillingSystem.DAL.EFCore.DomainErrors;
 using BillingSystem.DAL.EFCore.Primitives;
 using BillingSystem.Presentation.Exceptions;

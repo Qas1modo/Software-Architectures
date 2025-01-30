@@ -1,6 +1,6 @@
 ﻿using BillingSystem.DAL.EFCore.Primitives;
 
-namespace BillingSystem.BL.Exceptions;
+namespace BillingSystem.Application.Exceptions;
 
 public sealed class ValidationException(IEnumerable<Error> errors) : Exception("One or more validation failures has occurred.")
 {

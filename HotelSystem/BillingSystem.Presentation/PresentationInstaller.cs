@@ -1,4 +1,4 @@
-﻿using BillingSystem.BL.Installers;
+﻿using BillingSystem.Application.Installers;
 using BillingSystem.DAL.EFCore.Installers;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;

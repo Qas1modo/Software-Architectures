@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace BillingSystem.BL.Installers;
+namespace BillingSystem.Application.Installers;
 
 public static class BLInstaller
 {
