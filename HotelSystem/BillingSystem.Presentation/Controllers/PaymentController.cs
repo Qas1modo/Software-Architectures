@@ -1,18 +1,12 @@
-﻿using BillingSystem.Presentation.Constants;
-using BillingSystem.Presentation.Exceptions;
+﻿using BillingSystem.Presentation.Infrastructure;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace BillingSystem.Presentation.Controllers
 {
-    public class PaymentController : ControllerBase
+    public class PaymentController : ApiController
     {
-        private readonly IMediator _mediator;
-
-        public PaymentController(IMediator mediator)
+        public PaymentController(IMediator mediator) : base(mediator)
         {
-            _mediator = mediator;
         }
     }
 }

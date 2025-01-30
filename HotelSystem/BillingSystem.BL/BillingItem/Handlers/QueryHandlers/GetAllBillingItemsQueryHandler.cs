@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BillingSystem.Application.BillingItem.Queries;
 using BillingSystem.Application.Handlers.Base;
-using BillingSystem.DAL.EFCore.Entities;
 using BillingSystem.DAL.Infrastructure.QueryObjects.Interfaces.Base;
 using BillingSystem.Shared.Models.BillingItemModels;
 using MediatR;
@@ -10,9 +9,9 @@ namespace BillingSystem.Application.BillingItem.Handlers.QueryHandlers;
 
 public class GetAllBillingItemsQueryHandler : QueryHandler<GetAllBillingItemsQuery, List<BillingItemListModel>>, IRequestHandler<GetAllBillingItemsQuery, List<BillingItemListModel>>
 {
-    private readonly IQueryObject<BillingItemEntity> _billingItemQueryObject;
+    private readonly IQueryObject<Domain.Entities.BillingItem.BillingItem> _billingItemQueryObject;
 
-    public GetAllBillingItemsQueryHandler(IMapper mapper, IQueryObject<BillingItemEntity> billingItemQueryObject) : base(mapper)
+    public GetAllBillingItemsQueryHandler(IMapper mapper, IQueryObject<Domain.Entities.BillingItem.BillingItem> billingItemQueryObject) : base(mapper)
     {
         _billingItemQueryObject = billingItemQueryObject;
     }

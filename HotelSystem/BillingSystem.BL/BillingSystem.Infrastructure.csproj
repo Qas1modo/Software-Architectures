@@ -10,11 +10,13 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.1" />
+    <PackageReference Include="WolverineFx" Version="3.8.0" />
+    <PackageReference Include="WolverineFx.Http" Version="3.8.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BillingSystem.DAL.EFCore\BillingSystem.Domain.csproj" />
-    <ProjectReference Include="..\BillingSystem.DAL.Infrastructure\BillingSystem.Infrastructure.csproj" />
+    <ProjectReference Include="..\BillingSystem.DAL.Infrastructure\BillingSystem.Application.csproj" />
     <ProjectReference Include="..\BillingSystem.Shared\BillingSystem.Shared.csproj" />
   </ItemGroup>
 

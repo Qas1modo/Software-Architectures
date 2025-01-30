@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ErrorOr" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">
@@ -20,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BillingSystem.DAL.Infrastructure\BillingSystem.Infrastructure.csproj" />
+    <ProjectReference Include="..\BillingSystem.DAL.Infrastructure\BillingSystem.Application.csproj" />
   </ItemGroup>
 
 </Project>

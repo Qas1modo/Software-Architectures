@@ -1,14 +1,11 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using BillingSystem.Presentation.Infrastructure;
+using MediatR;
 
 namespace BillingSystem.Presentation.Controllers;
 
-public class InvoiceController : ControllerBase
+public class InvoiceController : ApiController
 {
-    private readonly IMediator _mediator;
-
-    public InvoiceController(IMediator mediator)
+    public InvoiceController(IMediator mediator) : base(mediator)
     {
-        _mediator = mediator;
     }
 }

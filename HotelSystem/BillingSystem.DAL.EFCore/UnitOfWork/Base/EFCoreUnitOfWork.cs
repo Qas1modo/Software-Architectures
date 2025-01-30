@@ -1,7 +1,8 @@
 ﻿using BillingSystem.DAL.EFCore.Database;
-using BillingSystem.DAL.EFCore.Entities;
 using BillingSystem.DAL.EFCore.Repositories.Base;
 using BillingSystem.DAL.Infrastructure.Repositories.Interfaces.Base;
+using BillingSystem.Domain.Entities.BillingItem;
+using BillingSystem.Domain.Entities.Invoice;
 
 namespace BillingSystem.DAL.EFCore.UnitOfWork.Base;
 
@@ -13,12 +14,12 @@ public class EFCoreUnitOfWork : IEFCoreUnitOfWork
     {
         _dbContext = dbContext;
 
-        BillingItemRepository = new EFCoreEntityRepository<BillingItemEntity>(_dbContext);
-        InvoiceRepository = new EFCoreEntityRepository<InvoiceEntity>(_dbContext);
+        BillingItemRepository = new EFCoreEntityRepository<BillingItem>(_dbContext);
+        InvoiceRepository = new EFCoreEntityRepository<Invoice>(_dbContext);
     }
 
-    public IEntityRepository<BillingItemEntity> BillingItemRepository { get; }
-    public IEntityRepository<InvoiceEntity> InvoiceRepository { get; }
+    public IEntityRepository<BillingItem> BillingItemRepository { get; }
+    public IEntityRepository<Invoice> InvoiceRepository { get; }
 
     public async Task Commit()
     {

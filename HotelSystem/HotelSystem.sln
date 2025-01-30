@@ -36,9 +36,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelServiceSystem.Applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingSystem", "BillingSystem\BillingSystem.csproj", "{7DEB0A90-F447-4B70-8C5F-EA03FDE0BEBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingSystem.Application", "BillingSystem.BL\BillingSystem.Application.csproj", "{F0B133B1-06D5-461A-A1AE-60FDE5CB5900}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingSystem.Infrastructure", "BillingSystem.BL\BillingSystem.Infrastructure.csproj", "{F0B133B1-06D5-461A-A1AE-60FDE5CB5900}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingSystem.Infrastructure", "BillingSystem.DAL.Infrastructure\BillingSystem.Infrastructure.csproj", "{0F00B693-AF61-4201-A12B-CCE3A94F3C67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingSystem.Application", "BillingSystem.DAL.Infrastructure\BillingSystem.Application.csproj", "{0F00B693-AF61-4201-A12B-CCE3A94F3C67}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingSystem.Domain", "BillingSystem.DAL.EFCore\BillingSystem.Domain.csproj", "{13FBECFD-4412-439C-A4D5-1170E1898499}"
 EndProject
