@@ -1,17 +1,17 @@
 ﻿using Inventory.Domain.Common;
 
-namespace BillingSystem.Domain.Entities.Invoice.ValueObjects;
+namespace BillingSystem.Domain.Entities.BillingItem.ValueObjects;
 
-public class InvoiceId : ValueObject
+public class BillingItemId : ValueObject
 {
     public int Value { get; private set; }
 
-    public InvoiceId(int value)
+    public BillingItemId(int value)
     {
         Value = value;
     }
 
-    public static InvoiceId Create(int value) => new InvoiceId(value);
+    public static BillingItemId Create(int value) => new BillingItemId(value);
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {

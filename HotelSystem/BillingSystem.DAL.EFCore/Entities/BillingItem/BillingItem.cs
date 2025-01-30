@@ -3,7 +3,7 @@ using Inventory.Domain.Common;
 
 namespace BillingSystem.Domain.Entities.BillingItem;
 
-public class BillingItem : AggregateRoot<CustomerId>
+public class BillingItem : AggregateRoot<BillingItemId>
 {
     public CustomerId CustomerId { get; private set; }
 
@@ -19,6 +19,8 @@ public class BillingItem : AggregateRoot<CustomerId>
 public static class BillingItemErrors
 {
     public const string ItemIdCannotBeDefault = nameof(ItemIdCannotBeDefault);
+    public const string CustomerIdCannotBeDefault = nameof(CustomerIdCannotBeDefault);
+    public const string InvoiceIdCannotBeDefault = nameof(InvoiceIdCannotBeDefault);
     public const string QuantityAmountCanNotBeZeroOrNegative = nameof(QuantityAmountCanNotBeZeroOrNegative);
     public const string UnitPriceCanNotBeZeroOrNegative = nameof(UnitPriceCanNotBeZeroOrNegative);
 }

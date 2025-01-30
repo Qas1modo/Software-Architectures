@@ -5,8 +5,6 @@ namespace BillingSystem.Domain.Entities.Invoice;
 
 public class Invoice : AggregateRoot<InvoiceId>
 {
-    public InvoiceId InvoiceId { get; set; }
-
     public FinalPrice FinalPrice { get; set; }
 
     public CurrencyCode CurrencyCode { get; set; }

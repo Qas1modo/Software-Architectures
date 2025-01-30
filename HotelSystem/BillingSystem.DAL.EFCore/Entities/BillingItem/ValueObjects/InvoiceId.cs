@@ -1,19 +1,24 @@
-﻿using Inventory.Domain.Common;
+﻿using ErrorOr;
+using Inventory.Domain.Common;
 
 namespace BillingSystem.Domain.Entities.BillingItem.ValueObjects;
 
 public class InvoiceId : ValueObject
 {
-    public Guid Value { get; private set; }
+    public int Value { get; private set; }
 
-    public InvoiceId(Guid value)
+    public InvoiceId(int value)
     {
         Value = value;
     }
 
-    public static InvoiceId CreateUnique() => new InvoiceId(Guid.NewGuid());
+    public static ErrorOr<InvoiceId> Create(int value)
+    {
+        if (value == default)
+            return Error.Validation(BillingItemErrors.InvoiceIdCannotBeDefault);
 
-    public static InvoiceId Create(Guid value) => new InvoiceId(value);
+        return new InvoiceId(value);
+    }
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {

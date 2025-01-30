@@ -1,4 +1,6 @@
-﻿using BillingSystem.DAL.EFCore.Entities.Interfaces;
+﻿using BillingSystem.DAL.EFCore.Entities.Base;
+using BillingSystem.DAL.EFCore.Entities.Interfaces;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Reflection;
@@ -7,6 +9,13 @@ namespace BillingSystem.DAL.EFCore.Database;
 
 public class ApplicationDbContext : DbContext
 {
+    private readonly IMediator _mediator;
+
+    public ApplicationDbContext(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     public ApplicationDbContext()
     {
     }
@@ -27,6 +36,8 @@ public class ApplicationDbContext : DbContext
         UpdateAuditableEntities(utcNow);
 
         UpdateSoftDeletableEntities(utcNow);
+
+        await PublishDomainEvents(cancellationToken);
 
         return await base.SaveChangesAsync(cancellationToken);
     }
@@ -79,5 +90,21 @@ public class ApplicationDbContext : DbContext
 
             UpdateDeletedEntityEntryReferencesToUnchanged(referenceEntry.TargetEntry);
         }
+    }
+
+    private async Task PublishDomainEvents(CancellationToken cancellationToken)
+    {
+        List<EntityEntry<BaseEntity>> aggregateRoots = ChangeTracker
+            .Entries<BaseEntity>()
+            .Where(entityEntry => entityEntry.Entity.DomainEvents.Count != 0)
+            .ToList();
+
+        var domainEvents = aggregateRoots.SelectMany(entityEntry => entityEntry.Entity.DomainEvents).ToList();
+
+        aggregateRoots.ForEach(entityEntry => entityEntry.Entity.ClearEvents());
+
+        IEnumerable<Task> tasks = domainEvents.Select(domainEvent => _mediator.Publish(domainEvent, cancellationToken));
+
+        await Task.WhenAll(tasks);
     }
 }
