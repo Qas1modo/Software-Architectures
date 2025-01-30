@@ -1,8 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BillingSystem.Presentation.Controllers;
 
 public class BillingItemController : ControllerBase
 {
-    // TODO Add methods
+    private readonly IMediator _mediator;
+
+    public BillingItemController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
 }

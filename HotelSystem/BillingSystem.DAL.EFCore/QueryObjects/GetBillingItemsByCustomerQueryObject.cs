@@ -13,7 +13,7 @@ public class GetBillingItemsByCustomerQueryObject : EFCoreQueryObject<BillingIte
 
     public GetBillingItemsByCustomerQueryObject(ApplicationDbContext dbContext) : base(dbContext) { }
 
-    public IQueryObject<BillingItemEntity> UseFilter(int customerId) 
+    public IQueryObject<BillingItemEntity> UseFilter(Guid customerId) 
     {
         Filter(billingItem => billingItem.CustomerId == customerId);
         _isFilterUsed = true;

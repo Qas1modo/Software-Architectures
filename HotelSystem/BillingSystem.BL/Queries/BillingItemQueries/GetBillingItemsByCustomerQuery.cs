@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BillingSystem.BL.Queries.BillingItemQueries;
 
-public record GetBillingItemsByCustomerQuery(int CustomerId, int Page = -1, int PageSize = -1) : IRequest<List<BillingItemListModel>>;
+public record GetBillingItemsByCustomerQuery(Guid CustomerId, int Page = -1, int PageSize = -1) : IRequest<List<BillingItemListModel>>;
