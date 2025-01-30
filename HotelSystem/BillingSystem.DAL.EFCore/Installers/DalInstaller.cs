@@ -1,11 +1,11 @@
 ﻿using BillingSystem.DAL.EFCore.Database;
-using BillingSystem.DAL.EFCore.Entities;
 using BillingSystem.DAL.EFCore.QueryObjects;
 using BillingSystem.DAL.EFCore.QueryObjects.Base;
 using BillingSystem.DAL.EFCore.UnitOfWork;
 using BillingSystem.DAL.Infrastructure.QueryObjects.Interfaces;
 using BillingSystem.DAL.Infrastructure.QueryObjects.Interfaces.Base;
 using BillingSystem.DAL.Infrastructure.UnitOfWork.Interfaces;
+using BillingSystem.Domain.Entities.BillingItem;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,7 +26,7 @@ public static class DalInstaller
             return new EFCoreUnitOfWorkProvider(new Func<ApplicationDbContext>(() => services.GetRequiredService<ApplicationDbContext>()));
         });
 
-        services.AddTransient<IGetBillingItemsByCustomerQueryObject<BillingItemEntity>, GetBillingItemsByCustomerQueryObject>();
+        services.AddTransient<IGetBillingItemsByCustomerQueryObject<BillingItem>, GetBillingItemsByCustomerQueryObject>();
 
         services.AddTransient(typeof(IQueryObject<>), typeof(EFCoreQueryObject<>));
 

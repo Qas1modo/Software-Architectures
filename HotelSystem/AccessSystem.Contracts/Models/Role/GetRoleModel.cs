@@ -1,0 +1,12 @@
+using AccessSystem.Contracts.Enumerations;
+
+namespace AccessSystem.Contracts.Models.Role;
+
+public class GetRoleModel
+{
+    public Guid? RoleId { get; set; }
+    public string? RoleCodeName { get; set; }
+   
+    public int Page { get; set; } = 0;
+    public int PageSize { get; set; } = 20;
+}

@@ -3,6 +3,7 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Wolverine;
 using Wolverine.Http;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,13 @@ builder.AddServiceDefaults();
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+builder.Host.UseWolverine(opts =>
+{
+    opts.MultipleHandlerBehavior = MultipleHandlerBehavior.Separated;
+    opts.Durability.MessageIdentity = MessageIdentity.IdAndDestination;
+    opts.Policies.AutoApplyTransactions();
+});
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -36,6 +44,8 @@ builder.Services.AddOpenTelemetry()
           .AddAspNetCoreInstrumentation()
           .AddHttpClientInstrumentation()
           .AddOtlpExporter());
+
+builder.Services.AddWolverineHttp();
 
 var connectionString = builder.Configuration.GetConnectionString("BillingDatabase")
     ?? throw new ArgumentException("Connection string was not found");

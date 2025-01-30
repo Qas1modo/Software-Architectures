@@ -398,3 +398,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/HotelSystem/HotelServiceSystem.Infrastructure/Database/HotelServiceSystem.db
+/HotelSystem/HotelServiceSystem.Infrastructure/Database/HotelServiceSystem.db-shm
+/HotelSystem/HotelServiceSystem.Infrastructure/Database/HotelServiceSystem.db-wal

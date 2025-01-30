@@ -1,4 +1,4 @@
-﻿using BillingSystem.BL.Installers;
+﻿using BillingSystem.Application.Installers;
 using BillingSystem.DAL.EFCore.Installers;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
@@ -11,7 +11,7 @@ public static class PresentationInstaller
     {
         services.InstallDAL(connectionString);
         services.InstallBL();
-        services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+        //services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
         return services;
     }
