@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BillingSystem\BillingSystem.csproj" />
+    <ProjectReference Include="..\RoomManagementSystem\RoomManagementSystem.API\RoomManagementSystem.API.csproj" />
   </ItemGroup>
 
 </Project>
