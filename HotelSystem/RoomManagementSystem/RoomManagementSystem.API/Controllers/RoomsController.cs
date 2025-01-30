@@ -6,17 +6,17 @@ using RoomManagementSystem.Contracts.Models.RoomModels;
 namespace RoomManagementSystem.API.Controllers
 {
     [Route("api/[controller]")]
-    public class RoomController : Controller
+    public class RoomsController : Controller
     {
         private readonly IMediator _mediator;
 
-        public RoomController(IMediator mediator)
+        public RoomsController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRooms([FromQuery] int page = -1, [FromQuery] int pageSize = -1)
+        public async Task<IActionResult> GetRooms([FromQuery] int page = 0, [FromQuery] int pageSize = 20)
         {
             var result = await _mediator.Send(new GetRoomsQuery(page, pageSize));
             return Ok(result);
@@ -24,7 +24,7 @@ namespace RoomManagementSystem.API.Controllers
 
         [HttpGet("search")]
         public async Task<IActionResult> SearchAvailable([FromQuery] RoomFilterModel filter,
-            [FromQuery] int page = -1, [FromQuery] int pageSize = -1)
+            [FromQuery] int page = 0, [FromQuery] int pageSize = 20)
         {
             var query = new SearchAvailableRoomsQuery(filter, page, pageSize);
             var result = await _mediator.Send(query);

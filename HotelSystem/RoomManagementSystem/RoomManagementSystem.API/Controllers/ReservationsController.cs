@@ -7,11 +7,11 @@ using RoomManagementSystem.BL.Queries.ReservationQueries;
 namespace RoomManagementSystem.API.Controllers
 {
     [Route("api/[controller]")]
-    public class ReservationController : Controller
+    public class ReservationsController : Controller
     {
         private readonly IMediator _mediator;
 
-        public ReservationController(IMediator mediator)
+        public ReservationsController(IMediator mediator)
         {
             _mediator = mediator;
         }
