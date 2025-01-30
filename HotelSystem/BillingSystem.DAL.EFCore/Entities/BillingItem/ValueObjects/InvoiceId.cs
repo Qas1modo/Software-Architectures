@@ -5,14 +5,14 @@ namespace BillingSystem.Domain.Entities.BillingItem.ValueObjects;
 
 public class InvoiceId : ValueObject
 {
-    public int Value { get; private set; }
+    public Guid Value { get; private set; }
 
-    public InvoiceId(int value)
+    public InvoiceId(Guid value)
     {
         Value = value;
     }
 
-    public static ErrorOr<InvoiceId> Create(int value)
+    public static ErrorOr<InvoiceId> Create(Guid value)
     {
         if (value == default)
             return Error.Validation(BillingItemErrors.InvoiceIdCannotBeDefault);

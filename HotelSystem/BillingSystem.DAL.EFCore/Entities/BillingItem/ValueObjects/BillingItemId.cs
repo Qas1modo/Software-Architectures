@@ -4,14 +4,14 @@ namespace BillingSystem.Domain.Entities.BillingItem.ValueObjects;
 
 public class BillingItemId : ValueObject
 {
-    public int Value { get; private set; }
+    public Guid Value { get; private set; }
 
-    public BillingItemId(int value)
+    public BillingItemId(Guid value)
     {
         Value = value;
     }
 
-    public static BillingItemId Create(int value) => new BillingItemId(value);
+    public static BillingItemId Create(Guid value) => new BillingItemId(value);
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {

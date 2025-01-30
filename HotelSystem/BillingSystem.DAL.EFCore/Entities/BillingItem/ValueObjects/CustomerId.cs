@@ -5,14 +5,14 @@ namespace BillingSystem.Domain.Entities.BillingItem.ValueObjects;
 
 public class CustomerId : ValueObject
 {
-    public int Value { get; private set; }
+    public Guid Value { get; private set; }
 
-    public CustomerId(int value)
+    public CustomerId(Guid value)
     {
         Value = value;
     }
 
-    public static CustomerId Create(int value) => new CustomerId(value);
+    public static CustomerId Create(Guid value) => new CustomerId(value);
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {

@@ -4,14 +4,14 @@ namespace BillingSystem.Domain.Entities.Invoice.ValueObjects;
 
 public class InvoiceId : ValueObject
 {
-    public int Value { get; private set; }
+    public Guid Value { get; private set; }
 
-    public InvoiceId(int value)
+    public InvoiceId(Guid value)
     {
         Value = value;
     }
 
-    public static InvoiceId Create(int value) => new InvoiceId(value);
+    public static InvoiceId Create(Guid value) => new InvoiceId(value);
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {
