@@ -8,19 +8,17 @@ using SharedKernel.Messages;
 
 namespace AccessSystem.Api.Handlers;
 
-public class GuestCheckedAccessCardHandler(IMediator mediator)
+public class GuestCheckedInHandler(IMediator mediator)
 {
-    private readonly IMediator mediator = mediator;
-
-    public async Task Handle(GuestCheckedInMessage guestCheckedOutMessage)
+    public async Task Handle(GuestCheckedInMessage guestCheckedInMessage)
     {
         var createAccessCardModel = new CreateAccessCardModel()
         {
-            HolderId = guestCheckedOutMessage.GlobalGuestId,
-            RoleNames = ["Room" + guestCheckedOutMessage.GuestRoomNumber]
+            HolderId = guestCheckedInMessage.GlobalGuestId,
+            RoleNames = ["Room" + guestCheckedInMessage.GuestRoomNumber]
         };
 
-        var resetCardResult = await Result.Create(guestCheckedOutMessage.GlobalGuestId, DomainErrors.General.UnProcessableRequest)
+        var resetCardResult = await Result.Create(guestCheckedInMessage.GlobalGuestId, DomainErrors.General.UnProcessableRequest)
             .Map(_ => new CreateAccessCardCommand(createAccessCardModel))
             .Bind(command => mediator.Send(command));
 

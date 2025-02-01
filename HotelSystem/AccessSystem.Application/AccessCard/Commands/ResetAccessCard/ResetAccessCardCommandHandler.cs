@@ -11,7 +11,7 @@ public class ResetAccessCardCommandHandler(IAccessCardRepository accessCardRepos
 {
     public async Task<Result> Handle(ResetAccessCardCommand request, CancellationToken cancellationToken)
     {
-        Guid cardId = request.ResetAccessCardModel.Id ?? Guid.Empty;
+        var cardId = request.ResetAccessCardModel.Id ?? Guid.Empty;
         if (request.ResetAccessCardModel.HolderId is not null)
         {
             var result = await accessCardRepository.GetByHolderId(request.ResetAccessCardModel.HolderId.Value);

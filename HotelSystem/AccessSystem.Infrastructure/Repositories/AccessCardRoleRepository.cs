@@ -6,12 +6,9 @@ using SharedKernel.Infrastructure.Repositories;
 
 namespace AccessSystem.Infrastructure.Repositories;
 
-internal class AccessCardRoleRepository : GenericRepository<AccessCardRole>, IAccessCardRoleRepository
+internal class AccessCardRoleRepository(IDbContext dbContext)
+    : GenericRepository<AccessCardRole>(dbContext), IAccessCardRoleRepository
 {
-    public AccessCardRoleRepository(IDbContext dbContext) : base(dbContext)
-    {
-    }
-
     public async Task ResetRoles(Guid cardId, CancellationToken cancellationToken)
     {
         var roles = await DbContext.Set<AccessCardRole>().Where(accessCardRole => accessCardRole.AccessCardId == cardId).ToArrayAsync(cancellationToken);
@@ -36,7 +33,7 @@ internal class AccessCardRoleRepository : GenericRepository<AccessCardRole>, IAc
             AccessCardId = cardId,
             RoleId = role.Id
         }).ToArrayAsync(cancellationToken);
-
+        
         await DbContext.Set<AccessCardRole>().AddRangeAsync(roles, cancellationToken);
     }
 

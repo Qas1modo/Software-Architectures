@@ -19,7 +19,7 @@ public class RequestAccessHandler(IMediator mediator)
         };
 
         var result = await Result.Create(accessRequestedMessage, DomainErrors.General.UnProcessableRequest)
-            .Map(request => new AccessRequestCommand(accessRequestCommandModel))
+            .Map(_ => new AccessRequestCommand(accessRequestCommandModel))
             .Bind(command => mediator.Send(command));
 
         if (result.IsFailure)

@@ -1,4 +1,3 @@
-using AccessSystem.Domain.Events.AccessCard;
 using SharedKernel.Domain.Core.Abstractions;
 using SharedKernel.Domain.Core.Primitives;
 
@@ -34,8 +33,6 @@ public class AccessCardEntity : AggregateRoot, IAuditableEntity, ISoftDeletableE
     public static AccessCardEntity Create()
     {
         var accessCard = new AccessCardEntity();
-        
-        accessCard.AddDomainEvent(new AccessCardCreatedDomainEvent(accessCard));
         
         return accessCard;
     }

@@ -20,7 +20,7 @@ public class GetAccessClaimQueryHandler(IAccessClaimRepository accessClaimReposi
         return new AccessClaimResponseModel
         {
             Id = accessClaim.Value.Id,
-            AllowedRoles = accessClaim.Value.AllowedRoles.Select(p => p.RoleCodeName).ToList(),
+            AllowedRoles = accessClaim.Value.AllowedRoles.Select(p => p.RoleCodeName).ToList()
         };
     }
 }

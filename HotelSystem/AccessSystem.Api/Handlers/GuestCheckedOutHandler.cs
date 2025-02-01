@@ -8,10 +8,8 @@ using SharedKernel.Messages;
 
 namespace AccessSystem.Api.Handlers;
 
-public class GuestCheckedOutResetCardHandler(IMediator mediator)
+public class GuestCheckedOutHandler(IMediator mediator)
 {
-    private readonly IMediator mediator = mediator;
-
     public async Task Handle(GuestCheckedOutMessage guestCheckedOutMessage)
     {
         var resetCardModel = new ResetAccessCardModel
