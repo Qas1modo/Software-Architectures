@@ -8,12 +8,9 @@ using SharedKernel.Infrastructure.Repositories;
 
 namespace AccessSystem.Infrastructure.Repositories;
 
-public class AccessCardRepository : GenericRepository<AccessCardEntity>, IAccessCardRepository
+public class AccessCardRepository(IDbContext dbContext)
+    : GenericRepository<AccessCardEntity>(dbContext), IAccessCardRepository
 {
-    public AccessCardRepository(IDbContext dbContext) : base(dbContext)
-    {
-    }
-
     public new async Task<Maybe<AccessCardEntity>> GetByIdAsync(Guid id)
     {
         if (id == Guid.Empty)
@@ -36,7 +33,9 @@ public class AccessCardRepository : GenericRepository<AccessCardEntity>, IAccess
 
     public async Task<Maybe<AccessCardResponseModel>> GetByHolderId(Guid id)
     {
-        var query = DbContext.Set<AccessCardEntity>().AsQueryable();
+        var query = DbContext.Set<AccessCardEntity>()
+            .Include(card => card.Roles)
+            .AsQueryable();
 
         var result = await query.FirstOrDefaultAsync(card => card.HolderId == id);
 
@@ -56,6 +55,7 @@ public class AccessCardRepository : GenericRepository<AccessCardEntity>, IAccess
     public new async Task Remove(AccessCardEntity entity)
     {
         var accessCardRoles = DbContext.Set<AccessCardRole>().AsQueryable();
+        
         var cardRoles = await accessCardRoles.Where(accessCardRole => accessCardRole.AccessCardId == entity.Id).ToListAsync();
         DbContext.Set<AccessCardRole>().RemoveRange(cardRoles);
         

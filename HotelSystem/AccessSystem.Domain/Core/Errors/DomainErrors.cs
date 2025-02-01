@@ -21,6 +21,8 @@ namespace AccessSystem.Domain.Core.Errors
         public static class AccessCardErrors
         {
             public static Error NotFound => new("AccessCardErrors.NotFound", "No such access card found");
+            
+            public static Error RoleAlreadyAssigned => new("AccessCardErrors.RoleAlreadyAssigned", "Role is already assigned to the access card");
         }
 
         public static class AccessClaimErrors
