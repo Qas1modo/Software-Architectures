@@ -1,0 +1,20 @@
+﻿using BillingSystem.Api.Exceptions;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Domain.Core.Primitives;
+
+namespace BillingSystem.Api.Common;
+
+[Route("api")]
+public abstract class ApiController : ControllerBase
+{
+    protected ApiController(IMediator mediator) => Mediator = mediator;
+
+    protected IMediator Mediator { get; }
+
+    protected IActionResult BadRequest(Error error) => BadRequest(new ApiErrorResponse([error]));
+
+    protected new IActionResult Ok(object value) => base.Ok(value);
+
+    protected new IActionResult NotFound() => base.NotFound();
+}
