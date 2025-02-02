@@ -20,7 +20,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BillingSystem.Infrastructure\BillingSystem.Infrastructure.csproj" />
+    <ProjectReference Include="..\BillingSystem.Application\BillingSystem.Application.csproj" />
     <ProjectReference Include="..\HotelSystem.ServiceDefaults\HotelSystem.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

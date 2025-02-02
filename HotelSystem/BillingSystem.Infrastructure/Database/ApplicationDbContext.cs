@@ -8,21 +8,9 @@ using System.Reflection;
 
 namespace BillingSystem.Infrastructure.Database;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IMediator mediator) 
+    : DbContext(options)
 {
-    private readonly IMediator _mediator;
-
-    public ApplicationDbContext(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
-    public ApplicationDbContext()
-    {
-    }
-
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -103,7 +91,7 @@ public class ApplicationDbContext : DbContext
 
         aggregateRoots.ForEach(entityEntry => entityEntry.Entity.ClearDomainEvents());
 
-        IEnumerable<Task> tasks = domainEvents.Select(domainEvent => _mediator.Publish(domainEvent, cancellationToken));
+        IEnumerable<Task> tasks = domainEvents.Select(domainEvent => mediator.Publish(domainEvent, cancellationToken));
 
         await Task.WhenAll(tasks);
     }
