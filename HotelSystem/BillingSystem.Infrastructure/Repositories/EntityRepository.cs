@@ -1,8 +1,8 @@
-﻿using BillingSystem.DAL.EFCore.Database;
+﻿using BillingSystem.Infrastructure.Database;
 using BillingSystem.Domain.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
-namespace BillingSystem.DAL.EFCore.Repositories.Base;
+namespace BillingSystem.Infrastructure.Repositories.Base;
 
 public class EntityRepository<TEntity> : IEntityRepository<TEntity> where TEntity : class
 {

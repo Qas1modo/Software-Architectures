@@ -6,7 +6,7 @@ using SharedKernel.Domain.Core.Events;
 using SharedKernel.Domain.Core.Primitives;
 using System.Reflection;
 
-namespace BillingSystem.DAL.EFCore.Database;
+namespace BillingSystem.Infrastructure.Database;
 
 public class ApplicationDbContext : DbContext
 {

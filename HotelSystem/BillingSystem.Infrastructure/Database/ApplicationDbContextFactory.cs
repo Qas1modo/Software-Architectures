@@ -1,4 +1,4 @@
-﻿using BillingSystem.DAL.EFCore.Database;
+﻿using BillingSystem.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 

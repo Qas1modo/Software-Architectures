@@ -1,10 +1,16 @@
 using BillingSystem.Api;
 using BillingSystem.Api.Middlewares;
 using HotelSystem.ServiceDefaults;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Wolverine;
+using Wolverine.Http;
 using Wolverine.Transports.Tcp;
 
 var builder = WebApplication.CreateBuilder(args);
+const string serviceName = "BillingSystemService";
 
 builder.AddServiceDefaults();
 
@@ -16,8 +22,6 @@ var connectionString = builder.Configuration.GetConnectionString("BillingDatabas
 builder.Services.ConfigureServices(connectionString);
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
 
 builder.Host.UseWolverine(opts =>
 {
@@ -36,6 +40,32 @@ builder.Host.UseWolverine(opts =>
         opts.PublishAllMessages().ToPort(port);
     }
 });
+
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Logging.AddOpenTelemetry(options =>
+{
+    options
+        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName))
+        .AddOtlpExporter();
+});
+
+builder.Services.AddOpenTelemetry()
+      .ConfigureResource(resource => resource.AddService(serviceName))
+      .WithTracing(tracing => tracing
+          .AddAspNetCoreInstrumentation()
+          .AddHttpClientInstrumentation()
+          .AddEntityFrameworkCoreInstrumentation()
+          .AddSource("Wolverine")
+          .AddOtlpExporter())
+      .WithMetrics(metrics => metrics
+          .AddAspNetCoreInstrumentation()
+          .AddHttpClientInstrumentation()
+          .AddOtlpExporter());
+
+builder.Services.AddWolverineHttp();
 
 var app = builder.Build();
 

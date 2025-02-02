@@ -1,4 +1,4 @@
-﻿using BillingSystem.DAL.EFCore.Database;
+﻿using BillingSystem.Infrastructure.Database;
 using BillingSystem.Domain.UnitOfWork.Interfaces;
 using BillingSystem.Infrastructure.UnitOfWork.Base;
 

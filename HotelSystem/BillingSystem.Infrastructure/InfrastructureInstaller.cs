@@ -1,5 +1,5 @@
-﻿using BillingSystem.DAL.EFCore.Database;
-using BillingSystem.Domain.UnitOfWork.Interfaces;
+﻿using BillingSystem.Domain.UnitOfWork.Interfaces;
+using BillingSystem.Infrastructure.Database;
 using BillingSystem.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

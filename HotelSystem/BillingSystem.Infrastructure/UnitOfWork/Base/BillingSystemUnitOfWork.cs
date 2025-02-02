@@ -1,9 +1,9 @@
-﻿using BillingSystem.DAL.EFCore.Database;
-using BillingSystem.DAL.EFCore.Repositories.Base;
+﻿using BillingSystem.Infrastructure.Database;
 using BillingSystem.Domain.Entities.BillingItem;
 using BillingSystem.Domain.Entities.Invoice;
 using BillingSystem.Domain.Repositories.Base;
 using BillingSystem.Domain.UnitOfWork.Interfaces;
+using BillingSystem.Infrastructure.Repositories.Base;
 
 namespace BillingSystem.Infrastructure.UnitOfWork.Base;
 
