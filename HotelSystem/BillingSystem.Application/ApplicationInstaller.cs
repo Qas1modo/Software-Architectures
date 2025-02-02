@@ -1,6 +1,15 @@
-﻿namespace BillingSystem.Application
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+
+namespace BillingSystem.Application
 {
-    internal class ApplicationInstaller
+    public static class ApplicationInstaller
     {
+        public static IServiceCollection ApplicationInstall(this IServiceCollection services)
+        {
+            services.AddMediatR(new MediatRServiceConfiguration()
+                .RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            return services;
+        }
     }
 }
