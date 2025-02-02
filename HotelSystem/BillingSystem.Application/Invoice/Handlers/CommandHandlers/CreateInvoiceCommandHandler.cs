@@ -8,7 +8,7 @@ namespace BillingSystem.Application.Invoice.Handlers.CommandHandlers;
 public class CreateInvoiceCommandHandler(IUnitOfWorkProvider<IUnitOfWork> unitOfWorkProvider)
     : ICommandHandler<CreateInvoiceCommand, Result>
 {
-    public override async Task<Result> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
     {
         // TODO Add logic
         return Result.Success();

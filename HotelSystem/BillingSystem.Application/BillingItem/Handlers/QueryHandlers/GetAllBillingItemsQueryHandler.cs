@@ -11,7 +11,7 @@ namespace BillingSystem.Application.BillingItem.Handlers.QueryHandlers;
 public class GetAllBillingItemsQueryHandler (IUnitOfWorkProvider<IUnitOfWork> unitOfWorkProvider, IMapper mapper)
     : IQueryHandler<GetAllBillingItemsQuery, Maybe<List<BillingItemListModel>>>
 {
-    public override async Task<Maybe<List<BillingItemListModel>>> Handle(GetAllBillingItemsQuery request, CancellationToken cancellationToken)
+    public async Task<Maybe<List<BillingItemListModel>>> Handle(GetAllBillingItemsQuery request, CancellationToken cancellationToken)
     {
         using var unitOfWork = unitOfWorkProvider.Create();
         var billingItemQuery = unitOfWork.BillingItemRepository.GetQuery();

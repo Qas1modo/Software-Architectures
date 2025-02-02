@@ -11,7 +11,7 @@ namespace BillingSystem.Application.Invoice.Handlers.QueryHandlers;
 public class GetAllInvoiceQueryHandler (IUnitOfWorkProvider<IUnitOfWork> unitOfWorkProvider, IMapper mapper)
     : IQueryHandler<GetAllInvoiceQuery, Maybe<List<InvoiceListModel>>>
 {
-    public override async Task<Maybe<List<InvoiceListModel>>> Handle(GetAllInvoiceQuery request, CancellationToken cancellationToken)
+    public async Task<Maybe<List<InvoiceListModel>>> Handle(GetAllInvoiceQuery request, CancellationToken cancellationToken)
     {
         using var unitOfWork = unitOfWorkProvider.Create();
         var invoiceQuery = unitOfWork.InvoiceRepository.GetQuery();

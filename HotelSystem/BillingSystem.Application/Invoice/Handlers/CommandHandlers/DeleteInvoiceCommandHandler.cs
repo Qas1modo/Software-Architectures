@@ -8,7 +8,7 @@ namespace BillingSystem.Application.Invoice.Handlers.CommandHandlers;
 public class DeleteInvoiceCommandHandler (IUnitOfWorkProvider<IUnitOfWork> unitOfWorkProvider)
     : ICommandHandler<DeleteInvoiceCommand, Result>
 {
-    public override async Task<Result> Handle(DeleteInvoiceCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteInvoiceCommand request, CancellationToken cancellationToken)
     {
         using var unitOfWork = unitOfWorkProvider.Create();
         await unitOfWork.InvoiceRepository.RemoveAsync(request.Id);

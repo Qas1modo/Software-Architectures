@@ -4,4 +4,4 @@ using SharedKernel.Domain.Core.Primitives.Maybe;
 
 namespace BillingSystem.Application.Invoice.Queries;
 
-public record GetInvoiceQuery(int InvoiceId) : IQuery<Maybe<InvoiceDetailModel>>;
+public record GetInvoiceQuery(Guid InvoiceId) : IQuery<Maybe<InvoiceDetailModel>>;

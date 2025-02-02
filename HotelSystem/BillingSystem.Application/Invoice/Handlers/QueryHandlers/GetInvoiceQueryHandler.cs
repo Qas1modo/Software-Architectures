@@ -10,7 +10,7 @@ namespace BillingSystem.Application.Invoice.Handlers.QueryHandlers;
 internal class GetInvoiceQueryHandler(IUnitOfWorkProvider<IUnitOfWork> unitOfWorkProvider, IMapper mapper)
     : IQueryHandler<GetInvoiceQuery, Maybe<InvoiceDetailModel>>
 {
-    public override async Task<Maybe<InvoiceDetailModel>> Handle(GetInvoiceQuery request, CancellationToken cancellationToken)
+    public async Task<Maybe<InvoiceDetailModel>> Handle(GetInvoiceQuery request, CancellationToken cancellationToken)
     {
         using var unitOfWork = unitOfWorkProvider.Create();
         var result = await unitOfWork.InvoiceRepository.GetByIdAsync(request.InvoiceId);

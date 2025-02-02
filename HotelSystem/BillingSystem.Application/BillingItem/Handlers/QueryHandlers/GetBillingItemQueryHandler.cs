@@ -10,7 +10,7 @@ namespace BillingSystem.Application.BillingItem.Handlers.QueryHandlers;
 public class GetBillingItemQueryHandler (IMapper mapper, IUnitOfWorkProvider<IUnitOfWork> unitOfWorkProvider)
     : IQueryHandler<GetBillingItemQuery, Maybe<BillingItemDetailModel>>
 {
-    public override async Task<Maybe<BillingItemDetailModel>> Handle(GetBillingItemQuery request, CancellationToken cancellationToken)
+    public async Task<Maybe<BillingItemDetailModel>> Handle(GetBillingItemQuery request, CancellationToken cancellationToken)
     {
         using var unitOfWork = unitOfWorkProvider.Create();
         var result = await unitOfWork.BillingItemRepository.GetByIdAsync(request.BillingItemId);

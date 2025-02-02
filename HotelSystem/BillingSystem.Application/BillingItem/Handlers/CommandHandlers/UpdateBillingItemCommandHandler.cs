@@ -8,9 +8,9 @@ namespace BillingSystem.Application.BillingItem.Handlers.CommandHandlers;
 public class UpdateBillingItemCommandHandler (IUnitOfWorkProvider<IUnitOfWork> unitOfWorkProvider)
     : ICommandHandler<UpdateBillingItemCommand, Result>
 {
-    public override async Task<Result> Handle(UpdateBillingItemCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateBillingItemCommand request, CancellationToken cancellationToken)
     {
         // TODO Add logic
-        return null;
+        return Result.Success();
     }
 }
