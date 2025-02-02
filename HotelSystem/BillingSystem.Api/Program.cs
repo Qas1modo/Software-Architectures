@@ -45,25 +45,6 @@ builder.Host.UseWolverine(opts =>
 builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Logging.AddOpenTelemetry(options =>
-{
-    options
-        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName))
-        .AddOtlpExporter();
-});
-
-builder.Services.AddOpenTelemetry()
-      .ConfigureResource(resource => resource.AddService(serviceName))
-      .WithTracing(tracing => tracing
-          .AddAspNetCoreInstrumentation()
-          .AddHttpClientInstrumentation()
-          .AddEntityFrameworkCoreInstrumentation()
-          .AddSource("Wolverine")
-          .AddOtlpExporter())
-      .WithMetrics(metrics => metrics
-          .AddAspNetCoreInstrumentation()
-          .AddHttpClientInstrumentation()
-          .AddOtlpExporter());
 
 builder.Services.AddWolverineHttp();
 

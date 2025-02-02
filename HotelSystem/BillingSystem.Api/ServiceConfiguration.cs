@@ -17,7 +17,7 @@ public static class ServiceConfiguration
         {
             swaggerGenOptions.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Access System API",
+                Title = "Billing system API",
                 Version = "v1"
             });
 
