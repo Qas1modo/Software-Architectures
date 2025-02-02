@@ -35,7 +35,7 @@ public class InvoiceController : ApiController
             .Bind(command => Mediator.Send(command))
             .Match(Ok, BadRequest);
 
-    [HttpPost(ApiRoutes.Invoice.UpdateInvoice)]
+    [HttpPut(ApiRoutes.Invoice.UpdateInvoice)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Put(InvoiceUpdateModel updateInvoice) =>
@@ -44,7 +44,7 @@ public class InvoiceController : ApiController
             .Bind(command => Mediator.Send(command))
             .Match(Ok, BadRequest);
 
-    [HttpPut(ApiRoutes.Invoice.DeleteInvoice)]
+    [HttpDelete(ApiRoutes.Invoice.DeleteInvoice)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete(Guid invoiceId) =>

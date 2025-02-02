@@ -35,7 +35,7 @@ public class BillingItemController : ApiController
             .Bind(command => Mediator.Send(command))
             .Match(Ok, BadRequest);
 
-    [HttpPost(ApiRoutes.BillingItems.UpdateBillingItem)]
+    [HttpPut(ApiRoutes.BillingItems.UpdateBillingItem)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Put(BillinItemUpdateModel updateBillingItem) =>
@@ -44,7 +44,7 @@ public class BillingItemController : ApiController
             .Bind(command => Mediator.Send(command))
             .Match(Ok, BadRequest);
 
-    [HttpPut(ApiRoutes.BillingItems.DeleteBillingItem)]
+    [HttpDelete(ApiRoutes.BillingItems.DeleteBillingItem)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete(Guid billingItemId) =>

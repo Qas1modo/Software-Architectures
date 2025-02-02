@@ -25,7 +25,7 @@ public class PaymentController : ApiController
     }
 
 
-    [HttpPost(ApiRoutes.Payment.GetPaymentRedirectUrl)]
+    [HttpGet(ApiRoutes.Payment.GetPaymentRedirectUrl)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetRedirectUrl(Guid invoiceId)
