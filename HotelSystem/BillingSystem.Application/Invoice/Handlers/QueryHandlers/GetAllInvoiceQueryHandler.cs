@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BillingSystem.Application.Invoice.Queries;
+﻿using BillingSystem.Application.Invoice.Queries;
 using BillingSystem.Domain.UnitOfWork.Interfaces;
 using BillingSystem.Shared.Models.Invoice;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +7,7 @@ using SharedKernel.Domain.Core.Primitives.Maybe;
 
 namespace BillingSystem.Application.Invoice.Handlers.QueryHandlers;
 
-public class GetAllInvoiceQueryHandler (IUnitOfWorkProvider<IUnitOfWork> unitOfWorkProvider, IMapper mapper)
+public class GetAllInvoiceQueryHandler (IUnitOfWorkProvider<IUnitOfWork> unitOfWorkProvider)
     : IQueryHandler<GetAllInvoiceQuery, Maybe<List<InvoiceListModel>>>
 {
     public async Task<Maybe<List<InvoiceListModel>>> Handle(GetAllInvoiceQuery request, CancellationToken cancellationToken)
@@ -20,6 +19,9 @@ public class GetAllInvoiceQueryHandler (IUnitOfWorkProvider<IUnitOfWork> unitOfW
             invoiceQuery = invoiceQuery.Skip(request.Page * request.PageSize);
 
         var invoices = await invoiceQuery.ToListAsync();
-        return mapper.Map<ICollection<InvoiceListModel>>(invoices).ToList();
+
+        var result = invoices.Select(x => new InvoiceListModel() { CurrencyCode = x.CurrencyCode.Value, CustomerId = x.CustomerId.Value, FinalPrice = x.FinalPrice.Value, PaymentId = x.PaymentId.Value ?? string.Empty, IsPaid = x.IsPaid.Value }).ToList();
+
+        return result;
     }
 }

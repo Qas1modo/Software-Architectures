@@ -38,7 +38,7 @@ public class UpdateInvoiceCommandHandler (IUnitOfWorkProvider<IUnitOfWork> unitO
         if (wasPaid != entity.IsPaid.Value && entity.IsPaid.Value)
         {
             var domainEvent = new InvoicePaidDomainEvent(entity);
-            await mediator.Send(domainEvent);
+            await mediator.Publish(domainEvent);
         }
 
         return Result.Success();

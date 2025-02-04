@@ -41,7 +41,7 @@ namespace BillingSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BillingItemEntitys", (string)null);
+                    b.ToTable("BillingItems", (string)null);
                 });
 
             modelBuilder.Entity("BillingSystem.Domain.Entities.Invoice.InvoiceEntity", b =>
@@ -68,7 +68,7 @@ namespace BillingSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InvoiceEntitys", (string)null);
+                    b.ToTable("Invoices", (string)null);
                 });
 
             modelBuilder.Entity("BillingSystem.Domain.Entities.BillingItem.BillingItemEntity", b =>
@@ -83,23 +83,7 @@ namespace BillingSystem.Infrastructure.Migrations
 
                             b1.HasKey("BillingItemEntityId");
 
-                            b1.ToTable("BillingItemEntitys");
-
-                            b1.WithOwner()
-                                .HasForeignKey("BillingItemEntityId");
-                        });
-
-                    b.OwnsOne("BillingSystem.Domain.Entities.BillingItem.ValueObjects.InvoiceId", "InvoiceId", b1 =>
-                        {
-                            b1.Property<Guid>("BillingItemEntityId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<Guid>("Value")
-                                .HasColumnType("TEXT");
-
-                            b1.HasKey("BillingItemEntityId");
-
-                            b1.ToTable("BillingItemEntitys");
+                            b1.ToTable("BillingItems");
 
                             b1.WithOwner()
                                 .HasForeignKey("BillingItemEntityId");
@@ -115,7 +99,7 @@ namespace BillingSystem.Infrastructure.Migrations
 
                             b1.HasKey("BillingItemEntityId");
 
-                            b1.ToTable("BillingItemEntitys");
+                            b1.ToTable("BillingItems");
 
                             b1.WithOwner()
                                 .HasForeignKey("BillingItemEntityId");
@@ -131,7 +115,7 @@ namespace BillingSystem.Infrastructure.Migrations
 
                             b1.HasKey("BillingItemEntityId");
 
-                            b1.ToTable("BillingItemEntitys");
+                            b1.ToTable("BillingItems");
 
                             b1.WithOwner()
                                 .HasForeignKey("BillingItemEntityId");
@@ -147,16 +131,13 @@ namespace BillingSystem.Infrastructure.Migrations
 
                             b1.HasKey("BillingItemEntityId");
 
-                            b1.ToTable("BillingItemEntitys");
+                            b1.ToTable("BillingItems");
 
                             b1.WithOwner()
                                 .HasForeignKey("BillingItemEntityId");
                         });
 
                     b.Navigation("CustomerId")
-                        .IsRequired();
-
-                    b.Navigation("InvoiceId")
                         .IsRequired();
 
                     b.Navigation("ItemId")
@@ -182,7 +163,7 @@ namespace BillingSystem.Infrastructure.Migrations
 
                             b1.HasKey("InvoiceEntityId");
 
-                            b1.ToTable("InvoiceEntitys");
+                            b1.ToTable("Invoices");
 
                             b1.WithOwner()
                                 .HasForeignKey("InvoiceEntityId");
@@ -198,7 +179,7 @@ namespace BillingSystem.Infrastructure.Migrations
 
                             b1.HasKey("InvoiceEntityId");
 
-                            b1.ToTable("InvoiceEntitys");
+                            b1.ToTable("Invoices");
 
                             b1.WithOwner()
                                 .HasForeignKey("InvoiceEntityId");
@@ -214,7 +195,7 @@ namespace BillingSystem.Infrastructure.Migrations
 
                             b1.HasKey("InvoiceEntityId");
 
-                            b1.ToTable("InvoiceEntitys");
+                            b1.ToTable("Invoices");
 
                             b1.WithOwner()
                                 .HasForeignKey("InvoiceEntityId");
@@ -230,7 +211,7 @@ namespace BillingSystem.Infrastructure.Migrations
 
                             b1.HasKey("InvoiceEntityId");
 
-                            b1.ToTable("InvoiceEntitys");
+                            b1.ToTable("Invoices");
 
                             b1.WithOwner()
                                 .HasForeignKey("InvoiceEntityId");
@@ -242,12 +223,11 @@ namespace BillingSystem.Infrastructure.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Value")
-                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.HasKey("InvoiceEntityId");
 
-                            b1.ToTable("InvoiceEntitys");
+                            b1.ToTable("Invoices");
 
                             b1.WithOwner()
                                 .HasForeignKey("InvoiceEntityId");

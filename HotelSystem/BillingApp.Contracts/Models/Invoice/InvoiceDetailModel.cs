@@ -2,5 +2,13 @@
 
 public class InvoiceDetailModel
 {
-    // TODO Add Properties
+    public Guid CustomerId { get; set; }
+
+    public decimal FinalPrice { get; set; }
+
+    public string CurrencyCode { get; set; }
+
+    public string PaymentId { get; set; }
+
+    public bool IsPaid { get; set; }
 }

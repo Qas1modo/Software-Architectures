@@ -9,13 +9,11 @@ internal sealed class BillingItemConfiguration : IEntityTypeConfiguration<Billin
     /// <inheritdoc />
     public void Configure(EntityTypeBuilder<BillingItemEntity> builder)
     {
-        builder.ToTable(nameof(BillingItemEntity) + "s");
+        builder.ToTable(BillingItemEntity.TableName);
 
         builder.HasKey(billingItem => billingItem.Id);
 
-        builder.OwnsOne(billingItem => billingItem.CustomerId);   
-        
-        builder.OwnsOne(billingItem => billingItem.InvoiceId); 
+        builder.OwnsOne(billingItem => billingItem.CustomerId);
         
         builder.OwnsOne(billingItem => billingItem.Quantity); 
         

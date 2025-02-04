@@ -1,20 +1,24 @@
 ﻿using BillingSystem.Domain.Core;
 using BillingSystem.Domain.Entities.Invoice.ValueObjects;
 using BillingSystem.Shared.Models.Invoice;
+using System.Runtime.Serialization;
 
 namespace BillingSystem.Domain.Entities.Invoice;
 
 public class InvoiceEntity : BillingSystemAggregateRoot
 {
-    public CustomerId CustomerId { get; set; }
+    [IgnoreDataMember]
+    public static string TableName = "Invoices";
 
-    public FinalPrice FinalPrice { get; set; }
+    public CustomerId CustomerId { get; private set; }
 
-    public CurrencyCode CurrencyCode { get; set; }
+    public FinalPrice FinalPrice { get; private set; }
 
-    public PaymentId PaymentId { get; set; }
+    public CurrencyCode CurrencyCode { get; private set; }
 
-    public IsPaid IsPaid { get; set; }
+    public PaymentId PaymentId { get; private set; }
+
+    public IsPaid IsPaid { get; private set; }
 
     // For EF.Core
     public InvoiceEntity() { }

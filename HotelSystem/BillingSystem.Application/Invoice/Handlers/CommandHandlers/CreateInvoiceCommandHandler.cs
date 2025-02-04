@@ -3,6 +3,7 @@ using BillingSystem.Application.Invoice.Commands;
 using BillingSystem.Domain.Core.Errors;
 using BillingSystem.Domain.UnitOfWork.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SharedKernel.Application.Core.Abstractions.Messaging;
 using SharedKernel.Domain.Core.Primitives.Result;
 
@@ -19,19 +20,16 @@ public class CreateInvoiceCommandHandler(IUnitOfWorkProvider<IUnitOfWork> unitOf
         }
 
         using var unitOfWork = unitOfWorkProvider.Create();
+        var billingItemRepository = unitOfWork.BillingItemRepository;
+
+        var valueOfStay = await billingItemRepository.GetQuery()
+            .Where(x => x.CustomerId.Value == request.InvoiceCreateModel.CustomerId)
+            .Select(x => x.UnitPrice.Value * x.Quantity.Value)
+            .SumAsync();
+
+        var newInvoice = new Domain.Entities.Invoice.InvoiceEntity(valueOfStay, "CZK", request.InvoiceCreateModel.CustomerId);
+
         var invoiceRepository = unitOfWork.InvoiceRepository;
-
-        var query = new GetBillingItemsByCustomerQuery(request.InvoiceCreateModel.CustomerId);
-        var customerBillItems = await mediator.Send(query, cancellationToken);
-
-        if (!customerBillItems.HasValue)
-        {
-            return Result.Failure(DomainErrors.InvoiceErrors.NoItemWasFound);
-        }
-
-        var amountOfStay = customerBillItems.Value.Select(x => x.Price).Sum();
-
-        var newInvoice = new Domain.Entities.Invoice.InvoiceEntity(amountOfStay, "CZK", request.InvoiceCreateModel.CustomerId);
         invoiceRepository.Insert(newInvoice);
 
         await unitOfWork.Commit();

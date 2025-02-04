@@ -9,7 +9,7 @@ internal sealed class InvoiceConfiguration : IEntityTypeConfiguration<InvoiceEnt
     /// <inheritdoc />
     public void Configure(EntityTypeBuilder<InvoiceEntity> builder)
     {
-        builder.ToTable(nameof(InvoiceEntity) + "s");
+        builder.ToTable(InvoiceEntity.TableName);
 
         builder.HasKey(invoice => invoice.Id);
 

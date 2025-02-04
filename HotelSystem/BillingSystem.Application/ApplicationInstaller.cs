@@ -7,8 +7,6 @@ namespace BillingSystem.Application
     {
         public static IServiceCollection ApplicationInstall(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(ApplicationInstaller));
-
             services.AddMediatR(new MediatRServiceConfiguration()
                 .RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 

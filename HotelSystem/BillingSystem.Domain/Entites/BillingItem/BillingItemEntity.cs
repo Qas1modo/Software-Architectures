@@ -1,11 +1,15 @@
 ﻿using BillingSystem.Domain.Core;
 using BillingSystem.Domain.Entities.BillingItem.ValueObjects;
 using BillingSystem.Shared.Models.BillingItem;
+using System.Runtime.Serialization;
 
 namespace BillingSystem.Domain.Entities.BillingItem;
 
 public class BillingItemEntity : BillingSystemAggregateRoot
 {
+    [IgnoreDataMember]
+    public static string TableName = "BillingItems";
+
     public CustomerId CustomerId { get; private set; }
 
     public ItemId ItemId { get; private set; }
@@ -13,8 +17,6 @@ public class BillingItemEntity : BillingSystemAggregateRoot
     public UnitPrice UnitPrice { get; private set; }
 
     public Quantity Quantity { get; private set; }
-
-    public InvoiceId InvoiceId { get; private set; }
 
     // For EF.Core
     public BillingItemEntity() { }
@@ -47,11 +49,6 @@ public class BillingItemEntity : BillingSystemAggregateRoot
         if (billinItemUpdateModel.Quantity is int newQuantity)
         {
             Quantity = Quantity.Create(newQuantity).Value;
-        }
-
-        if (billinItemUpdateModel.InvoiceId is Guid newInvoiceId)
-        {
-            InvoiceId = InvoiceId.Create(newInvoiceId).Value;
         }
     }
 }

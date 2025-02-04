@@ -4,7 +4,7 @@ namespace BillingSystem.Domain.Entities.Invoice.ValueObjects;
 
 public class PaymentId : ValueObject
 {
-    public string Value { get; private set; }
+    public string? Value { get; private set; }
 
     public PaymentId(string value)
     {
