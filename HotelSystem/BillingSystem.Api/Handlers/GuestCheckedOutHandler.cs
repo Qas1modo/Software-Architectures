@@ -1,4 +1,9 @@
-﻿using MediatR;
+﻿using BillingSystem.Api.Handlers.Excpetions;
+using BillingSystem.Application.Invoice.Commands;
+using BillingSystem.Domain.Core.Errors;
+using BillingSystem.Shared.Models.Invoice;
+using MediatR;
+using SharedKernel.Domain.Core.Primitives.Result;
 using SharedKernel.Messages;
 
 namespace BillingSystem.Api.Handlers;
@@ -9,17 +14,15 @@ public class GuestCheckedOutHandler(IMediator mediator)
 
     public async Task Handle(GuestCheckedOutMessage guestCheckedOutMessage)
     {
-        //var resultDeactivateGuest = await Result.Create(guestCheckedOutMessage.GlobalGuestId, DomainErrors.General.UnProcessableRequest)
-        //    .Map(request => new DeactivateGuestCommand(guestCheckedOutMessage.GlobalGuestId))
-        //    .Bind(command => mediator.Send(command));
-        //var resultCleanRoom = await Result.Create(guestCheckedOutMessage.GuestRoomNumber, DomainErrors.General.UnProcessableRequest)
-        //    .Map(request => new CreateCleanRoomRequestCommand(guestCheckedOutMessage.GuestRoomNumber))
-        //    .Bind(command => mediator.Send(command));
-        //var result = Result.FirstFailureOrSuccess([resultDeactivateGuest, resultCleanRoom]);
+        var createInvoiceModel = new InvoiceCreateModel() { CustomerId = guestCheckedOutMessage.GlobalGuestId };
 
-        //if (result.IsFailure)
-        //{
-        //    throw new GuestCheckedOutFailedException(result.Error);
-        //}
+        var result = await Result.Create(createInvoiceModel.CustomerId, DomainErrors.General.UnProcessableRequest)
+            .Map(_ => new CreateInvoiceCommand(createInvoiceModel))
+            .Bind(command => mediator.Send(command));
+
+        if (result.IsFailure)
+        {
+            throw new InvoiceCreationFailException(result.Error);
+        }
     }
 }

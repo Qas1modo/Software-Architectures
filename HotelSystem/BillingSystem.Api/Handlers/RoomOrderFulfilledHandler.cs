@@ -1,3 +1,7 @@
+using BillingSystem.Api.Handlers.Excpetions;
+using BillingSystem.Application.BillingItem.Commands;
+using BillingSystem.Domain.Core.Errors;
+using BillingSystem.Shared.Models.BillingItem;
 using MediatR;
 using SharedKernel.Domain.Core.Primitives.Result;
 using SharedKernel.Messages;
@@ -6,29 +10,17 @@ namespace BillingSystem.Api.Handlers;
 
 public class RoomOrderFulfilledHandler(IMediator mediator)
 {
-    public async Task Handle(RoomOrderFulfilledMessage premiumOrderCreatedMessage)
+    public async Task Handle(RoomOrderFulfilledMessage roomOrderFulfilledMessage)
     {
-        //var updateAccessCardModel = new UpdateAccessCardFromOrderModel()
-        //{
-        //    HolderId = premiumOrderCreatedMessage.GlobalGuestId,
-        //    RoleNameToAdd = premiumOrderCreatedMessage.RelevantRoleCodeName,
-        //    PremiumOrderId = premiumOrderCreatedMessage.PremiumOrderId
-        //};
+        var createBillingItemModel = new BillingItemCreateModel() { CustomerId = roomOrderFulfilledMessage.GlobalGuestId, ItemId = roomOrderFulfilledMessage.RoomOrderId, UnitPrice = roomOrderFulfilledMessage.TotalPrice, Quantity = 1 };
 
-        //var updateCardResult = await Result
-        //    .Create(premiumOrderCreatedMessage.GlobalGuestId, DomainErrors.General.UnProcessableRequest)
-        //    .Map(_ => new UpdateAccessCardFromOrderCommand(updateAccessCardModel))
-        //    .Bind(command => mediator.Send(command));
+        var result = await Result.Create(createBillingItemModel.CustomerId, DomainErrors.General.UnProcessableRequest)
+            .Map(_ => new CreateBillingItemCommand(createBillingItemModel))
+            .Bind(command => mediator.Send(command));
 
-        //// I didn't make the roles with capacity, so it should always pass unless error happens (like user is in the role already)
-        //if (updateCardResult.IsFailure)
-        //{
-        //    var errorEvent = new AccessCardUpdateFailedFromOrderDomainEvent(premiumOrderCreatedMessage.GlobalGuestId, premiumOrderCreatedMessage.PremiumOrderId, updateCardResult.Error);
-        //    await mediator.Publish(errorEvent);
-        //    throw new PremuimOrderProcessingException(updateCardResult.Error);
-        //}
-        
-        //var creationEvent = new AccessCardUpdatedFromOrderDomainEvent(premiumOrderCreatedMessage.GlobalGuestId, premiumOrderCreatedMessage.PremiumOrderId);
-        //await mediator.Publish(creationEvent);
+        if (result.IsFailure)
+        {
+            throw new BillingItemCreationFailException(result.Error);
+        }
     }
 }
