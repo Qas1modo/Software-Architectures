@@ -4,12 +4,12 @@ using BillingSystem.Domain.Entities.BillingItem;
 
 namespace BillingSystem.Domain.Configurations;
 
-internal sealed class BillingItemConfiguration : IEntityTypeConfiguration<BillingItem>
+internal sealed class BillingItemConfiguration : IEntityTypeConfiguration<BillingItemEntity>
 {
     /// <inheritdoc />
-    public void Configure(EntityTypeBuilder<BillingItem> builder)
+    public void Configure(EntityTypeBuilder<BillingItemEntity> builder)
     {
-        builder.ToTable(nameof(BillingItem) + "s");
+        builder.ToTable(nameof(BillingItemEntity) + "s");
 
         builder.HasKey(billingItem => billingItem.Id);
 

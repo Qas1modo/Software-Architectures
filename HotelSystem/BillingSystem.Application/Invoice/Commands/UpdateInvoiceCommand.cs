@@ -4,4 +4,4 @@ using SharedKernel.Domain.Core.Primitives.Result;
 
 namespace BillingSystem.Application.Invoice.Commands;
 
-public class UpdateInvoiceCommand(InvoiceUpdateModel InvoiceUpdateModel) : ICommand<Result>;
+public record UpdateInvoiceCommand(InvoiceUpdateModel InvoiceUpdateModel) : ICommand<Result>;

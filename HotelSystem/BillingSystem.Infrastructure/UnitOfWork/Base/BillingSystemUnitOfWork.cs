@@ -15,13 +15,13 @@ public class BillingSystemUnitOfWork : IUnitOfWork
     {
         _dbContext = dbContext;
 
-        BillingItemRepository = new EntityRepository<BillingItem>(_dbContext);
-        InvoiceRepository = new EntityRepository<Invoice>(_dbContext);
+        BillingItemRepository = new EntityRepository<BillingItemEntity>(_dbContext);
+        InvoiceRepository = new EntityRepository<InvoiceEntity>(_dbContext);
     }
 
-    public IEntityRepository<BillingItem> BillingItemRepository { get; }
+    public IEntityRepository<BillingItemEntity> BillingItemRepository { get; }
 
-    public IEntityRepository<Invoice> InvoiceRepository { get; }
+    public IEntityRepository<InvoiceEntity> InvoiceRepository { get; }
 
     public async Task Commit()
     {

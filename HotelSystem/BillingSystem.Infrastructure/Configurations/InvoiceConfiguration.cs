@@ -4,12 +4,12 @@ using BillingSystem.Domain.Entities.Invoice;
 
 namespace BillingSystem.Domain.Configurations;
 
-internal sealed class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
+internal sealed class InvoiceConfiguration : IEntityTypeConfiguration<InvoiceEntity>
 {
     /// <inheritdoc />
-    public void Configure(EntityTypeBuilder<Invoice> builder)
+    public void Configure(EntityTypeBuilder<InvoiceEntity> builder)
     {
-        builder.ToTable(nameof(Invoice) + "s");
+        builder.ToTable(nameof(InvoiceEntity) + "s");
 
         builder.HasKey(invoice => invoice.Id);
 
@@ -20,6 +20,8 @@ internal sealed class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
         builder.OwnsOne(invoice => invoice.PaymentId);
 
         builder.OwnsOne(invoice => invoice.IsPaid);
+
+        builder.OwnsOne(invoice => invoice.CustomerId);
 
         builder.Property(invoice => invoice.CreatedOnUtc)
             .HasDefaultValueSql("getutcdate()");

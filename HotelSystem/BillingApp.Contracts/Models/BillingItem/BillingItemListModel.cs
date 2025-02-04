@@ -2,5 +2,5 @@
 
 public class BillingItemListModel
 {
-    // TODO Add Properties
+    public decimal Price { get; set; }
 }

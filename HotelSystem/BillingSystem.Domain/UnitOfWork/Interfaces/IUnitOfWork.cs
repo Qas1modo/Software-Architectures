@@ -7,6 +7,6 @@ namespace BillingSystem.Domain.UnitOfWork.Interfaces;
 
 public interface IUnitOfWork : IBaseUnitOfWork
 {
-    public IEntityRepository<BillingItem> BillingItemRepository { get; }
-    public IEntityRepository<Invoice> InvoiceRepository { get; }
+    public IEntityRepository<BillingItemEntity> BillingItemRepository { get; }
+    public IEntityRepository<InvoiceEntity> InvoiceRepository { get; }
 }

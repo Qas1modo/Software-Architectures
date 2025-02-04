@@ -7,6 +7,6 @@ internal class BillingItemCreateProfile : Profile
 {
     public BillingItemCreateProfile()
     {
-        CreateMap<BillingItemCreateModel, Domain.Entities.BillingItem.BillingItem>();
+        CreateMap<BillingItemCreateModel, Domain.Entities.BillingItem.BillingItemEntity>();
     }
 }

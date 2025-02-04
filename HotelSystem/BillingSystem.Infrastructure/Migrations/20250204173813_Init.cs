@@ -12,7 +12,7 @@ namespace BillingSystem.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BillingItems",
+                name: "BillingItemEntitys",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -28,14 +28,15 @@ namespace BillingSystem.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BillingItems", x => x.Id);
+                    table.PrimaryKey("PK_BillingItemEntitys", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Invoices",
+                name: "InvoiceEntitys",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CustomerId_Value = table.Column<Guid>(type: "TEXT", nullable: false),
                     FinalPrice_Value = table.Column<decimal>(type: "TEXT", nullable: false),
                     CurrencyCode_Value = table.Column<string>(type: "TEXT", nullable: false),
                     PaymentId_Value = table.Column<string>(type: "TEXT", nullable: false),
@@ -47,7 +48,7 @@ namespace BillingSystem.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Invoices", x => x.Id);
+                    table.PrimaryKey("PK_InvoiceEntitys", x => x.Id);
                 });
         }
 
@@ -55,10 +56,10 @@ namespace BillingSystem.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BillingItems");
+                name: "BillingItemEntitys");
 
             migrationBuilder.DropTable(
-                name: "Invoices");
+                name: "InvoiceEntitys");
         }
     }
 }

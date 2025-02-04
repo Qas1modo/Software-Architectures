@@ -14,27 +14,17 @@ public class PaymentController : ApiController
     [HttpGet(ApiRoutes.Payment.IsInvoicePaid)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> IsPaid(Guid invoiceId)
+    public IActionResult IsPaid(Guid invoiceId)
     {
-        //await Maybe<GetNotCompletedCleanRoomRequestsQuery>
-        //                .From(new GetNotCompletedCleanRoomRequestsQuery(invoiceId))
-        //                .Bind(query => Mediator.Send(query))
-        //                .Match(Ok, NotFound);
-
-        return Ok();
+        return Ok(false);
     }
 
 
     [HttpGet(ApiRoutes.Payment.GetPaymentRedirectUrl)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetRedirectUrl(Guid invoiceId)
+    public IActionResult GetRedirectUrl(Guid invoiceId)
     {
-        //await Maybe.Create(invoiceId.RoomNumber, DomainErrors.General.UnProcessableRequest)
-        //                .Map(request => new CreateCleanRoomRequestCommand(invoiceId.RoomNumber))
-        //                .Bind(command => Mediator.Send(command))
-        //                .Match(Ok, BadRequest);
-
-        return Ok();
+        return Ok("https://www.google.com/");
     }
 }

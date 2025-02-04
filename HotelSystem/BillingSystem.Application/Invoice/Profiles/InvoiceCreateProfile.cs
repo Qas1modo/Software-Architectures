@@ -7,6 +7,6 @@ internal class InvoiceCreateProfile : Profile
 {
     public InvoiceCreateProfile()
     {
-        CreateMap<InvoiceCreateModel, Domain.Entities.Invoice.Invoice>();
+        CreateMap<InvoiceCreateModel, Domain.Entities.Invoice.InvoiceEntity>();
     }
 }

@@ -2,5 +2,5 @@
 
 public class InvoiceCreateModel
 {
-    // TODO Add Properties
+    public Guid CustomerId { get; set; }
 }

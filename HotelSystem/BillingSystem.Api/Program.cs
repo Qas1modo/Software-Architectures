@@ -3,7 +3,6 @@ using BillingSystem.Api.Middlewares;
 using HotelSystem.ServiceDefaults;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Wolverine;
 using Wolverine.Http;
@@ -58,7 +57,7 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(swaggerUiOptions => {
-        swaggerUiOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "Hotel Service System API");
+        swaggerUiOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "Hotel Billing System API");
         swaggerUiOptions.RoutePrefix = string.Empty;
     }
     );

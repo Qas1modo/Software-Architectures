@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BillingSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250202225830_Init")]
+    [Migration("20250204173813_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace BillingSystem.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
 
-            modelBuilder.Entity("BillingSystem.Domain.Entities.BillingItem.BillingItem", b =>
+            modelBuilder.Entity("BillingSystem.Domain.Entities.BillingItem.BillingItemEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,10 +44,10 @@ namespace BillingSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BillingItems", (string)null);
+                    b.ToTable("BillingItemEntitys", (string)null);
                 });
 
-            modelBuilder.Entity("BillingSystem.Domain.Entities.Invoice.Invoice", b =>
+            modelBuilder.Entity("BillingSystem.Domain.Entities.Invoice.InvoiceEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,89 +71,89 @@ namespace BillingSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Invoices", (string)null);
+                    b.ToTable("InvoiceEntitys", (string)null);
                 });
 
-            modelBuilder.Entity("BillingSystem.Domain.Entities.BillingItem.BillingItem", b =>
+            modelBuilder.Entity("BillingSystem.Domain.Entities.BillingItem.BillingItemEntity", b =>
                 {
                     b.OwnsOne("BillingSystem.Domain.Entities.BillingItem.ValueObjects.CustomerId", "CustomerId", b1 =>
                         {
-                            b1.Property<Guid>("BillingItemId")
+                            b1.Property<Guid>("BillingItemEntityId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<Guid>("Value")
                                 .HasColumnType("TEXT");
 
-                            b1.HasKey("BillingItemId");
+                            b1.HasKey("BillingItemEntityId");
 
-                            b1.ToTable("BillingItems");
+                            b1.ToTable("BillingItemEntitys");
 
                             b1.WithOwner()
-                                .HasForeignKey("BillingItemId");
+                                .HasForeignKey("BillingItemEntityId");
                         });
 
                     b.OwnsOne("BillingSystem.Domain.Entities.BillingItem.ValueObjects.InvoiceId", "InvoiceId", b1 =>
                         {
-                            b1.Property<Guid>("BillingItemId")
+                            b1.Property<Guid>("BillingItemEntityId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<Guid>("Value")
                                 .HasColumnType("TEXT");
 
-                            b1.HasKey("BillingItemId");
+                            b1.HasKey("BillingItemEntityId");
 
-                            b1.ToTable("BillingItems");
+                            b1.ToTable("BillingItemEntitys");
 
                             b1.WithOwner()
-                                .HasForeignKey("BillingItemId");
+                                .HasForeignKey("BillingItemEntityId");
                         });
 
                     b.OwnsOne("BillingSystem.Domain.Entities.BillingItem.ValueObjects.ItemId", "ItemId", b1 =>
                         {
-                            b1.Property<Guid>("BillingItemId")
+                            b1.Property<Guid>("BillingItemEntityId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<Guid>("Value")
                                 .HasColumnType("TEXT");
 
-                            b1.HasKey("BillingItemId");
+                            b1.HasKey("BillingItemEntityId");
 
-                            b1.ToTable("BillingItems");
+                            b1.ToTable("BillingItemEntitys");
 
                             b1.WithOwner()
-                                .HasForeignKey("BillingItemId");
+                                .HasForeignKey("BillingItemEntityId");
                         });
 
                     b.OwnsOne("BillingSystem.Domain.Entities.BillingItem.ValueObjects.Quantity", "Quantity", b1 =>
                         {
-                            b1.Property<Guid>("BillingItemId")
+                            b1.Property<Guid>("BillingItemEntityId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("Value")
                                 .HasColumnType("INTEGER");
 
-                            b1.HasKey("BillingItemId");
+                            b1.HasKey("BillingItemEntityId");
 
-                            b1.ToTable("BillingItems");
+                            b1.ToTable("BillingItemEntitys");
 
                             b1.WithOwner()
-                                .HasForeignKey("BillingItemId");
+                                .HasForeignKey("BillingItemEntityId");
                         });
 
                     b.OwnsOne("BillingSystem.Domain.Entities.BillingItem.ValueObjects.UnitPrice", "UnitPrice", b1 =>
                         {
-                            b1.Property<Guid>("BillingItemId")
+                            b1.Property<Guid>("BillingItemEntityId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<decimal>("Value")
                                 .HasColumnType("TEXT");
 
-                            b1.HasKey("BillingItemId");
+                            b1.HasKey("BillingItemEntityId");
 
-                            b1.ToTable("BillingItems");
+                            b1.ToTable("BillingItemEntitys");
 
                             b1.WithOwner()
-                                .HasForeignKey("BillingItemId");
+                                .HasForeignKey("BillingItemEntityId");
                         });
 
                     b.Navigation("CustomerId")
@@ -172,75 +172,94 @@ namespace BillingSystem.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BillingSystem.Domain.Entities.Invoice.Invoice", b =>
+            modelBuilder.Entity("BillingSystem.Domain.Entities.Invoice.InvoiceEntity", b =>
                 {
                     b.OwnsOne("BillingSystem.Domain.Entities.Invoice.ValueObjects.CurrencyCode", "CurrencyCode", b1 =>
                         {
-                            b1.Property<Guid>("InvoiceId")
+                            b1.Property<Guid>("InvoiceEntityId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
-                            b1.HasKey("InvoiceId");
+                            b1.HasKey("InvoiceEntityId");
 
-                            b1.ToTable("Invoices");
+                            b1.ToTable("InvoiceEntitys");
 
                             b1.WithOwner()
-                                .HasForeignKey("InvoiceId");
+                                .HasForeignKey("InvoiceEntityId");
+                        });
+
+                    b.OwnsOne("BillingSystem.Domain.Entities.Invoice.ValueObjects.CustomerId", "CustomerId", b1 =>
+                        {
+                            b1.Property<Guid>("InvoiceEntityId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("TEXT");
+
+                            b1.HasKey("InvoiceEntityId");
+
+                            b1.ToTable("InvoiceEntitys");
+
+                            b1.WithOwner()
+                                .HasForeignKey("InvoiceEntityId");
                         });
 
                     b.OwnsOne("BillingSystem.Domain.Entities.Invoice.ValueObjects.FinalPrice", "FinalPrice", b1 =>
                         {
-                            b1.Property<Guid>("InvoiceId")
+                            b1.Property<Guid>("InvoiceEntityId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<decimal>("Value")
                                 .HasColumnType("TEXT");
 
-                            b1.HasKey("InvoiceId");
+                            b1.HasKey("InvoiceEntityId");
 
-                            b1.ToTable("Invoices");
+                            b1.ToTable("InvoiceEntitys");
 
                             b1.WithOwner()
-                                .HasForeignKey("InvoiceId");
+                                .HasForeignKey("InvoiceEntityId");
                         });
 
                     b.OwnsOne("BillingSystem.Domain.Entities.Invoice.ValueObjects.IsPaid", "IsPaid", b1 =>
                         {
-                            b1.Property<Guid>("InvoiceId")
+                            b1.Property<Guid>("InvoiceEntityId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<bool>("Value")
                                 .HasColumnType("INTEGER");
 
-                            b1.HasKey("InvoiceId");
+                            b1.HasKey("InvoiceEntityId");
 
-                            b1.ToTable("Invoices");
+                            b1.ToTable("InvoiceEntitys");
 
                             b1.WithOwner()
-                                .HasForeignKey("InvoiceId");
+                                .HasForeignKey("InvoiceEntityId");
                         });
 
                     b.OwnsOne("BillingSystem.Domain.Entities.Invoice.ValueObjects.PaymentId", "PaymentId", b1 =>
                         {
-                            b1.Property<Guid>("InvoiceId")
+                            b1.Property<Guid>("InvoiceEntityId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
-                            b1.HasKey("InvoiceId");
+                            b1.HasKey("InvoiceEntityId");
 
-                            b1.ToTable("Invoices");
+                            b1.ToTable("InvoiceEntitys");
 
                             b1.WithOwner()
-                                .HasForeignKey("InvoiceId");
+                                .HasForeignKey("InvoiceEntityId");
                         });
 
                     b.Navigation("CurrencyCode")
+                        .IsRequired();
+
+                    b.Navigation("CustomerId")
                         .IsRequired();
 
                     b.Navigation("FinalPrice")
