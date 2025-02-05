@@ -27,10 +27,6 @@ namespace RoomManagementSystem.DAL.EFCore
                 return new EFCoreUnitOfWorkProvider(new Func<RoomManagementDbContext>(() => services.GetRequiredService<RoomManagementDbContext>()));
             });
 
-            //services.AddTransient<IGetBillingItemsByCustomerQueryObject<BillingItemEntity>, GetBillingItemsByCustomerQueryObject>();
-
-            //services.AddTransient(typeof(IQueryObject<>), typeof(EFCoreQueryObject<>));
-
             return services;
         }
     }
