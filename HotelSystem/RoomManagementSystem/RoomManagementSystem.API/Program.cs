@@ -1,3 +1,5 @@
+using HotelSystem.ServiceDefaults;
+using RoomManagementSystem.API;
 using RoomManagementSystem.BL.Installers;
 using RoomManagementSystem.DAL.EFCore;
 using RoomManagementSystem.DAL.EFCore.Database;
@@ -5,6 +7,8 @@ using Wolverine;
 using Wolverine.Transports.Tcp;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 
 // Add services to the container.
 
@@ -40,6 +44,7 @@ builder.Host.UseWolverine(opts =>
         opts.PublishAllMessages().ToPort(port);
     }
 });
+
 
 var app = builder.Build();
 

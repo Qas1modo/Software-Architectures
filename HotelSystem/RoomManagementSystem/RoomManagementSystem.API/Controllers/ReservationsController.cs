@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using RoomManagementSystem.BL;
 using RoomManagementSystem.BL.Commands.ReservationCommands;
 using RoomManagementSystem.BL.Queries.ReservationQueries;
+using SharedKernel.Messages;
+using Wolverine;
 
 namespace RoomManagementSystem.API.Controllers
 {
@@ -10,10 +12,12 @@ namespace RoomManagementSystem.API.Controllers
     public class ReservationsController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly IMessageBus _messageBus;
 
-        public ReservationsController(IMediator mediator)
+        public ReservationsController(IMediator mediator, IMessageBus messageBus)
         {
             _mediator = mediator;
+            _messageBus = messageBus;
         }
 
         [HttpPost]
@@ -31,16 +35,19 @@ namespace RoomManagementSystem.API.Controllers
         }
 
         [HttpPut("check-in/{id}")]
-        public async Task<IActionResult> CheckIn(int id)
+        public async Task<IActionResult> CheckIn(int id, string firstName, string lastName, string email)
         {
             var result = await _mediator.Send(new CheckInCommand(id));
+            await _messageBus.PublishAsync(new GuestCheckedInMessage(new Guid(), id, firstName, lastName, email));
             return Ok(result);
         }
 
         [HttpPut("check-out/{id}")]
-        public async Task<IActionResult> CheckOut(int id)
+        public async Task<IActionResult> CheckOut(int id, Guid guestGuid, string firstName, string lastName, string email)
         {
             var result = await _mediator.Send(new CheckOutCommand(id));
+            await _messageBus.PublishAsync(new GuestCheckedOutMessage(guestGuid, id, firstName, lastName, email));
+
             return Ok(result);
         }
 
