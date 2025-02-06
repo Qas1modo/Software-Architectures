@@ -6,9 +6,9 @@ namespace RoomManagementSystem.DAL.EFCore.Database
 {
     public static class DataInitializer
     {
+        private static DateTime CreatedDate = new DateTime(2025,02,06);
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            // TODO Seed db
             modelBuilder.Entity<RoomEntity>().HasData(GetSampleRooms());
             modelBuilder.Entity<ReservationEntity>().HasData(GetSampleReservations());
         }
@@ -25,7 +25,7 @@ namespace RoomManagementSystem.DAL.EFCore.Database
                 Price = 199.99m,
                 BedCount = 1,
                 RoomState = RoomState.VacantReady,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = CreatedDate,
             },
             new RoomEntity
             {
@@ -36,7 +36,7 @@ namespace RoomManagementSystem.DAL.EFCore.Database
                 Price = 349.99m,
                 BedCount = 2,
                 RoomState = RoomState.VacantReady,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = CreatedDate,
             },
             new RoomEntity
             {
@@ -47,7 +47,7 @@ namespace RoomManagementSystem.DAL.EFCore.Database
                 Price = 149.99m,
                 BedCount = 2,
                 RoomState = RoomState.VacantDirty,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = CreatedDate,
             },
             new RoomEntity
             {
@@ -58,7 +58,7 @@ namespace RoomManagementSystem.DAL.EFCore.Database
                 Price = 299.99m,
                 BedCount = 1,
                 RoomState = RoomState.OutOfService,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = CreatedDate,
             },
             new RoomEntity
             {
@@ -69,14 +69,14 @@ namespace RoomManagementSystem.DAL.EFCore.Database
                 Price = 99.99m,
                 BedCount = 1,
                 RoomState = RoomState.Occupied,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = CreatedDate,
             }
         ];
         }
 
         public static IList<ReservationEntity> GetSampleReservations()
         {
-            var currentDate = DateTime.UtcNow;
+            var currentDate = CreatedDate;
 
             return
         [
