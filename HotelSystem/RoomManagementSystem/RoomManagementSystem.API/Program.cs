@@ -1,8 +1,14 @@
+using HotelSystem.ServiceDefaults;
+using RoomManagementSystem.API;
 using RoomManagementSystem.BL.Installers;
 using RoomManagementSystem.DAL.EFCore;
 using RoomManagementSystem.DAL.EFCore.Database;
+using Wolverine;
+using Wolverine.Transports.Tcp;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 
 // Add services to the container.
 
@@ -20,6 +26,26 @@ builder.Services.AddMediatR(cfg => {
     // Register handlers from API assembly if you have any there
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
+
+builder.Host.UseWolverine(opts =>
+{
+    opts.MultipleHandlerBehavior = MultipleHandlerBehavior.Separated;
+    opts.Durability.MessageIdentity = MessageIdentity.IdAndDestination;
+    opts.Policies.AutoApplyTransactions();
+
+    var wolverineConfig = builder.Configuration.GetSection("Wolverine");
+    var listenPort = wolverineConfig.GetValue<int>("ListenPort");
+    var publishPorts = wolverineConfig.GetSection("PublishPorts").Get<int[]>() ?? [];
+
+    opts.ListenAtPort(listenPort);
+
+    foreach (var port in publishPorts)
+    {
+        opts.PublishAllMessages().ToPort(port);
+    }
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
