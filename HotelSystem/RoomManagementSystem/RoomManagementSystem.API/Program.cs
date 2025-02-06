@@ -62,11 +62,11 @@ app.UseAuthorization();
 app.MapControllers();
 
 
-// Run DB migrations
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<RoomManagementDbContext>();
-    context.Database.EnsureCreated();
-}
+//// Run DB migrations
+//using (var scope = app.Services.CreateScope())
+//{
+//    var context = scope.ServiceProvider.GetRequiredService<RoomManagementDbContext>();
+//    context.Database.EnsureCreated();
+//}
 
 app.Run();
