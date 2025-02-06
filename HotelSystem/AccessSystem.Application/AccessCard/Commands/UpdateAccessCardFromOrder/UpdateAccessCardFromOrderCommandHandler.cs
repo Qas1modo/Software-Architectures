@@ -30,7 +30,7 @@ public class UpdateAccessCardFromOrderCommandHandler(
         var roleToAdd = await roleRepository.GetRolesByNames([request.UpdateAccessCardFromOrderModel.RoleNameToAdd],
             cancellationToken);
 
-        if (roleToAdd.HasNoValue)
+        if (roleToAdd.HasNoValue || roleToAdd.Value.Count == 0)
         {
             return Result.Failure(DomainErrors.RoleErrors.NotFound);
         }
