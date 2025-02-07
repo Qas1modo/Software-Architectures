@@ -6,6 +6,7 @@ namespace AccessSystem.Domain.Repositories;
 
 public interface IAccessCardRepository
 {
+    Task<Maybe<List<AccessCardEntity>>> GetAllAsync();
     Task<Maybe<AccessCardEntity>> GetByIdAsync(Guid id);
 
     Task<Maybe<AccessCardResponseModel>> GetByHolderId(Guid id);

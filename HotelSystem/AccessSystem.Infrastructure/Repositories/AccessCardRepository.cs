@@ -11,6 +11,12 @@ namespace AccessSystem.Infrastructure.Repositories;
 public class AccessCardRepository(IDbContext dbContext)
     : GenericRepository<AccessCardEntity>(dbContext), IAccessCardRepository
 {
+    public async Task<Maybe<List<AccessCardEntity>>> GetAllAsync()
+    {
+        var result = await DbContext.Set<AccessCardEntity>().Include(c => c.Roles).ToListAsync();
+        return Maybe<List<AccessCardEntity>>.From(result);
+    }
+
     public new async Task<Maybe<AccessCardEntity>> GetByIdAsync(Guid id)
     {
         if (id == Guid.Empty)
