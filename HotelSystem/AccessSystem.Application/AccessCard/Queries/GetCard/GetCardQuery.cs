@@ -4,4 +4,4 @@ using SharedKernel.Domain.Core.Primitives.Maybe;
 
 namespace AccessSystem.Application.AccessCard.Queries.GetCard;
 
-public sealed record GetCardQuery(GetAccessCardModel GetAccessCardModel) : IQuery<Maybe<AccessCardResponseModel>>;
+public sealed record GetCardQuery(GetAccessCardModel GetAccessCardModel) : IQuery<Maybe<List<AccessCardResponseModel>>>;
