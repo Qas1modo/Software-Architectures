@@ -5,6 +5,7 @@ namespace AccessSystem.Domain.Repositories;
 
 public interface IAccessClaimRepository
 {
+    Task<Maybe<List<AccessClaimEntity>>> GetAllAsync();
     Task<Maybe<AccessClaimEntity>> GetByIdAsync(Guid id);
 
     void Insert(AccessClaimEntity accessClaim);

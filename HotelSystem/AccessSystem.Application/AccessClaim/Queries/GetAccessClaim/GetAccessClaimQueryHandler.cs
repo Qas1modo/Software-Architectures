@@ -6,21 +6,39 @@ using SharedKernel.Domain.Core.Primitives.Maybe;
 namespace AccessSystem.Application.AccessClaim.Queries.GetAccessClaim;
 
 public class GetAccessClaimQueryHandler(IAccessClaimRepository accessClaimRepository)
-    : IQueryHandler<GetAccessClaimQuery, Maybe<AccessClaimResponseModel>>
+    : IQueryHandler<GetAccessClaimQuery, Maybe<List<AccessClaimResponseModel>>>
 {
-    public async Task<Maybe<AccessClaimResponseModel>> Handle(GetAccessClaimQuery request, CancellationToken cancellationToken)
+    public async Task<Maybe<List<AccessClaimResponseModel>>> Handle(GetAccessClaimQuery request, CancellationToken cancellationToken)
     {
-        var accessClaim = await accessClaimRepository.GetByIdAsync(request.GetAccessClaimModel.Id);
+        if (request.GetAccessClaimModel.Id == null)
+        {
+            var accessClaims = await accessClaimRepository.GetAllAsync();
+            if (accessClaims.HasNoValue)
+            {
+                return Maybe<List<AccessClaimResponseModel>>.None;
+            }
+
+            return accessClaims.Value.Select(accessClaim => new AccessClaimResponseModel
+            {
+                Id = accessClaim.Id,
+                AllowedRoles = accessClaim.AllowedRoles.Select(p => p.RoleCodeName).ToList()
+            }).ToList();
+        }
+        var accessClaim = await accessClaimRepository.GetByIdAsync(request.GetAccessClaimModel.Id.Value);
         
         if (accessClaim.HasNoValue)
         {
-            return Maybe<AccessClaimResponseModel>.None;
+            return Maybe<List<AccessClaimResponseModel>>.None;
         }
-        
-        return new AccessClaimResponseModel
+
+
+        return new List<AccessClaimResponseModel>()
         {
-            Id = accessClaim.Value.Id,
-            AllowedRoles = accessClaim.Value.AllowedRoles.Select(p => p.RoleCodeName).ToList()
+            new AccessClaimResponseModel
+            {
+                Id = accessClaim.Value.Id,
+                AllowedRoles = accessClaim.Value.AllowedRoles.Select(p => p.RoleCodeName).ToList()
+            }
         };
     }
 }

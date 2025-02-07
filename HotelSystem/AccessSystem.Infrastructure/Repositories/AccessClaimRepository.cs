@@ -9,6 +9,13 @@ namespace AccessSystem.Infrastructure.Repositories;
 
 internal class AccessClaimRepository(IDbContext dbContext) : GenericRepository<AccessClaimEntity>(dbContext), IAccessClaimRepository
 {
+    public async Task<Maybe<List<AccessClaimEntity>>> GetAllAsync()
+    {
+        var accessClaim = await DbContext.Set<AccessClaimEntity>().Include(claim => claim.AllowedRoles).ToListAsync();
+
+        return Maybe<List<AccessClaimEntity>>.From(accessClaim);
+    }
+
     public new async Task<Maybe<AccessClaimEntity>> GetByIdAsync(Guid id)
     {
         if (id == Guid.Empty)

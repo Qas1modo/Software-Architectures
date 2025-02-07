@@ -4,4 +4,4 @@ using SharedKernel.Domain.Core.Primitives.Maybe;
 
 namespace AccessSystem.Application.AccessClaim.Queries.GetAccessClaim;
 
-public record GetAccessClaimQuery(GetAccessClaimModel GetAccessClaimModel) : IQuery<Maybe<AccessClaimResponseModel>>;
+public record GetAccessClaimQuery(GetAccessClaimModel GetAccessClaimModel) : IQuery<Maybe<List<AccessClaimResponseModel>>>;
