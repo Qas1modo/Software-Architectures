@@ -8,10 +8,10 @@ https://www.figma.com/design/P2PMOooD5uKye8W8b8Zsgc/Event-Storming-(Community)
 
 ## Rozdělení práce
 
- - Service System - X
+ - Service System - Radomír Mann [493346]
  - Billing system - Jakub Košvanec [485430]
- - Access System - X
- - Room management System - X
+ - Access System - Jonáš Jadrníček [514017]
+ - Room management System - Josef Žižka [514412]
 
 ### Service system
 Tato část systému bude odpovědná za to, když dojde k nějakému objednání buď pití jídla nebo pití na pokoj, hotel toto zaznamená a bude to dále interně řešit, než se tento proces neuzavře ukončení, tak že ubytovaný objednávku obdrží nebo bude z nějakého důvodu zamítnuta.
