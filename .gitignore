@@ -408,3 +408,4 @@ FodyWeavers.xsd
 /HotelSystem/RoomManagementSystem/RoomManagementSystem.DAL.EFCore/RoomManagement.db-wal
 /HotelSystem/AccessSystem.Infrastructure/Database/AccessSystem.db-shm
 /HotelSystem/AccessSystem.Infrastructure/Database/AccessSystem.db-wal
+/HotelSystem/BillingSystem.Api/Billing.db
