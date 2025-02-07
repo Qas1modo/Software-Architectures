@@ -26,7 +26,7 @@ namespace RoomManagementSystem.BL.Handlers.CommandHandlers.ReservationCommandHan
         {
             _ = await uow.Reservations.GetByIdAsync(reservationId) ?? throw new Exception("Reservation not found");
         }
-        protected async Task EnsureRoomAvailable(IEFCoreUnitOfWork uow, int roomId, DateTimeOffset fromDate, DateTimeOffset toDate, int? excludeReservationId = null)
+        protected async Task EnsureRoomAvailable(IEFCoreUnitOfWork uow, int roomId, DateTime fromDate, DateTime toDate, int? excludeReservationId = null)
         {
             if (!await IsRoomAvailable(uow, roomId, fromDate, toDate, excludeReservationId))
             {
@@ -36,8 +36,8 @@ namespace RoomManagementSystem.BL.Handlers.CommandHandlers.ReservationCommandHan
         protected async Task<bool> IsRoomAvailable(
             IEFCoreUnitOfWork uow,
             int roomId,
-            DateTimeOffset fromDate,
-            DateTimeOffset toDate,
+            DateTime fromDate,
+            DateTime toDate,
             int? excludeReservationId = null) // Optional parameter to exclude current reservation when updating
         {
             var conflictingReservations = await uow.Reservations.GetAsync(

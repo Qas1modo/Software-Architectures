@@ -38,7 +38,7 @@ namespace RoomManagementSystem.API.Controllers
         public async Task<IActionResult> CheckIn(int id, string firstName, string lastName, string email)
         {
             var result = await _mediator.Send(new CheckInCommand(id));
-            await _messageBus.PublishAsync(new GuestCheckedInMessage(new Guid(), id, firstName, lastName, email));
+            await _messageBus.PublishAsync(new GuestCheckedInMessage(Guid.NewGuid(), id, firstName, lastName, email));
             return Ok(result);
         }
 

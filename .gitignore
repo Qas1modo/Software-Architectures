@@ -406,3 +406,5 @@ FodyWeavers.xsd
 /HotelSystem/RoomManagementSystem/RoomManagementSystem.DAL.EFCore/RoomManagement.db
 /HotelSystem/RoomManagementSystem/RoomManagementSystem.DAL.EFCore/RoomManagement.db-shm
 /HotelSystem/RoomManagementSystem/RoomManagementSystem.DAL.EFCore/RoomManagement.db-wal
+/HotelSystem/AccessSystem.Infrastructure/Database/AccessSystem.db-shm
+/HotelSystem/AccessSystem.Infrastructure/Database/AccessSystem.db-wal

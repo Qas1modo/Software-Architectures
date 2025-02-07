@@ -20,6 +20,7 @@ namespace HotelServiceSystem.Api.Handlers
                 GuestLastName = guestCheckedInMessage.GuestLastName,
                 GuestRoom = guestCheckedInMessage.GuestRoomNumber,
                 GlobalGuestId = guestCheckedInMessage.GlobalGuestId,
+                Email = guestCheckedInMessage.GuestEmail,
             };
             var result = await Result.Create(guestCheckedInMessage, DomainErrors.General.UnProcessableRequest)
                 .Map(request => new CreateGuestCommand(guestCheckedInCommandModel))

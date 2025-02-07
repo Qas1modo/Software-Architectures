@@ -11,7 +11,7 @@ using RoomManagementSystem.DAL.EFCore.Database;
 namespace RoomManagementSystem.DAL.EFCore.Migrations
 {
     [DbContext(typeof(RoomManagementDbContext))]
-    [Migration("20250206165235_InitialCreate")]
+    [Migration("20250207113344_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
