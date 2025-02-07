@@ -401,3 +401,4 @@ FodyWeavers.xsd
 /HotelSystem/HotelServiceSystem.Infrastructure/Database/HotelServiceSystem.db
 /HotelSystem/HotelServiceSystem.Infrastructure/Database/HotelServiceSystem.db-shm
 /HotelSystem/HotelServiceSystem.Infrastructure/Database/HotelServiceSystem.db-wal
+/HotelSystem/BillingSystem.Infrastructure/Billing.db
