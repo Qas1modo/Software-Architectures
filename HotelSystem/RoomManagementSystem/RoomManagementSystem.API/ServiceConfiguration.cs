@@ -1,7 +1,4 @@
-﻿using Microsoft.OpenApi.Models;
-using OpenTelemetry;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Trace;
+﻿using Microsoft.OpenApi;
 
 namespace RoomManagementSystem.API
 {

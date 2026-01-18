@@ -1,6 +1,6 @@
 ﻿using HotelServiceSystem.Application;
 using HotelServiceSystem.Infrastructure;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace HotelServiceSystem.Api;
 

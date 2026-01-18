@@ -1,7 +1,6 @@
-﻿using FluentValidation.AspNetCore;
-using AccessSystem.Application;
+﻿using AccessSystem.Application;
 using AccessSystem.Infrastructure;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace AccessSystem.Api;
 

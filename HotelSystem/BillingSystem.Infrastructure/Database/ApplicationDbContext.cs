@@ -72,7 +72,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             return;
         }
 
-        foreach (ReferenceEntry referenceEntry in entityEntry.References.Where(r => r.TargetEntry.State == EntityState.Deleted))
+        foreach (ReferenceEntry referenceEntry in entityEntry.References.Where(r => 
+                     r.TargetEntry.State == EntityState.Deleted))
         {
             referenceEntry.TargetEntry.State = EntityState.Unchanged;
 

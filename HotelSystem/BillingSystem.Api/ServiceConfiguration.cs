@@ -1,6 +1,6 @@
 ﻿using BillingSystem.Application;
 using BillingSystem.Infrastructure;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace BillingSystem.Api;
 
