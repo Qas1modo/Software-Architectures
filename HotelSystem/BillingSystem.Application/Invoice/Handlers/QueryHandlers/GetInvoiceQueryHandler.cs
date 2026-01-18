@@ -13,7 +13,7 @@ internal class GetInvoiceQueryHandler(IUnitOfWorkProvider<IUnitOfWork> unitOfWor
     {
         using var unitOfWork = unitOfWorkProvider.Create();
         var result = await unitOfWork.InvoiceRepository.GetByIdAsync(request.InvoiceId);
-
+        if (result is null) return Maybe<InvoiceDetailModel>.None;
         return new InvoiceDetailModel()
         {
             CustomerId = result.CustomerId.Value,
